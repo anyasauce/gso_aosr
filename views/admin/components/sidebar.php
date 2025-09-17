@@ -40,8 +40,8 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 </svg>
             </button>
             <div class="hidden mt-2 ml-4 space-y-2">
-                <a href="#" class="flex items-center px-4 py-2 text-sm text-white/80 rounded-lg hover:bg-white/10">Capitol Offices</a>
-                <a href="#" class="flex items-center px-4 py-2 text-sm text-white/80 rounded-lg hover:bg-white/10">Private Offices</a>
+                <a href="capitol.php"  <?= $currentPage == 'capitol.php' ? 'bg-white/20 text-white' : 'text-white/90' ?> class="flex items-center px-4 py-2 text-sm text-white/80 rounded-lg hover:bg-white/10">Capitol Offices</a>
+                <a href="private.php" <?= $currentPage == 'private.php' ? 'bg-white/20 text-white' : 'text-white/90' ?> class="flex items-center px-4 py-2 text-sm text-white/80 rounded-lg hover:bg-white/10">Private Offices</a>
             </div>
         </li>
 
