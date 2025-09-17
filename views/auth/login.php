@@ -1,4 +1,3 @@
-<!-- login.php -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -45,7 +44,7 @@
         </div>
 
         <!-- Login Form -->
-        <form action="#" method="post" class="space-y-5">
+        <form action="../../controllers/AuthController.php" method="post" class="space-y-5">
             <!-- Email -->
             <div>
                 <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
@@ -64,7 +63,7 @@
 
             <!-- Submit -->
             <div>
-                <button type="submit"
+                <button type="submit" name="login"
                     class="w-full py-2.5 px-4 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 hover:shadow-lg transition duration-200">
                     Login
                 </button>
