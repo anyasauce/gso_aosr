@@ -1,6 +1,6 @@
 <?php 
 require_once '../config/init.php';
-
+require_once 'PHPMailerController.php';
 if(isset($_POST['reserve'])){
     $reservation_type = $_POST['reservationType'];
     $type_of_government = $_POST['govType'];
@@ -42,8 +42,8 @@ if(isset($_POST['reserve'])){
        $event_name = $_POST['event_name'];
        $res_place = $_POST['res_place'];
        $num_person = $_POST['num_person'];
-       $num_chairs = $_POST['num_chairs'] || 0;
-       $sound_system = $_POST['sound_system'] || '';
+       $num_chairs   = $_POST['num_chairs']   ?? 0;
+       $sound_system = $_POST['sound_system'] ?? '';
        $start_date = $_POST['start_datetime'];
        $end_date = $_POST['end_datetime'];
        $purpose = $_POST['purpose'];
@@ -60,15 +60,18 @@ if(isset($_POST['reserve'])){
         $end_date = $_POST['end_datetime'];
         $purpose = $_POST['purpose'];
 
-        $stmt = $conn->prepare("UPDATE requests SET v_type = ?, num_pass = ?, latitude = ?, longitude = ? WHERE id = ?");
-        $stmt -> bind_param('sissi', $v_type, $num_pass, $destinationLat, $destinationLong,$req_id);
+        $stmt = $conn->prepare("UPDATE requests SET v_type = ?, num_pass = ?, latitude = ?, longitude = ?, start_date = ?, end_date = ?WHERE id = ?");
+        $stmt->bind_param('siddssi', $v_type, $num_pass, $destinationLat, $destinationLong,$start_date, $end_date, $req_id);
+
    }
 
    if($stmt->execute()){
+            $fullname = $last_name . ', ' . $first_name;
             // Call Mauiler function
-            // If mail->sendI()
-            echo json_encode(["success" => "true" ]);
+            if(sendPendingEmail($email, $fullname)){
+            echo json_encode(["success" => true]);
             exit;
+            }
         }
 
 }
