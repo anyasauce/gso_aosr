@@ -12,24 +12,58 @@
       <!-- Page Content -->
       <div class="p-4">
         <!-- Stats Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <!-- Total Users Card -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Pending Requests -->
           <div class="bg-white rounded-xl shadow-sm transition-transform duration-200 hover:-translate-y-1">
-            <div class="p-4">
-              <div class="flex items-center justify-between">
-                <div>
-                  <h6 class="text-gray-500 mb-2">Total Users</h6>
-                  <h3 class="text-2xl font-bold mb-1">1,234</h3>
-                  <span class="text-sm text-green-500">↑ 12% from last month</span>
-                </div>
-                <div class="w-12 h-12 bg-blue-50 text-blue-500 rounded-xl flex items-center justify-center">
-                  <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 16 16">
-                    <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
-                  </svg>
-                </div>
+            <div class="p-6 flex justify-between items-center">
+              <div>
+                <h6 class="text-gray-500 mb-2">Pending Requests</h6>
+                <h3 class="text-2xl font-bold mb-1">8</h3>
+                <span class="text-sm text-orange-500">↑ 2 new today</span>
+              </div>
+              <div class="w-12 h-12 bg-orange-50 text-orange-500 rounded-xl flex items-center justify-center">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                  <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
+                </svg>
               </div>
             </div>
           </div>
+
+          <!-- Approved Today -->
+          <div class="bg-white rounded-xl shadow-sm transition-transform duration-200 hover:-translate-y-1">
+            <div class="p-6 flex justify-between items-center">
+              <div>
+                <h6 class="text-gray-500 mb-2">Approved Today</h6>
+                <h3 class="text-2xl font-bold mb-1">12</h3>
+                <span class="text-sm text-green-500">↑ 15% from yesterday</span>
+              </div>
+              <div class="w-12 h-12 bg-green-50 text-green-500 rounded-xl flex items-center justify-center">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                  <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Total Processed -->
+          <div class="bg-white rounded-xl shadow-sm transition-transform duration-200 hover:-translate-y-1">
+            <div class="p-6 flex justify-between items-center">
+              <div>
+                <h6 class="text-gray-500 mb-2">Total Processed</h6>
+                <h3 class="text-2xl font-bold mb-1">156</h3>
+                <span class="text-sm text-blue-500">This month</span>
+              </div>
+              <div class="w-12 h-12 bg-blue-50 text-blue-500 rounded-xl flex items-center justify-center">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                  <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
 
           <!-- Similar structure for Orders and Revenue cards -->
           <!-- ...existing cards with Tailwind classes... -->

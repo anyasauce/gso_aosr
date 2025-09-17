@@ -152,7 +152,7 @@
                                 </div>
                                 <div class="sm:col-span-2">
                                     <label for="remarks-<?= $index ?>" class="block font-bold text-gray-700 mb-2">Remarks (Optional)</label>
-                                    <textarea id="remarks-<?= $index ?>" name="remarks" rows="3" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5" placeholder="Add a reason for approval or disapproval..."><?= htmlspecialchars($record['remarks']) ?></textarea>
+                                    <textarea id="remarks-<?= $index ?>" name="remarks" rows="3" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5" placeholder="Add a reason for approval or disapproval..." style="resize:none;"><?= htmlspecialchars($record['remarks'])?></textarea>
                                 </div>
                     </div>
                     <div class="flex justify-end items-center p-4 bg-gray-50 border-t">
