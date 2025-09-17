@@ -119,11 +119,11 @@
                             </div>
                             <div>
                                 <p class="font-bold text-gray-700">Event Start</p>
-                                <p class="text-gray-600"><?= date("F j, Y, g:i A", strtotime($record['start_date'] . ' ' . $record['start_time'])) ?></p>
+                                <p class="text-gray-600"><?= date("F j, Y, g:i A", strtotime($record['start_date'] )) ?></p>
                             </div>
                             <div>
                                 <p class="font-bold text-gray-700">Event End</p>
-                                <p class="text-gray-600"><?= date("F j, Y, g:i A", strtotime($record['end_date'] . ' ' . $record['end_time'])) ?></p>
+                                <p class="text-gray-600"><?= date("F j, Y, g:i A", strtotime($record['end_date'] )) ?></p>
                             </div>
                             <div>
                                 <p class="font-bold text-gray-700">Reservation Place</p>
