@@ -2,7 +2,7 @@
 header('Content-Type: application/json');
 
 include 'config/init.php';
-$sql = "SELECT start_date, end_date FROM requests WHERE status = 'Approved' AND res_type = 'place'";
+$sql = "SELECT start_date, end_date FROM requests WHERE status = 'Approved' AND res_type = 'p";
 $result = $conn->query($sql);
 
 $reservedDates = [];
