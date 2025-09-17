@@ -49,19 +49,7 @@
 
 <body class="bg-gray-50 text-gray-800 antialiased">
 
-    <nav class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-gray-200">
-        <div class="container mx-auto flex items-center justify-between px-6 py-4">
-            <a href="#" class="text-2xl font-bold text-gray-900">GSO AOSR</a>
-            <div class="hidden md:flex items-center space-x-8">
-                <a href="#about" class="text-gray-600 hover:text-indigo-600 transition-colors duration-300 font-medium">About</a>
-                <a href="#features" class="text-gray-600 hover:text-indigo-600 transition-colors duration-300 font-medium">Features</a>
-                <a href="#reservation" class="text-gray-600 hover:text-indigo-600 transition-colors duration-300 font-medium">Reserve</a>
-            </div>
-            <a href="views/auth/login.php" class="bg-indigo-600 text-white px-5 py-2 rounded-full hover:bg-indigo-700 transition-all duration-300 font-medium shadow-lg hover:shadow-indigo-500/50 transform hover:-translate-y-0.5">
-                Login
-            </a>
-        </div>
-    </nav>
+    <?php include 'header.php' ?>
 
     <section class="hero flex items-center justify-center min-h-[60vh] md:justify-start text-white">
         <div class="relative z-10 p-6 md:p-12 lg:p-24 max-w-3xl text-center md:text-left">
@@ -70,7 +58,7 @@
                 <p class="text-lg md:text-xl font-light text-gray-200 max-w-2xl mb-8">
                     Effortlessly book venues and vehicles for your next event or official travel. Our simple, secure platform makes it easy to manage your needs.
                 </p>
-                <a href="#reservation" class="bg-white text-indigo-600 font-bold py-3 px-8 rounded-full hover:bg-gray-200 transition duration-300 transform hover:scale-105 inline-block shadow-2xl">
+                <a href="reservation.php" class="bg-white text-indigo-600 font-bold py-3 px-8 rounded-full hover:bg-gray-200 transition duration-300 transform hover:scale-105 inline-block shadow-2xl">
                     Start Your Reservation
                 </a>
             </div>
@@ -116,11 +104,7 @@
         </div>
     </section>
 
-    <footer class="bg-gray-900 text-white py-8">
-        <div class="container mx-auto px-6 text-center">
-            <p>&copy; 2025 GSO AOSR. All Rights Reserved.</p>
-        </div>
-    </footer>
+    <?php include 'footer.php' ?>
 
 </body>
 
