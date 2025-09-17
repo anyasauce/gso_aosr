@@ -45,33 +45,67 @@
                 <div id="stepIndicator" class="flex items-center justify-between mb-10 text-sm font-medium text-slate-500">
                     <div class="step-item text-center flex-1">
                         <div class="step-number mx-auto w-10 h-10 flex items-center justify-center rounded-full border-2 mb-2">1</div>
-                        <span class="step-label hidden md:block">Type</span>
+                        <span class="step-label hidden md:block">Government Type</span>
                     </div>
                     <div class="flex-1 h-px bg-slate-200"></div>
                     <div class="step-item text-center flex-1">
                         <div class="step-number mx-auto w-10 h-10 flex items-center justify-center rounded-full border-2 mb-2">2</div>
-                        <span class="step-label hidden md:block">Details</span>
+                        <span class="step-label hidden md:block">Reservation Type</span>
                     </div>
                     <div class="flex-1 h-px bg-slate-200"></div>
                     <div class="step-item text-center flex-1">
                         <div class="step-number mx-auto w-10 h-10 flex items-center justify-center rounded-full border-2 mb-2">3</div>
-                        <span class="step-label hidden md:block">Schedule</span>
+                        <span class="step-label hidden md:block">Information</span>
                     </div>
                     <div class="flex-1 h-px bg-slate-200"></div>
                      <div class="step-item text-center flex-1">
                         <div class="step-number mx-auto w-10 h-10 flex items-center justify-center rounded-full border-2 mb-2">4</div>
-                        <span class="step-label hidden md:block">Purpose</span>
+                        <span class="step-label hidden md:block">Schedule</span>
                     </div>
                     <div class="flex-1 h-px bg-slate-200"></div>
                     <div class="step-item text-center flex-1">
                         <div class="step-number mx-auto w-10 h-10 flex items-center justify-center rounded-full border-2 mb-2">5</div>
+                        <span class="step-label hidden md:block">Purpose</span>
+                    </div>
+
+                     <div class="flex-1 h-px bg-slate-200"></div>
+                    <div class="step-item text-center flex-1">
+                        <div class="step-number mx-auto w-10 h-10 flex items-center justify-center rounded-full border-2 mb-2">6</div>
                         <span class="step-label hidden md:block">Review</span>
                     </div>
                 </div>
 
                 <form id="reservationForm" action="controllers/ReservationController.php" method="post" novalidate>
-                    <div class="step active">
-                        <h3 class="text-xl font-semibold mb-2 text-slate-800">1. Select Reservation Type</h3>
+                    
+                 <div class="step active">
+                        <h3 class="text-xl font-semibold mb-2 text-slate-800">1. Select Government Type</h3>
+                        <p class="text-slate-500 mb-6">What is your Government Type?</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <label for="capitol" class="relative cursor-pointer border-2 border-slate-200 rounded-xl p-6 text-center transition-all duration-300 has-[:checked]:border-indigo-600 has-[:checked]:bg-indigo-50/50 has-[:checked]:shadow-lg has-[:checked]:shadow-indigo-500/10 hover:border-indigo-400">
+                            <input type="radio" name="reservationType" id="capitol" class="absolute opacity-0" value="capitol" required>
+                            <!-- Icon: Office Building -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 mx-auto mb-3 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 21h18M4 3h16M5 3v18m14-18v18M9 7h6m-6 4h6m-6 4h6" />
+                            </svg>
+                            <p class="text-lg font-semibold text-slate-800">Capitol Offices</p>
+                            <p class="text-sm text-slate-500">Government and administrative offices</p>
+                        </label>
+
+                        <label for="private" class="relative cursor-pointer border-2 border-slate-200 rounded-xl p-6 text-center transition-all duration-300 has-[:checked]:border-indigo-600 has-[:checked]:bg-indigo-50/50 has-[:checked]:shadow-lg has-[:checked]:shadow-indigo-500/10 hover:border-indigo-400">
+                            <input type="radio" name="reservationType" id="private" class="absolute opacity-0" value="private" required>
+                            <!-- Icon: Briefcase / Private Office -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 mx-auto mb-3 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2m4 0H4m16 0v10a2 2 0 01-2 2H6a2 2 0 01-2-2V7h16z" />
+                            </svg>
+                            <p class="text-lg font-semibold text-slate-800">Private Offices</p>
+                            <p class="text-sm text-slate-500">Business, corporate, and private workspaces</p>
+                        </label>
+
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <h3 class="text-xl font-semibold mb-2 text-slate-800">2. Select Reservation Type</h3>
                         <p class="text-slate-500 mb-6">What would you like to book?</p>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <label for="venue" class="relative cursor-pointer border-2 border-slate-200 rounded-xl p-6 text-center transition-all duration-300 has-[:checked]:border-indigo-600 has-[:checked]:bg-indigo-50/50 has-[:checked]:shadow-lg has-[:checked]:shadow-indigo-500/10 hover:border-indigo-400">
@@ -91,7 +125,7 @@
                     </div>
 
                     <div class="step">
-                        <h3 class="text-xl font-semibold mb-2 text-slate-800">2. Your Information</h3>
+                        <h3 class="text-xl font-semibold mb-2 text-slate-800">3. Your Information</h3>
                         <p class="text-slate-500 mb-6">Please provide your contact details.</p>
                          <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
                              <div class="md:col-span-2">
@@ -114,7 +148,7 @@
                     </div>
                     
                     <div class="step">
-                         <h3 class="text-xl font-semibold mb-2 text-slate-800">3. Schedule & Details</h3>
+                         <h3 class="text-xl font-semibold mb-2 text-slate-800">4. Schedule & Details</h3>
                          <p class="text-slate-500 mb-6">When do you need the reservation?</p>
 
                          <div id="venue-details" class="hidden space-y-5">
@@ -184,7 +218,7 @@
                     </div>
 
                     <div class="step">
-                        <h3 class="text-xl font-semibold mb-2 text-slate-800">4. Purpose of Reservation</h3>
+                        <h3 class="text-xl font-semibold mb-2 text-slate-800">5. Purpose of Reservation</h3>
                         <p class="text-slate-500 mb-6">Let us know why you are making this reservation.</p>
                         <div>
                              <label class="block mb-1.5 text-sm font-medium text-slate-600">Purpose / Name of Event</label>
@@ -193,7 +227,7 @@
                     </div>
 
                     <div class="step">
-                        <h3 class="text-xl font-semibold mb-2 text-slate-800">5. Review & Submit</h3>
+                        <h3 class="text-xl font-semibold mb-2 text-slate-800">6. Review & Submit</h3>
                         <p class="text-slate-500 mb-6">Please double-check your details before submitting.</p>
                         <div class="bg-slate-50/80 rounded-lg p-6 border space-y-3">
                             <div id="review-details">
