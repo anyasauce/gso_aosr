@@ -12,12 +12,23 @@ if(isset($_POST['login'])) {
 
     if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
+        
         if (password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['email']   = $user['email'];
             $_SESSION['role']    = $user['role'];
-            header("Location: ../views/admin/index.php");
+
+            if ($user['role'] === 'admin') {
+                header("Location: ../views/admin/index.php");
+            } elseif ($user['role'] === 'gso_sec') {
+                header("Location: ../views/gso_sec/index.php");
+            } elseif ($user['role'] === 'gov_sec') {
+                header("Location: ../views/gov_sec/index.php"); 
+            } else {
+                header("Location: ../views/admin/index.php");
+            }
             exit();
+
         } else {
             ?>
             <script>
@@ -35,7 +46,4 @@ if(isset($_POST['login'])) {
         <?php
     }
 }
-
-
-
 ?>
