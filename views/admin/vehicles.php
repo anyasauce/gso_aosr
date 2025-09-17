@@ -13,11 +13,11 @@
         <main class="p-6">
             <div class="bg-white shadow rounded-lg p-6">
                 <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-xl font-semibold">User Management</h2>
+                    <h2 class="text-xl font-semibold">Vehicles Management</h2>
                     <button 
                         onclick="document.getElementById('addModal').classList.remove('hidden')" 
                         class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">
-                        + Add User
+                        + Add Vehicles
                     </button>
                 </div>
 
@@ -27,29 +27,32 @@
                         <thead class="bg-gray-100">
                         <tr>
                             <th class="px-4 py-2 border">ID</th>
-                            <th class="px-4 py-2 border">Email</th>
-                            <th class="px-4 py-2 border">Role</th>
-                            <th class="px-4 py-2 border">Actions</th>
+                            <th class="px-4 py-2 border">Vehicle Name</th>
+                            <th class="px-4 py-2 border">Capacity</th>
+                            <th class="px-4 py-2 border">Plate No.</th>
+                            <th class="px-4 py-2 border">Availability</th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php
                         include '../../config/init.php'; // your DB connection
 
-                        $result = $conn->query("SELECT * FROM users");
+                        $result = $conn->query("SELECT * FROM vehicles");
                         while ($row = $result->fetch_assoc()):
                             ?>
                             <tr>
                                 <td class="px-4 py-2 border"><?= $row['id'] ?></td>
-                                <td class="px-4 py-2 border"><?= htmlspecialchars($row['email']) ?></td>
-                                <td class="px-4 py-2 border capitalize"><?= $row['role'] ?></td>
+                                <td class="px-4 py-2 border"><?= htmlspecialchars($row['vehicle_name']) ?></td>
+                                <td class="px-4 py-2 border"><?= htmlspecialchars($row['seat_capacity'])?></td>
+                                <td class="px-4 py-2 border"><?= htmlspecialchars($row['plate_no'])?></td>
+
                                 <td class="px-4 py-2 border flex items-center justify-center gap-3">
                                     <button 
-                                        onclick="openEditModal(<?= $row['id'] ?>, '<?= $row['email'] ?>', '<?= $row['role'] ?>')" 
+                                        onclick="openEditModal(<?= $row['id'] ?>, '<?=$row['vehicle_name']?>','<?= $row['seat_capacity'] ?>', <?=$row['plate_no']?>)" 
                                         class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600">
                                         Edit
                                     </button>
-                                    <form action="../../controllers/UserController.php?id=<?= $row['id'] ?>" method="POST">
+                                    <form action="../../controllers/VehicleController.php?id=<?= $row['id'] ?>" method="POST">
                                     <button type = "submit"  name = "delete"
                                         class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">
                                         Delete
@@ -69,20 +72,14 @@
 <!-- Add User Modal -->
 <div id="addModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
     <div class="bg-white rounded-lg p-6 w-96">
-        <h3 class="text-lg font-semibold mb-4">Add User</h3>
-        <form action="../../controllers/UserController.php?action=add" method="POST">
-            <input type="email" name="email" placeholder="Email" required class="w-full mb-3 border rounded px-3 py-2">
-            <input type="password" name="password" placeholder="Password" required class="w-full mb-3 border rounded px-3 py-2">
-            <select name="role" required class="w-full mb-3 border rounded px-3 py-2">
-                <option value="">Select Role</option>
-                <option value="admin">Admin</option>
-                <option value="gso_sec">GSO Sec</option>
-                <option value="gov_sec">Gov Sec</option>
-                <option value="driver">Driver</option>
-            </select>
+        <h3 class="text-lg font-semibold mb-4">Add Vehicle</h3>
+        <form action="../../controllers/VehicleController.php" method="POST">
+            <input type="text" name="name" placeholder="Vehicle Name" required class="w-full mb-3 border rounded px-3 py-2">
+            <input type="number" min="1" name="capacity" placeholder="Seat Capacity" required class="w-full mb-3 border rounded px-3 py-2">
+            <input type="text" name="plate_no" id="" placeholder="Plate Number" required class="w-full mb-3 border rounded px-3 py-2">
             <div class="flex justify-end gap-2">
                 <button type="button" onclick="document.getElementById('addModal').classList.add('hidden')" class="px-4 py-2 rounded border">Cancel</button>
-                <button type="submit" name="addUser" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Save</button>
+                <button type="submit" name="add_vehicle" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Save</button>
             </div>
         </form>
     </div>
@@ -92,28 +89,27 @@
 <div id="editModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
     <div class="bg-white rounded-lg p-6 w-96">
         <h3 class="text-lg font-semibold mb-4">Edit User</h3>
-        <form action="../../controllers/UserController.php?action=edit" method="POST">
+        <form action="../../controllers/VehicleController.php" method="POST">
             <input type="hidden" name="id" id="edit_id">
-            <input type="email" name="email" id="edit_email" required class="w-full mb-3 border rounded px-3 py-2">
-            <select name="role" id="edit_role" required class="w-full mb-3 border rounded px-3 py-2">
-                <option value="admin">Admin</option>
-                <option value="gso_sec">GSO Sec</option>
-                <option value="gov_sec">Gov Sec</option>
-                <option value="driver">Driver</option>
-            </select>
+            <input type="text" name="name" id="edit_email" required class="w-full mb-3 border rounded px-3 py-2">
+            <input type="number" name="capacity" id="edit_capacity" required class="w-full mb-3 border rounded px-3 py-2">
+            <input type="text" name="plate_no" id="edit_plate_no" required class="w-full mb-3 border rounded px-3 py-2">
+
             <div class="flex justify-end gap-2">
                 <button type="button" onclick="document.getElementById('editModal').classList.add('hidden')" class="px-4 py-2 rounded border">Cancel</button>
-                <button type="submit" name="updateUser" class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700">Update</button>
+                <button type="submit" name="update" class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700">Update</button>
             </div>
         </form>
     </div>
 </div>
 
 <script>
-    function openEditModal(id, email, role) {
+    function openEditModal(id, email, capacity, plate_no) {
         document.getElementById('edit_id').value = id;
         document.getElementById('edit_email').value = email;
-        document.getElementById('edit_role').value = role;
+        document.getElementById('edit_capacity').value = capacity
+        document.getElementById('edit_plate_no').value = plate_no || ''
+
         document.getElementById('editModal').classList.remove('hidden');
     }
 </script>

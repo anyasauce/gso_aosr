@@ -74,16 +74,16 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 </svg>
             </button>
             <div class="hidden mt-2 ml-4 space-y-2">
-                <a href="#" class="flex items-center px-4 py-2 text-sm text-white/80 rounded-lg hover:bg-white/10">Vehicle Requests</a>
+                <a href="vehicles.php" <?= $currentPage == 'vehicles.php' ? 'bg-white/20 text-white' : 'text-white/90' ?> class="flex items-center px-4 py-2 text-sm text-white/80 rounded-lg hover:bg-white/10">Vehicle Requests</a>
                 <a href="#" class="flex items-center px-4 py-2 text-sm text-white/80 rounded-lg hover:bg-white/10">Venue Reservations</a>
             </div>
         </li>
 
         <!-- User Management -->
         <li>
-            <a href="user.php" 
+            <a href="users.php" 
                class="flex items-center px-4 py-3 rounded-lg transition-all duration-200 hover:bg-white/10 hover:translate-x-1 
-               <?= $currentPage == 'user.php' ? 'bg-white/20 text-white' : 'text-white/90' ?>">
+               <?= $currentPage == 'users.php' ? 'bg-white/20 text-white' : 'text-white/90' ?>">
                 <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M10 12a5 5 0 100-10 5 5 0 000 10zm-7 8a7 7 0 0114 0H3z"/>
                 </svg>

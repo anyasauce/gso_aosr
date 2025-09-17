@@ -60,8 +60,8 @@ if (isset($_POST['updateUser'])) {
 }
 
 // DELETE - Remove User
-if (isset($_GET['delete'])) {
-    $id = $_GET['delete'];
+if (isset($_POST['delete'])) {
+    $id = $_GET['id'];
 
     $stmt = $conn->prepare("DELETE FROM users WHERE id=?");
     $stmt->bind_param("i", $id);
