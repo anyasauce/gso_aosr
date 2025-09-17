@@ -113,8 +113,8 @@
                   <td class="px-6 py-4 whitespace-nowrap">1</td>
                   <td class="px-6 py-4 whitespace-nowrap">
                     <div class="flex items-center">
-                      <img src="https://ui-avatars.com/api/?name=Gso+Secretary" class="w-8 h-8 rounded-full mr-3">
-                      <span>Gso Secretary</span>
+                      <img src="https://ui-avatars.com/api/?name=Governor+Secretary" class="w-8 h-8 rounded-full mr-3">
+                      <span>Governor Secretary</span>
                     </div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
