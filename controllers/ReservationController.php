@@ -40,28 +40,36 @@ if(isset($_POST['reserve'])){
     $req_id = $conn->insert_id;
    if($reservation_type === 'place'){
        $event_name = $_POST['event_name'];
-       $res_place = $_POST['event_name'];
+       $res_place = $_POST['res_place'];
        $num_person = $_POST['num_person'];
-       $num_chairs = $_POST['num_chairs'];
-       $sound_system = $_POST['sound_system'];
-       $start_date = $_POST['start_date'];
-       $start_time = $_POST['start_time'];
-       $end_date = $_POST['end_date'];
-       $end_time = $_POST['end_time'];
+       $num_chairs = $_POST['num_chairs'] || 0;
+       $sound_system = $_POST['sound_system'] || '';
+       $start_date = $_POST['start_datetime'];
+       $end_date = $_POST['end_datetime'];
        $purpose = $_POST['purpose'];
-       $additional_notes = $_POST['additional_notes'];
+    //    $additional_notes = $_POST['additional_notes'] || '';
 
-        $stmt = $conn->prepare("UPDATE requests SET event_name = ?, res_place = ?, num_person = ?, num_chairs = ?, sound_system = ?, start_date = ?, start_time = ?, end_date = ?, end_time = ?, purpose =?, add_notes = ? WHERE id = ?");
-        $stmt->bind_param('ssiisssssssi', $event_name, $res_place, $num_person, $num_chairs, $sound_system, $start_date, $start_time, $end_date, $end_time, $purpose, $additional_notes, $req_id);
+        $stmt = $conn->prepare("UPDATE requests SET event_name = ?, res_place = ?, num_person = ?, num_chairs = ?, sound_system = ?, start_date = ?, end_date = ?, purpose =? WHERE id = ?");
+        $stmt->bind_param('ssiissssi', $event_name, $res_place, $num_person, $num_chairs, $sound_system, $start_date, $end_date,  $purpose, $req_id);    
+   } else {
+        $v_type = $_POST['v_type'];
+        $num_pass = $_POST['num_pass'];
+        $destinationLat = $_POST['latitude'];
+        $destinationLong = $_POST['longitude'];
+        $start_date = $_POST['start_datetime'];
+        $end_date = $_POST['end_datetime'];
+        $purpose = $_POST['purpose'];
 
+        $stmt = $conn->prepare("UPDATE requests SET v_type = ?, num_pass = ?, latitude = ?, longitude = ? WHERE id = ?");
+        $stmt -> bind_param('sissi', $v_type, $num_pass, $destinationLat, $destinationLong,$req_id);
+   }
 
-        if($stmt->execute()){
+   if($stmt->execute()){
+            // Call Mauiler function
+            // If mail->sendI()
             echo json_encode(["success" => "true" ]);
             exit;
         }
 
-   }
-
-   echo "Arwin";
 }
 ?>
