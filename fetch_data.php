@@ -2,16 +2,25 @@
 header('Content-Type: application/json');
 
 include 'config/init.php';
-$sql = "SELECT start_date, end_date FROM requests WHERE status = 'Approved' AND res_type = 'p";
+
+$sql = "SELECT start_date, end_date 
+        FROM requests 
+        WHERE status = 'Approved' 
+        AND res_type = 'place'";
+
 $result = $conn->query($sql);
 
 $reservedDates = [];
 
-if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
+if ($result && $result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
         $startDate = new DateTime($row['start_date']);
-        $endDate = new DateTime($row['end_date']);
-        
+        $endDate   = new DateTime($row['end_date']);
+
+        // Normalize time to midnight so loop works day by day
+        $startDate->setTime(0, 0, 0);
+        $endDate->setTime(0, 0, 0);
+
         while ($startDate <= $endDate) {
             $reservedDates[] = $startDate->format('Y-m-d');
             $startDate->modify('+1 day');
