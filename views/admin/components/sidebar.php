@@ -1,3 +1,7 @@
+<?php 
+$currentPage = basename($_SERVER['PHP_SELF']); 
+?>
+
 <!-- sidebar.php -->
 <nav class="w-[280px] min-h-screen bg-gradient-to-br from-slate-800 to-indigo-900 text-white shadow-lg flex flex-col p-4">
     <div class="border-b border-white/10 pb-4 mb-4">
@@ -13,7 +17,9 @@
     <ul class="space-y-2">
         <!-- Dashboard -->
         <li>
-            <a href="#" class="flex items-center px-4 py-3 text-white bg-white/20 rounded-lg group transition-all duration-200 hover:bg-white/25 hover:translate-x-1">
+            <a href="index.php" 
+               class="flex items-center px-4 py-3 rounded-lg group transition-all duration-200 hover:bg-white/25 hover:translate-x-1 
+               <?= $currentPage == 'index.php' ? 'bg-white/20 text-white' : 'text-white/90' ?>">
                 <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"/>
                     <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"/>
@@ -75,11 +81,22 @@
 
         <!-- User Management -->
         <li>
-            <a href="#" class="flex items-center px-4 py-3 text-white/90 rounded-lg transition-all duration-200 hover:bg-white/10 hover:translate-x-1">
+            <a href="user.php" 
+               class="flex items-center px-4 py-3 rounded-lg transition-all duration-200 hover:bg-white/10 hover:translate-x-1 
+               <?= $currentPage == 'user.php' ? 'bg-white/20 text-white' : 'text-white/90' ?>">
                 <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M10 12a5 5 0 100-10 5 5 0 000 10zm-7 8a7 7 0 0114 0H3z"/>
                 </svg>
                 <span>User Management</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="#" class="flex items-center px-4 py-3 text-white/90 rounded-lg transition-all duration-200 hover:bg-white/10 hover:translate-x-1">
+                <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 12a5 5 0 100-10 5 5 0 000 10zm-7 8a7 7 0 0114 0H3z"/>
+                </svg>
+                <span>Inventory Management</span>
             </a>
         </li>
 
