@@ -49,33 +49,67 @@
                 <div id="stepIndicator" class="flex items-center justify-between mb-10 text-sm font-medium text-slate-500">
                     <div class="step-item text-center flex-1">
                         <div class="step-number mx-auto w-10 h-10 flex items-center justify-center rounded-full border-2 mb-2">1</div>
-                        <span class="step-label hidden md:block">Type</span>
+                        <span class="step-label hidden md:block">Government Type</span>
                     </div>
                     <div class="flex-1 h-px bg-slate-200"></div>
                     <div class="step-item text-center flex-1">
                         <div class="step-number mx-auto w-10 h-10 flex items-center justify-center rounded-full border-2 mb-2">2</div>
-                        <span class="step-label hidden md:block">Details</span>
+                        <span class="step-label hidden md:block">Reservation Type</span>
                     </div>
                     <div class="flex-1 h-px bg-slate-200"></div>
                     <div class="step-item text-center flex-1">
                         <div class="step-number mx-auto w-10 h-10 flex items-center justify-center rounded-full border-2 mb-2">3</div>
-                        <span class="step-label hidden md:block">Schedule</span>
+                        <span class="step-label hidden md:block">Information</span>
                     </div>
                     <div class="flex-1 h-px bg-slate-200"></div>
                     <div class="step-item text-center flex-1">
                         <div class="step-number mx-auto w-10 h-10 flex items-center justify-center rounded-full border-2 mb-2">4</div>
-                        <span class="step-label hidden md:block">Purpose</span>
+                        <span class="step-label hidden md:block">Schedule</span>
                     </div>
                     <div class="flex-1 h-px bg-slate-200"></div>
                     <div class="step-item text-center flex-1">
                         <div class="step-number mx-auto w-10 h-10 flex items-center justify-center rounded-full border-2 mb-2">5</div>
+                        <span class="step-label hidden md:block">Purpose</span>
+                    </div>
+
+                     <div class="flex-1 h-px bg-slate-200"></div>
+                    <div class="step-item text-center flex-1">
+                        <div class="step-number mx-auto w-10 h-10 flex items-center justify-center rounded-full border-2 mb-2">6</div>
                         <span class="step-label hidden md:block">Review</span>
                     </div>
                 </div>
 
                 <form id="reservationForm" action="controllers/ReservationController.php" method="post" novalidate>
-                    <div class="step active">
-                        <h3 class="text-xl font-semibold mb-2 text-slate-800">1. Select Reservation Type</h3>
+                    
+                 <div class="step active">
+                        <h3 class="text-xl font-semibold mb-2 text-slate-800">1. Select Government Type</h3>
+                        <p class="text-slate-500 mb-6">What is your Government Type?</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <label for="capitol" class="relative cursor-pointer border-2 border-slate-200 rounded-xl p-6 text-center transition-all duration-300 has-[:checked]:border-indigo-600 has-[:checked]:bg-indigo-50/50 has-[:checked]:shadow-lg has-[:checked]:shadow-indigo-500/10 hover:border-indigo-400">
+                            <input type="radio" name="govType" id="capitol" class="absolute opacity-0" value="capitol" required>
+                            <!-- Icon: Office Building -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 mx-auto mb-3 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 21h18M4 3h16M5 3v18m14-18v18M9 7h6m-6 4h6m-6 4h6" />
+                            </svg>
+                            <p class="text-lg font-semibold text-slate-800">Capitol Offices</p>
+                            <p class="text-sm text-slate-500">Government and administrative offices</p>
+                        </label>
+
+                        <label for="private" class="relative cursor-pointer border-2 border-slate-200 rounded-xl p-6 text-center transition-all duration-300 has-[:checked]:border-indigo-600 has-[:checked]:bg-indigo-50/50 has-[:checked]:shadow-lg has-[:checked]:shadow-indigo-500/10 hover:border-indigo-400">
+                            <input type="radio" name="govType" id="private" class="absolute opacity-0" value="private" required>
+                            <!-- Icon: Briefcase / Private Office -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 mx-auto mb-3 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2m4 0H4m16 0v10a2 2 0 01-2 2H6a2 2 0 01-2-2V7h16z" />
+                            </svg>
+                            <p class="text-lg font-semibold text-slate-800">Private Offices</p>
+                            <p class="text-sm text-slate-500">Business, corporate, and private workspaces</p>
+                        </label>
+
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <h3 class="text-xl font-semibold mb-2 text-slate-800">2. Select Reservation Type</h3>
                         <p class="text-slate-500 mb-6">What would you like to book?</p>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <label for="venue" class="relative cursor-pointer border-2 border-slate-200 rounded-xl p-6 text-center transition-all duration-300 has-[:checked]:border-indigo-600 has-[:checked]:bg-indigo-50/50 has-[:checked]:shadow-lg has-[:checked]:shadow-indigo-500/10 hover:border-indigo-400">
@@ -99,8 +133,9 @@
                     </div>
 
                     <div class="step">
-                        <h3 class="text-xl font-semibold mb-2 text-slate-800">2. Your Information</h3>
+                        <h3 class="text-xl font-semibold mb-2 text-slate-800">3. Your Information</h3>
                         <p class="text-slate-500 mb-6">Please provide your contact details.</p>
+<<<<<<< HEAD
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
                             <div class="md:col-span-2">
                                 <label class="block mb-1.5 text-sm font-medium text-slate-600">Email Address</label>
@@ -120,6 +155,44 @@
                             </div>
                         </div>
                     </div>
+=======
+                         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
+                             <div class="md:col-span-2">
+                                 <label class="block mb-1.5 text-sm font-medium text-slate-600">Email Address</label>
+                                 <input type="email" name="email" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="name@example.com" required>
+                             </div>
+                             <div>
+                                 <label class="block mb-1.5 text-sm font-medium text-slate-600">First Name</label>
+                                 <input type="text" name="first_name" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Juan" required>
+                             </div>
+                             <div>
+                                 <label class="block mb-1.5 text-sm font-medium text-slate-600">Last Name</label>
+                                 <input type="text" name="last_name" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Dela Cruz" required>
+                             </div>
+                             <div>
+                                 <label class="block mb-1.5 text-sm font-medium text-slate-600">Title</label>
+                                 <input type="text" name="title" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Title" required>
+                             </div>
+                             <div class="">
+                                <label class="block mb-1.5 text-sm font-medium text-slate-600">Organization Name</label>
+                                <input type="text" name="org_name" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="e.g., Provincial Government of Iloilo" required>
+                            </div>
+                            <div class="">
+                                <label class="block mb-1.5 text-sm font-medium text-slate-600">Phone Number</label>
+                                <input type="text" name="phone_number" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="e.g., Provincial Government of Iloilo" required>
+                            </div>
+                            <div class="">
+                                <label class="block mb-1.5 text-sm font-medium text-slate-600">Address</label>
+                                <input type="text" name="address" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="e.g., Provincial Government of Iloilo" required>
+                            </div>
+
+                         </div>
+                    </div>
+                    
+                    <div class="step">
+                         <h3 class="text-xl font-semibold mb-2 text-slate-800">4. Schedule & Details</h3>
+                         <p class="text-slate-500 mb-6">When do you need the reservation?</p>
+>>>>>>> e5207dfed3fcc87428d2968f9a992ff53e44f86a
 
                     <div class="step">
                         <h3 class="text-xl font-semibold mb-2 text-slate-800">3. Schedule & Details</h3>
@@ -127,6 +200,10 @@
 
                         <div id="venue-details" class="hidden space-y-5">
                             <h4 class="text-md font-semibold text-slate-700 border-b pb-2">Venue Details</h4>
+                            <div>
+                                     <label class="block mb-1.5 text-sm font-medium text-slate-600">Name of Event</label>
+                                     <input type="text" name="event_name" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="e.g., Social Party">
+                                 </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
                                 <div>
                                     <label class="block mb-1.5 text-sm font-medium text-slate-600">Select Venue</label>
@@ -142,6 +219,17 @@
                                     <input type="number" name="num_person" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="e.g., 50">
                                 </div>
                             </div>
+                            <div>
+                                     <label class="block mb-1.5 text-sm font-medium text-slate-600">Sound Systems</label>
+                                     <select name="sound_system" id="" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                                        <option value="No" selected> No</option>
+                                        <option value="Yes">Yes</option>
+                                     </select>
+                                 </div>
+                            <div>
+                                     <label class="block mb-1.5 text-sm font-medium text-slate-600">Number of Chairs</label>
+                                     <input type="number" name="num_chairs" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="e.g., 50">
+                                 </div>
                             <div id="calendar-wrapper">
                                 <h4 class="text-md font-semibold text-slate-700 pt-4 border-b pb-2">Check Availability</h4>
                                 <div class="bg-slate-50/80 rounded-lg p-4 mt-2 border">
@@ -154,6 +242,7 @@
                             <h4 class="text-md font-semibold text-slate-700 border-b pb-2">Vehicle Details</h4>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
                                 <div>
+<<<<<<< HEAD
                                     <label class="block mb-1.5 text-sm font-medium text-slate-600">Vehicle Type</label>
                                     <select name="vehicle_type" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
                                         <option disabled selected>Choose a vehicle...</option>
@@ -175,6 +264,29 @@
                                 <input type="hidden" name="destination_latitude" id="dest-lat">
                                 <input type="hidden" name="destination_longitude" id="dest-lng">
                             </div>
+=======
+                                     <label class="block mb-1.5 text-sm font-medium text-slate-600">Vehicle Type</label>
+                                     <select name="v_type" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                                         <option disabled selected>Choose a vehicle...</option>
+                                         <option>Sedan</option>
+                                         <option>SUV / Pickup</option>
+                                         <option>Van</option>
+                                         <option>Bus</option>
+                                     </select>
+                                 </div>
+                                 <div>
+                                     <label class="block mb-1.5 text-sm font-medium text-slate-600">Number of Passengers</label>
+                                     <input type="number" name="num_pass" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="e.g., 4">
+                                 </div>
+                            </div>
+                            <div id="map-wrapper">
+                               <h4 class="text-md font-semibold text-slate-700 pt-4 border-b pb-2">Set Destination</h4>
+                               <p class="text-sm text-slate-500 mt-2">Click on the map to drop a pin on your destination.</p>
+                               <div id="map" class="w-full h-80 rounded-xl shadow-md mt-3 border z-0"></div>
+                               <input type="text" name="latitude" id="dest-lat">
+                               <input type="text" name="longitude" id="dest-lng">
+                           </div>
+>>>>>>> e5207dfed3fcc87428d2968f9a992ff53e44f86a
                         </div>
 
                         <div class="space-y-5 mt-5 pt-5 border-t">
@@ -192,7 +304,7 @@
                     </div>
 
                     <div class="step">
-                        <h3 class="text-xl font-semibold mb-2 text-slate-800">4. Purpose of Reservation</h3>
+                        <h3 class="text-xl font-semibold mb-2 text-slate-800">5. Purpose of Reservation</h3>
                         <p class="text-slate-500 mb-6">Let us know why you are making this reservation.</p>
                         <div>
                             <label class="block mb-1.5 text-sm font-medium text-slate-600">Purpose / Name of Event</label>
@@ -201,7 +313,7 @@
                     </div>
 
                     <div class="step">
-                        <h3 class="text-xl font-semibold mb-2 text-slate-800">5. Review & Submit</h3>
+                        <h3 class="text-xl font-semibold mb-2 text-slate-800">6. Review & Submit</h3>
                         <p class="text-slate-500 mb-6">Please double-check your details before submitting.</p>
                         <div class="bg-slate-50/80 rounded-lg p-6 border space-y-3">
                             <div id="review-details">
@@ -212,7 +324,7 @@
                     <div class="flex justify-between mt-10">
                         <button type="button" id="prevBtn" class="hidden bg-slate-200 text-slate-800 px-6 py-3 rounded-full font-semibold transition hover:bg-slate-300">Previous</button>
                         <button type="button" id="nextBtn" class="ml-auto bg-indigo-600 text-white px-8 py-3 rounded-full font-semibold transition hover:bg-indigo-700 shadow-lg shadow-indigo-500/30">Next Step</button>
-                        <button type="submit" id="submitBtn" name="reserve" class="hidden bg-emerald-600 text-white px-8 py-3 rounded-full font-semibold transition hover:bg-emerald-700 shadow-lg shadow-emerald-500/30">Submit Reservation</button>
+                        <button type="button" id="submitBtn" name="reserve" class="hidden bg-emerald-600 text-white px-8 py-3 rounded-full font-semibold transition hover:bg-emerald-700 shadow-lg shadow-emerald-500/30">Submit Reservation</button>
                     </div>
                 </form>
             </div>
@@ -227,6 +339,8 @@
 
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const steps = document.querySelectorAll(".step");
@@ -391,6 +505,63 @@
             // Initial setup
             showStep(currentStep);
         });
+
+       document.getElementById('submitBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+
+    const form = document.querySelector('form');
+    var formData = new FormData(form);
+
+    formData.append('reserve', true);
+
+    $.ajax({
+        url: 'controllers/ReservationController.php',
+        type: 'POST',
+        dataType: 'json',
+        processData: false,
+        contentType: false,
+        data: formData,
+        beforeSend: function() {
+            Swal.fire({
+                title: 'Processing...',
+                text: 'Please wait while we reserve your booking.',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+        },
+        success: function(response) {
+            console.log(response);
+
+            if (response.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Reservation Confirmed!',
+                    text: 'Your reservation has been successfully made.'
+                }).then(()=>{
+                    location.reload();
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Reservation Failed',
+                    text: response.message || 'Something went wrong.'
+                });
+            }
+        },
+        error: function(xhr, status, err) {
+            Swal.close();
+            console.log(xhr.responseText);
+            Swal.fire({
+                icon: 'error',
+                title: 'Server Error',
+                text: 'Please try again later.'
+            });
+        }
+    });
+});
+
     </script>
 </body>
 
