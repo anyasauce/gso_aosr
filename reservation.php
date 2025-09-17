@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <title>GSO AOSR</title>
     <style>
         * {
@@ -233,6 +234,7 @@
                     </div>
 
                     <div class="step">
+                        <div id="calendar-wrapper">
                         <section id="calendar" class="py-20 bg-gray-100">
                             <div class="container mx-auto px-4 max-w-6xl">
                                 <h2 class="text-4xl font-bold text-gray-900 text-center mb-10">Check Availability</h2>
@@ -286,6 +288,13 @@
                                 </div>
                             </div>
                         </section>
+                        </div>
+
+                         <div id="map-wrapper" class="hidden">
+                            <p>Pin the location where you wanted to go.</p>
+                            <div id="map" class="w-full h-96 rounded-xl shadow"></div>
+                        </div>
+
                         <div>
                             <label class="block mb-1 font-medium">Start Date</label>
                             <input type="date" name="start_date"
@@ -348,6 +357,7 @@
         </div>
     </section>
 
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
         // Form & Calendar Script
         const steps = document.querySelectorAll(".step");
@@ -414,15 +424,46 @@
             }
         });
 
-        venueRadio.addEventListener("change", () => {
-            venueDetails.classList.remove("hidden");
-            vehicleDetails.classList.add("hidden");
-        });
+            venueRadio.addEventListener("change", () => {
+                venueDetails.classList.remove("hidden");
+                vehicleDetails.classList.add("hidden");
 
-        vehicleRadio.addEventListener("change", () => {
+                document.getElementById("calendar-wrapper").classList.remove("hidden");
+                document.getElementById("map-wrapper").classList.add("hidden");
+            });
+
+            vehicleRadio.addEventListener("change", () => {
             vehicleDetails.classList.remove("hidden");
             venueDetails.classList.add("hidden");
+
+            document.getElementById("calendar-wrapper").classList.add("hidden");
+            document.getElementById("map-wrapper").classList.remove("hidden");
+
+            // ✅ Initialize Leaflet map only when vehicle is selected
+            if (!window.mapInitialized) {
+                const map = L.map('map').setView([10.7202, 122.5621], 13); // Iloilo City coords
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; OpenStreetMap contributors'
+                }).addTo(map);
+
+                // Optional marker at Iloilo City
+                L.marker([10.7202, 122.5621]).addTo(map)
+                    .bindPopup("<b>Iloilo City</b><br>Center of your map")
+                    .openPopup();
+
+                window.mapInitialized = true; // Prevent re-initializing
+            } else {
+                setTimeout(() => {
+                    map.invalidateSize(); // Fix display when toggled from hidden
+                }, 200);
+            }
         });
+
+
+        // vehicleRadio.addEventListener("change", () => {
+        //     vehicleDetails.classList.remove("hidden");
+        //     venueDetails.classList.add("hidden");
+        // });
 
         function generateReviewSummary() {
             reviewDetails.innerHTML = '';
@@ -445,7 +486,8 @@
                     throw new Error('Network response was not ok');
                 }
                 const dates = await response.json();
-                reservedDates = dates; // The PHP script now sends back an array of strings
+                reservedDates = dates;
+                console.log(dates); // The PHP script now sends back an array of strings
                 updateCalendar(); // Call updateCalendar after the data is fetched
             } catch (error) {
                 console.error('Error fetching reserved dates:', error);
@@ -484,13 +526,20 @@
                 dayEl.className = `calendar-day-cell border-b transition-all duration-300`;
                 dayEl.innerHTML = `<span class="text-xs font-semibold text-gray-900 w-7 h-7 flex items-center justify-center rounded-full transition-colors duration-200 ${isToday ? 'bg-blue-600 text-white' : ''}">${i}</span>`;
 
-                if (isReserved) {
-                    dayEl.classList.add('bg-red-200', 'hover:bg-red-300', 'cursor-not-allowed');
-                    dayEl.innerHTML += `<div class="mt-2 text-red-700 text-xs font-medium text-center">Reserved</div>`;
-                } else {
-                    dayEl.classList.add('bg-white', 'hover:bg-gray-100', 'cursor-pointer');
-                    dayEl.innerHTML += `<div class="mt-2 text-green-700 text-xs font-medium text-center">Available</div>`;
-                }
+              if (isReserved) {
+                dayEl.classList.add('bg-red-200', 'hover:bg-red-300', 'cursor-not-allowed');
+                dayEl.innerHTML += `
+                    <div class="mt-2 hidden md:block text-red-700 text-xs font-medium text-center">
+                        Reserved
+                    </div>`;
+        } else {
+            dayEl.classList.add('bg-white', 'hover:bg-gray-100', 'cursor-pointer');
+            dayEl.innerHTML += `
+                <div class="mt-2 hidden md:block text-green-700 text-xs font-medium text-center">
+                    Available
+                </div>`;
+        }
+
 
                 calendarGrid.appendChild(dayEl);
             }
