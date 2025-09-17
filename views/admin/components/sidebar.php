@@ -75,7 +75,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             </button>
             <div class="hidden mt-2 ml-4 space-y-2">
                 <a href="vehicles.php" <?= $currentPage == 'vehicles.php' ? 'bg-white/20 text-white' : 'text-white/90' ?> class="flex items-center px-4 py-2 text-sm text-white/80 rounded-lg hover:bg-white/10">Vehicle Requests</a>
-                <a href="#" class="flex items-center px-4 py-2 text-sm text-white/80 rounded-lg hover:bg-white/10">Venue Reservations</a>
+                <a href="venue.php" <?= $currentPage == 'venue.php' ? 'bg-white/20 text-white' : 'text-white/90' ?> class="flex items-center px-4 py-2 text-sm text-white/80 rounded-lg hover:bg-white/10">Venue Reservations</a>
             </div>
         </li>
 
