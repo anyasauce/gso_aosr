@@ -1,3 +1,17 @@
+<?php
+// Role mapping
+$roleLabels = [
+    'admin'   => 'Admin',
+    'gso_sec' => 'GSO Secretary',
+    'gov_sec' => 'Governor Secretary',
+    'driver'  => 'Driver'
+];
+
+// Get role label or fallback
+$roleDisplay = $roleLabels[$_SESSION['role'] ?? ''] ?? 'Guest';
+?>
+
+
 <!-- Header -->
 <nav class="flex items-center justify-between px-4 py-3 bg-white/95 backdrop-blur border-b border-gray-100">
     <div class="flex items-center">
@@ -27,12 +41,16 @@
 
         <!-- User Profile -->
         <div class="flex items-center">
-            <img src="https://ui-avatars.com/api/?name=Admin&background=0D8ABC&color=fff" 
-                 alt="Admin" 
-                 class="w-8 h-8 rounded-full mr-2">
+            <img src="https://ui-avatars.com/api/?name=<?= urlencode($_SESSION['name'] ?? 'User') ?>&background=0D8ABC&color=fff" 
+                alt="User" 
+                class="w-8 h-8 rounded-full mr-2">
             <div class="flex flex-col">
-                <span class="font-semibold text-sm text-gray-800">Admin User</span>
-                <span class="text-xs text-gray-500">Administrator</span>
+                <span class="font-semibold text-sm text-gray-800">
+                    <?= htmlspecialchars($roleDisplay) ?>
+                </span>
+                <span class="text-xs text-gray-500">
+                    <?= htmlspecialchars($_SESSION['role'] ?? 'Role') ?>
+                </span>
             </div>
         </div>
 
