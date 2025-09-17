@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php include '../admin/components/head.php' ?>
+<?php include 'components/head.php' ?>
 <body class="bg-gray-50">
   <div class="flex">
-    <?php include '../admin/components/sidebar.php' ?> <!-- Same Sidebar -->
+    <?php include 'components/sidebar.php' ?> <!-- Same Sidebar -->
 
     <!-- Main Content -->
     <div class="flex flex-col flex-1">
-      <?php include '../admin/components/header.php' ?> <!-- Same Header -->
+      <?php include 'components/header.php' ?> <!-- Same Header -->
 
       <!-- Page Content -->
       <div class="p-4">
