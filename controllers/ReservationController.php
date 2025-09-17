@@ -19,18 +19,20 @@ if(isset($_POST['reserve'])){
     $stmt->execute();
     $validate_email = $stmt->get_result();
 
-    if($validate_email->num_rows == 0){
-        exit;
-    }
+if ($validate_email->num_rows == 0) {
+    echo json_encode(["success" => false, "message" => "Email not registered."]);
+    exit;
+}
 
     $stmt = $conn->prepare("SELECT * FROM requests WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
 
-    if($result->num_rows > 0){
-        exit;
-    }
+if ($result->num_rows > 0) {
+    echo json_encode(["success" => false, "message" => "You already have a pending reservation."]);
+    exit;
+}
 
 
     $stmt = $conn->prepare("INSERT INTO requests (res_type, type_gov, email, first_name, last_name, title, org, phone, address) VALUES (?,?,?,?,?,?,?,?,?)");
@@ -60,8 +62,9 @@ if(isset($_POST['reserve'])){
         $end_date = $_POST['end_datetime'];
         $purpose = $_POST['purpose'];
 
-        $stmt = $conn->prepare("UPDATE requests SET v_type = ?, num_pass = ?, latitude = ?, longitude = ?, start_date = ?, end_date = ?WHERE id = ?");
-        $stmt->bind_param('siddssi', $v_type, $num_pass, $destinationLat, $destinationLong,$start_date, $end_date, $req_id);
+        $stmt = $conn->prepare("UPDATE requests SET v_type = ?, num_pass = ?, latitude = ?, longitude = ?, start_date = ?, end_date = ? WHERE id = ?");
+        $stmt->bind_param('siddssi', $v_type, $num_pass, $destinationLat, $destinationLong, $start_date, $end_date, $req_id);
+
 
    }
 
@@ -72,7 +75,7 @@ if(isset($_POST['reserve'])){
             echo json_encode(["success" => true]);
             exit;
             }
-        }
+    }
 
 }
 ?>
