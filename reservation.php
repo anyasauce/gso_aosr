@@ -211,10 +211,10 @@
                                      <label class="block mb-1.5 text-sm font-medium text-slate-600">Vehicle Type</label>
                                      <select name="v_type" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
                                          <option disabled selected>Choose a vehicle...</option>
-                                         <option>Sedan</option>
-                                         <option>SUV / Pickup</option>
-                                         <option>Van</option>
-                                         <option>Bus</option>
+                                         <option value= "Sedan">Sedan</option>
+                                         <option value= "SUV / Pickup">SUV / Pickup</option>
+                                         <option value= "Van">Van</option>
+                                         <option value= "Bus">Bus</option>
                                      </select>
                                  </div>
                                  <div>
@@ -468,7 +468,7 @@
                     title: 'Reservation Confirmed!',
                     text: 'Your reservation has been successfully made.'
                 }).then(()=>{
-                    location.reload();
+                    // location.reload();
                 });
             } else {
                 Swal.fire({
