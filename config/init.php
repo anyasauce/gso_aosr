@@ -1,6 +1,6 @@
 <?php
 
-include 'config/db.php';
-include 'config/session.php';
+include 'db.php';
+include 'session.php';
 
 ?>
