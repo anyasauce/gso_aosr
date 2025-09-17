@@ -370,169 +370,250 @@
     </section>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // --- Form Navigation Variables ---
-            const steps = document.querySelectorAll(".step");
-            const stepItems = document.querySelectorAll(".step-item");
-            const prevBtn = document.getElementById("prevBtn");
-            const nextBtn = document.getElementById("nextBtn");
-            const submitBtn = document.getElementById("submitBtn");
-            const form = document.getElementById("reservationForm");
-            const venueDetails = document.getElementById("venue-details");
-            const vehicleDetails = document.getElementById("vehicle-details");
-            const reviewDetails = document.getElementById("review-details");
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- Form Navigation Variables ---
+        const steps = document.querySelectorAll(".step");
+        const stepItems = document.querySelectorAll(".step-item");
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+        const submitBtn = document.getElementById("submitBtn");
+        const form = document.getElementById("reservationForm");
+        const venueDetails = document.getElementById("venue-details");
+        const vehicleDetails = document.getElementById("vehicle-details");
+        const reviewDetails = document.getElementById("review-details");
 
-            // --- Map Variables ---
-            const mapWrapper = document.getElementById('map-wrapper');
-            let map = null;
-            let destinationMarker = null;
+        // --- Map Variables ---
+        const mapWrapper = document.getElementById('map-wrapper');
+        let map = null;
+        let destinationMarker = null;
 
-            // --- Calendar Variables ---
-            const calendarTitle = document.getElementById("calendar-title");
-            const calendarGrid = document.getElementById("calendar-grid");
-            const prevMonthBtn = document.getElementById("prev-month-btn");
-            const nextMonthBtn = document.getElementById("next-month-btn");
-            let currentMonth = new Date();
-            let reservedDates = []; // Fetched from server
+        // --- Calendar Variables ---
+        const calendarTitle = document.getElementById("calendar-title");
+        const calendarGrid = document.getElementById("calendar-grid");
+        const prevMonthBtn = document.getElementById("prev-month-btn");
+        const nextMonthBtn = document.getElementById("next-month-btn");
+        let currentMonth = new Date();
+        let reservedDates = []; // Fetched from server
 
-            // --- State ---
-            let currentStep = 0;
+        // --- State ---
+        let currentStep = 0;
 
-            // --- FORM NAVIGATION LOGIC ---
-            function updateStepIndicator() {
-                stepItems.forEach((item, index) => {
-                    const number = item.querySelector('.step-number');
-                    const label = item.querySelector('.step-label');
-                    if (index < currentStep) {
-                        number.classList.add('bg-emerald-500', 'border-emerald-500', 'text-white');
-                        number.classList.remove('bg-indigo-600', 'border-indigo-600');
-                        number.innerHTML = `&#10003;`;
-                    } else if (index === currentStep) {
-                        number.classList.add('bg-indigo-600', 'border-indigo-600', 'text-white');
-                        label.classList.add('text-indigo-600');
-                        number.innerHTML = index + 1;
-                    } else {
-                        number.classList.remove('bg-indigo-600', 'border-indigo-600', 'text-white', 'bg-emerald-500', 'border-emerald-500');
-                        label.classList.remove('text-indigo-600');
-                        number.innerHTML = index + 1;
-                    }
-                });
-            }
+        // --- FORM NAVIGATION LOGIC ---
+        function updateStepIndicator() {
+            stepItems.forEach((item, index) => {
+                const number = item.querySelector('.step-number');
+                const label = item.querySelector('.step-label');
+                if (index < currentStep) {
+                    number.classList.add('bg-emerald-500', 'border-emerald-500', 'text-white');
+                    number.classList.remove('bg-indigo-600', 'border-indigo-600');
+                    number.innerHTML = `&#10003;`;
+                } else if (index === currentStep) {
+                    number.classList.add('bg-indigo-600', 'border-indigo-600', 'text-white');
+                    label.classList.add('text-indigo-600');
+                    number.innerHTML = index + 1;
+                } else {
+                    number.classList.remove('bg-indigo-600', 'border-indigo-600', 'text-white', 'bg-emerald-500', 'border-emerald-500');
+                    label.classList.remove('text-indigo-600');
+                    number.innerHTML = index + 1;
+                }
+            });
+        }
 
-            function showStep(stepIndex) {
-                steps.forEach((step, index) => step.classList.toggle("active", index === stepIndex));
-                prevBtn.classList.toggle("hidden", stepIndex === 0);
-                nextBtn.classList.toggle("hidden", stepIndex === steps.length - 1);
-                submitBtn.classList.toggle("hidden", stepIndex !== steps.length - 1);
-                updateStepIndicator();
-            }
+        function showStep(stepIndex) {
+            steps.forEach((step, index) => step.classList.toggle("active", index === stepIndex));
+            prevBtn.classList.toggle("hidden", stepIndex === 0);
+            nextBtn.classList.toggle("hidden", stepIndex === steps.length - 1);
+            submitBtn.classList.toggle("hidden", stepIndex !== steps.length - 1);
+            updateStepIndicator();
+        }
 
-            nextBtn.addEventListener("click", () => {
-                const currentStepFields = steps[currentStep].querySelectorAll('[required]');
-                let isValid = true;
-                currentStepFields.forEach(field => {
-                    if (!field.value || (field.type === 'radio' && !form.querySelector(`[name="${field.name}"]:checked`))) {
-                        isValid = false;
-                        field.closest('label')?.classList.add('border-red-500');
-                        field.classList.add('border-red-500');
-                    } else {
-                        field.closest('label')?.classList.remove('border-red-500');
-                        field.classList.remove('border-red-500');
-                    }
-                });
-
-                if (isValid && currentStep < steps.length - 1) {
-                    currentStep++;
-                    showStep(currentStep);
-                    if (currentStep === steps.length - 1) {
-                        generateReviewSummary();
-                    }
+        nextBtn.addEventListener("click", () => {
+            const currentStepFields = steps[currentStep].querySelectorAll('[required]');
+            let isValid = true;
+            currentStepFields.forEach(field => {
+                if (!field.value || (field.type === 'radio' && !form.querySelector(`[name="${field.name}"]:checked`))) {
+                    isValid = false;
+                    field.closest('label')?.classList.add('border-red-500');
+                    field.classList.add('border-red-500');
+                } else {
+                    field.closest('label')?.classList.remove('border-red-500');
+                    field.classList.remove('border-red-500');
                 }
             });
 
-            prevBtn.addEventListener("click", () => {
-                if (currentStep > 0) {
-                    currentStep--;
-                    showStep(currentStep);
-                }
-            });
-
-            form.addEventListener('change', (e) => {
-                if (e.target.name === 'reservationType') {
-                    const isVehicle = e.target.value === 'vehicle';
-                    vehicleDetails.classList.toggle('hidden', !isVehicle);
-                    venueDetails.classList.toggle('hidden', isVehicle);
-                    if (isVehicle) {
-                        setTimeout(() => {
-                            initMap();
-                            map.invalidateSize();
-                        }, 10);
-                    }
-                }
-            });
-
-            // --- MAP LOGIC ---
-            function initMap() {
-                if (map) return;
-                map = L.map('map').setView([10.7202, 122.5621], 13);
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; OpenStreetMap contributors'
-                }).addTo(map);
-
-                map.on('click', function (e) {
-                    const { lat, lng } = e.latlng;
-                    document.getElementById('dest-lat').value = lat.toFixed(6);
-                    document.getElementById('dest-lng').value = lng.toFixed(6);
-                    if (destinationMarker) map.removeLayer(destinationMarker);
-                    destinationMarker = L.marker([lat, lng]).addTo(map).bindPopup(`<b>Destination Pinned</b>`).openPopup();
-                });
-            }
-
-            async function fetchReservedDates() {
-                try {
-                    const response = await fetch('fetch_data.php');
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    const dates = await response.json();
-                    reservedDates = dates; 
-                    updateCalendar();
-                } catch (error) {
-                    console.error('Error fetching reserved dates:', error);
-                    updateCalendar();
+            if (isValid && currentStep < steps.length - 1) {
+                currentStep++;
+                showStep(currentStep);
+                if (currentStep === steps.length - 1) {
+                    generateReviewSummary();
                 }
             }
+        });
 
-           function updateCalendar() {
-                if (!calendarGrid || !calendarTitle) return;
+        prevBtn.addEventListener("click", () => {
+            if (currentStep > 0) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        });
 
-                calendarGrid.innerHTML = '';
-                calendarTitle.textContent = currentMonth.toLocaleString('default', { month: 'long', year: 'numeric' });
-
-                const firstDay = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1);
-                const lastDay = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0);
-                const startDayIndex = firstDay.getDay();
-                const lastDate = lastDay.getDate();
-                const prevLastDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 0).getDate();
-
-                for (let i = startDayIndex; i > 0; i--) {
-                    const dayEl = document.createElement('div');
-                    dayEl.className = 'calendar-day-cell bg-slate-50/50 border-b';
-                    dayEl.innerHTML = `<span class="text-xs font-semibold text-slate-400 w-7 h-7 rounded-full">${prevLastDate - i + 1}</span>`;
-                    calendarGrid.appendChild(dayEl);
+        form.addEventListener('change', (e) => {
+            if (e.target.name === 'reservationType') {
+                const isVehicle = e.target.value === 'vehicle';
+                vehicleDetails.classList.toggle('hidden', !isVehicle);
+                venueDetails.classList.toggle('hidden', isVehicle);
+                if (isVehicle) {
+                    setTimeout(() => {
+                        initMap();
+                        map.invalidateSize();
+                    }, 10);
                 }
             }
+        });
+
+        // --- MAP LOGIC ---
+        function initMap() {
+            if (map) return;
+            map = L.map('map').setView([10.7202, 122.5621], 13);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+
+            map.on('click', function (e) {
+                const {
+                    lat,
+                    lng
+                } = e.latlng;
+                document.getElementById('dest-lat').value = lat.toFixed(6);
+                document.getElementById('dest-lng').value = lng.toFixed(6);
+                if (destinationMarker) map.removeLayer(destinationMarker);
+                destinationMarker = L.marker([lat, lng]).addTo(map).bindPopup(`<b>Destination Pinned</b>`).openPopup();
             });
-      
-            // --- INITIALIZATION ---
-            showStep(currentStep);
-            fetchReservedDates();
+        }
+
+        // --- CALENDAR LOGIC ---
+        async function fetchReservedDates() {
+            try {
+                // Replace 'fetch_data.php' with your actual endpoint if needed
+                const response = await fetch('fetch_data.php');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const dates = await response.json();
+                reservedDates = dates;
+                updateCalendar();
+            } catch (error) {
+                console.error('Error fetching reserved dates:', error);
+                // For demonstration, using dummy data if fetch fails
+                reservedDates = ['2025-09-25', '2025-09-26'];
+                updateCalendar();
+            }
+        }
+
+        function updateCalendar() {
+            if (!calendarGrid || !calendarTitle) return;
+
+            calendarGrid.innerHTML = '';
+            calendarTitle.textContent = currentMonth.toLocaleString('default', {
+                month: 'long',
+                year: 'numeric'
+            });
+
+            const firstDay = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1);
+            const lastDay = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0);
+            const startDayIndex = firstDay.getDay();
+            const lastDate = lastDay.getDate();
+            const prevLastDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 0).getDate();
+
+            // Previous month's days
+            for (let i = startDayIndex; i > 0; i--) {
+                const dayEl = document.createElement('div');
+                dayEl.className = 'calendar-day-cell bg-slate-50/50 border-b';
+                dayEl.innerHTML = `<span class="text-xs font-semibold text-slate-400 w-7 h-7 rounded-full">${prevLastDate - i + 1}</span>`;
+                calendarGrid.appendChild(dayEl);
+            }
+
+            // --- THIS ENTIRE LOOP WAS MISSING ---
+            // Current month's days
+            for (let i = 1; i <= lastDate; i++) {
+                const dayEl = document.createElement('div');
+                const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), i);
+                const isToday = date.toDateString() === new Date().toDateString();
+                const dateString = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
+                const isReserved = reservedDates.includes(dateString);
+
+                dayEl.className = 'calendar-day-cell border-b transition-all duration-300';
+                dayEl.innerHTML = `<span class="text-sm font-semibold text-slate-800 w-8 h-8 flex items-center justify-center rounded-full transition-colors ${isToday ? 'bg-indigo-600 text-white' : ''}">${i}</span>`;
+
+                if (isReserved) {
+                    dayEl.classList.add('bg-rose-100/60', 'cursor-not-allowed');
+                    dayEl.innerHTML += `<div class="mt-2 text-rose-700 text-xs font-semibold text-center">Reserved</div>`;
+                } else {
+                    dayEl.classList.add('bg-white', 'hover:bg-slate-50', 'cursor-pointer');
+                    dayEl.innerHTML += `<div class="mt-2 text-emerald-700 text-xs font-semibold text-center">Available</div>`;
+                }
+                calendarGrid.appendChild(dayEl);
+            }
+            // --- END OF MISSING CODE ---
+        }
+
+        prevMonthBtn.addEventListener("click", () => {
+            currentMonth.setMonth(currentMonth.getMonth() - 1);
+            updateCalendar();
+        });
+
+        nextMonthBtn.addEventListener("click", () => {
+            currentMonth.setMonth(currentMonth.getMonth() + 1);
+            updateCalendar();
+        });
+
+        // --- REVIEW & SUBMIT LOGIC ---
+        function generateReviewSummary() {
+            reviewDetails.innerHTML = '';
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+            const friendlyLabels = {
+                govType: "Government Type", reservationType: "Reservation Type", email: "Email", first_name: "First Name", last_name: "Last Name", title: "Title", org_name: "Organization", phone_number: "Phone", address: "Address", event_name: "Event Name", res_place: "Venue", num_person: "Persons", num_chairs: "Chairs", sound_system: "Sound System", v_type: "Vehicle Type", num_pass: "Passengers", start_datetime: "Start Time", end_datetime: "End Time", purpose: "Purpose", latitude: "Destination Latitude", longitude: "Destination Longitude"
+            };
+            for (const key in data) {
+                if (data[key] && friendlyLabels[key]) {
+                    if (data.reservationType === 'place' && (key.startsWith('v_') || key === 'num_pass' || key.startsWith('lat') || key.startsWith('lon'))) continue;
+                    if (data.reservationType === 'vehicle' && (['event_name', 'res_place', 'num_person', 'num_chairs', 'sound_system'].includes(key))) continue;
+                    const p = document.createElement('p');
+                    p.innerHTML = `<strong class="font-semibold text-slate-900">${friendlyLabels[key]}:</strong> <span class="text-slate-600">${data[key].replace('T', ' ')}</span>`;
+                    reviewDetails.appendChild(p);
+                }
+            }
+        }
+
+        submitBtn.addEventListener('click', function(e) {
+             e.preventDefault();
+             const formData = new FormData(form);
+             formData.append('reserve', true);
+             $.ajax({
+                 url: 'controllers/ReservationController.php', type: 'POST', dataType: 'json', processData: false, contentType: false, data: formData,
+                 beforeSend: () => Swal.fire({ title: 'Processing...', text: 'Please wait...', allowOutsideClick: false, didOpen: () => Swal.showLoading() }),
+                 success: (response) => {
+                     if (response.success) {
+                         Swal.fire({ icon: 'success', title: 'Reservation Confirmed!', text: 'Your reservation has been made.' }).then(() => location.reload());
+                     } else {
+                         Swal.fire({ icon: 'error', title: 'Reservation Failed', text: response.message || 'Something went wrong.' });
+                     }
+                 },
+                 error: () => Swal.fire({ icon: 'error', title: 'Server Error', text: 'Please try again later.' })
+             });
+        });
+
+        // --- INITIALIZATION ---
+        showStep(currentStep);
+        fetchReservedDates();
         
-    </script>
+    }); // <-- THIS WAS IN THE WRONG PLACE. It now correctly wraps the entire script.
+</script>
 </body>
 
 </html>
