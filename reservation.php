@@ -624,14 +624,17 @@
                  url: 'controllers/ReservationController.php', type: 'POST', dataType: 'json', processData: false, contentType: false, data: formData,
                  beforeSend: () => Swal.fire({ title: 'Processing...', text: 'Please wait...', allowOutsideClick: false, didOpen: () => Swal.showLoading() }),
                  success: (response) => {
+                    console.log(response)
                      if (response.success) {
                          Swal.fire({ icon: 'success', title: 'Reservation Confirmed!', text: 'Your reservation has been made.' }).then(() => location.reload());
                      } else {
                          Swal.fire({ icon: 'error', title: 'Reservation Failed', text: response.message || 'Something went wrong.' });
                      }
                  },
-                 error: () => Swal.fire({ icon: 'error', title: 'Server Error', text: 'Please try again later.' })
-             });
+                 error: (xhr, status, err) => {
+                    console.log(xhr.responseText);
+                    Swal.fire({ icon: 'error', title: 'Server Error', text: 'Please try again later.' });
+             }
         });
 
         // --- INITIALIZATION ---
@@ -639,6 +642,7 @@
         fetchReservedDates();
         
     }); // <-- THIS WAS IN THE WRONG PLACE. It now correctly wraps the entire script.
+});
 </script>
 </body>
 
