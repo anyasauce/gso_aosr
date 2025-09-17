@@ -507,7 +507,7 @@
                 }
             }
 
-            function updateCalendar() {
+           function updateCalendar() {
                 if (!calendarGrid || !calendarTitle) return;
 
                 calendarGrid.innerHTML = '';
@@ -525,43 +525,13 @@
                     dayEl.innerHTML = `<span class="text-xs font-semibold text-slate-400 w-7 h-7 rounded-full">${prevLastDate - i + 1}</span>`;
                     calendarGrid.appendChild(dayEl);
                 }
-            });
-        },
-        success: function(response) {
-            console.log(response);
-
-            if (response.success) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Reservation Confirmed!',
-                    text: 'Your reservation has been successfully made.'
-                }).then(()=>{
-                    // location.reload();
-                });
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Reservation Failed',
-                    text: response.message || 'Something went wrong.'
-                });
             }
-        },
-        error: function(xhr, status, err) {
-            Swal.close();
-            console.log(xhr.responseText);
-            Swal.fire({
-                icon: 'error',
-                title: 'Server Error',
-                text: 'Please try again later.'
             });
-        }
-    });
-});
-
+      
             // --- INITIALIZATION ---
             showStep(currentStep);
             fetchReservedDates();
-        });
+        
     </script>
 </body>
 
