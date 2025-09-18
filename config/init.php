@@ -5,7 +5,10 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 // --- 2. Define project root path ---
-define('ROOT_PATH', __DIR__ . '/../');
+if (!defined('ROOT_PATH')) {
+    define('ROOT_PATH', __DIR__ . '/../');
+}
+
 
 // --- 3. Composer autoload ---
 require_once ROOT_PATH . 'vendor/autoload.php';

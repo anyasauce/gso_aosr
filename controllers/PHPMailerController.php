@@ -67,3 +67,52 @@ function sendPaymentLinkEmail($email, $name, $requestId, $amount, $paymentLink) 
         return false;
     }
 }
+
+
+function sendApprovedEmailWithAttachment($email, $attachment = null){
+    global $mail;
+    try {
+        $mail->clearAddresses(); // Clear any previous recipients
+        $mail->addAddress($email);
+
+        $mail->isHTML(true);
+        $mail->Subject = 'Approved Reservation';
+        
+        $template = file_get_contents('../assets/templates/approved.html');
+        $mail->Body = $template;
+
+        if ($attachment !== null) {
+            // Attach raw PDF string with a filename
+            $mail->addStringAttachment($attachment, 'letter.pdf', 'base64', 'application/pdf');
+        }
+
+        $mail->send();
+        return true;
+
+    } catch (Exception $e) {
+        error_log("Failed to send email to {$email}. Mailer Error: " . $e->getMessage());
+        return false;
+    }
+}
+
+
+function sendPendingEmail($email, $fullname){
+    global $mail;
+    try {
+        $mail->clearAddresses(); // Clear any previous recipients
+        $mail->addAddress($email);
+
+        $mail->isHTML(true);
+        $mail->Subject = 'Approved Reservation';
+        
+        $template = file_get_contents('../assets/templates/pending.html');
+        $mail->Body = $template;
+
+        $mail->send();
+        return true;
+
+    } catch (Exception $e) {
+        error_log("Failed to send email to {$email}. Mailer Error: " . $e->getMessage());
+        return false;
+    } 
+}
