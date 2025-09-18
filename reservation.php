@@ -1,18 +1,18 @@
 
 <?php
-                                require_once 'config/db.php';
+require_once 'config/db.php';
 
-                                $venues = [];
-                                $sql = "SELECT id, venue_name FROM venue ORDER BY venue_name ASC";
-                                $result = $conn->query($sql);
+$venues = [];
+$sql = "SELECT id, venue_name FROM venue ORDER BY venue_name ASC";
+$result = $conn->query($sql);
 
-                                if ($result && $result->num_rows > 0) {
-                                    while($row = $result->fetch_assoc()) {
-                                        $venues[] = $row;
-                                    }
-                                }
-                                $conn->close();
-                                ?>
+if ($result && $result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+        $venues[] = $row;
+    }
+}
+$conn->close();
+?>
 
 <!DOCTYPE html>
 <html lang="en">
