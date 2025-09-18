@@ -26,12 +26,22 @@ class PaymongoController
                     ],
                     'payment_method_types' => ['gcash', 'paymaya', 'grab_pay'],
                     'line_items' => $lineItems,
-                    'success_url' => APP_URL . '/public/payment_success.php',
-                    'cancel_url' => APP_URL . '/public/pay.php',
+                    'success_url' => APP_URL . '/public/payment_success.php?checkout_session_id={CHECKOUT_SESSION_ID}',
+                    'cancel_url' => APP_URL . '/public/payment_cancel.php',
                     'description' => 'GSO AOSR Reservation Payment'
                 ]
             ]
         ];
+        return $this->makeApiRequest('/checkout_sessions', 'POST', $payload);
+    }
+
+    /**
+     * Creates a Checkout Session with custom payload (for more control)
+     * @param array $payload
+     * @return object|null
+     */
+    public function createCheckoutSessionCustom(array $payload)
+    {
         return $this->makeApiRequest('/checkout_sessions', 'POST', $payload);
     }
 
@@ -64,8 +74,13 @@ class PaymongoController
         $responseBody = curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-        if (curl_errno($ch)) { error_log('cURL error: ' . curl_error($ch)); }
+        if (curl_errno($ch)) { 
+            error_log('cURL error: ' . curl_error($ch)); 
+        }
         curl_close($ch);
+
+        // Log API response for debugging
+        error_log("PayMongo API {$method} {$endpoint} - HTTP {$httpCode}: " . $responseBody);
 
         if ($httpCode >= 200 && $httpCode < 300) {
             return json_decode($responseBody)->data;

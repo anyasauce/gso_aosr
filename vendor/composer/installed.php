@@ -3,11 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-<<<<<<< HEAD
-        'reference' => '9d541d95150857ee49c674670c038b9338ff2720',
-=======
-        'reference' => '2b40dcff047b920ef52e5aea6371a71973b2c03b',
->>>>>>> 31d07f4e30fc24c47bc601c3fa6ab089bd847881
+        'reference' => '2a430c47acbb1a4d7b21d4ae12e0a78bed0a3702',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -17,17 +13,12 @@
         '__root__' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-<<<<<<< HEAD
-            'reference' => '9d541d95150857ee49c674670c038b9338ff2720',
-=======
-            'reference' => '2b40dcff047b920ef52e5aea6371a71973b2c03b',
->>>>>>> 31d07f4e30fc24c47bc601c3fa6ab089bd847881
+            'reference' => '2a430c47acbb1a4d7b21d4ae12e0a78bed0a3702',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-<<<<<<< HEAD
         'graham-campbell/result-type' => array(
             'pretty_version' => 'v1.1.3',
             'version' => '1.1.3.0',
@@ -46,8 +37,6 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-=======
->>>>>>> 31d07f4e30fc24c47bc601c3fa6ab089bd847881
         'phpmailer/phpmailer' => array(
             'pretty_version' => 'v6.10.0',
             'version' => '6.10.0.0',
@@ -57,7 +46,6 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-<<<<<<< HEAD
         'phpoption/phpoption' => array(
             'pretty_version' => '1.9.4',
             'version' => '1.9.4.0',
@@ -103,7 +91,5 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-=======
->>>>>>> 31d07f4e30fc24c47bc601c3fa6ab089bd847881
     ),
 );

@@ -43,7 +43,6 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 
 
         <li>
-<<<<<<< HEAD
             <a href="governorequest.php" 
                class="flex items-center px-4 py-3 rounded-lg transition-all duration-200 hover:bg-white/10 hover:translate-x-1 
                <?= $currentPage == 'governorequest.php' ? 'bg-white/20 text-white' : 'text-white/90' ?>">
@@ -56,8 +55,6 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 
         
         <li>
-=======
->>>>>>> 31d07f4e30fc24c47bc601c3fa6ab089bd847881
             <a href="letter.php" 
                class="flex items-center px-4 py-3 rounded-lg transition-all duration-200 hover:bg-white/10 hover:translate-x-1 
                <?= $currentPage == 'letter.php' ? 'bg-white/20 text-white' : 'text-white/90' ?>">
@@ -67,10 +64,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 </div>
             </a>
         </li>
-<<<<<<< HEAD
         
-=======
->>>>>>> 31d07f4e30fc24c47bc601c3fa6ab089bd847881
 
     </ul>
 </nav>
