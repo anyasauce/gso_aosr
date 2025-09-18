@@ -1,3 +1,19 @@
+
+<?php
+                                require_once 'config/db.php';
+
+                                $venues = [];
+                                $sql = "SELECT id, venue_name FROM venue ORDER BY venue_name ASC";
+                                $result = $conn->query($sql);
+
+                                if ($result && $result->num_rows > 0) {
+                                    while($row = $result->fetch_assoc()) {
+                                        $venues[] = $row;
+                                    }
+                                }
+                                $conn->close();
+                                ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -211,14 +227,24 @@
                                         Event</label><input type="text" name="event_name"
                                         class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                                         placeholder="e.g., Social Party"></div>
-                                <div><label class="block mb-1.5 text-sm font-medium text-slate-600">Select
-                                        Venue</label><select name="res_place"
-                                        class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                
+                                <div>
+                                    <label class="block mb-1.5 text-sm font-medium text-slate-600">
+                                        Select Venue
+                                    </label>
+                                    <select name="res_place" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500">
                                         <option disabled selected>Choose a place...</option>
-                                        <option>Iloilo Convention Center</option>
-                                        <option>Freedom Grandstand</option>
-                                        <option>Casa Real de Iloilo</option>
-                                    </select></div>
+                                        
+                                        <?php
+                                        foreach ($venues as $venue) {
+                                            $id = htmlspecialchars($venue['id']);
+                                            $name = htmlspecialchars($venue['venue_name']);
+                                            echo "<option value=\"{$id}\">{$name}</option>";
+                                        }
+                                        ?>
+                                        
+                                    </select>
+                                </div>
                                 <div><label class="block mb-1.5 text-sm font-medium text-slate-600">Number of
                                         Persons</label><input type="number" name="num_person"
                                         class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
