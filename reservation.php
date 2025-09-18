@@ -251,12 +251,32 @@ $conn->close();
                                         
                                     </select>
                                 </div>
-                                <div><label class="block mb-1.5 text-sm font-medium text-slate-600">Number of
-                                        Persons</label><input type="number" name="num_person"
+                                <div>
+                                    <label class="block mb-1.5 text-sm font-medium text-slate-600">Number of
+                                        Persons</label>
+                                        <input type="number" name="num_person"
                                         class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                                         placeholder="e.g., 50"></div>
-                                <div><label class="block mb-1.5 text-sm font-medium text-slate-600">Number of
+                                <div>
+                                    <label class="block mb-1.5 text-sm font-medium text-slate-600">Number of
                                         Chairs</label><input type="number" name="num_chairs"
+                                        class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                        placeholder="e.g., 50"></div>
+                                <div>
+                                    <label class="block mb-1.5 text-sm font-medium text-slate-600">Number of
+                                        Tables</label><input type="number" name="num_tables"
+                                        class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                        placeholder="e.g., 50"></div>
+
+                                <div>
+                                    <label class="block mb-1.5 text-sm font-medium text-slate-600">Number of
+                                        Rostrum</label><input type="number" name="num_rostrum"
+                                        class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                        placeholder="e.g., 50">
+                                </div>
+                                <div class="md:col-span-2">
+                                    <label class="block mb-1.5 text-sm font-medium text-slate-600">Number of
+                                        Stage Tables</label><input type="number" name="num_stage_table"
                                         class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                                         placeholder="e.g., 50"></div>
                                 <div class="md:col-span-2"><label
@@ -265,7 +285,8 @@ $conn->close();
                                         class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500">
                                         <option value="No" selected> No</option>
                                         <option value="Yes">Yes</option>
-                                    </select></div>
+                                    </select>
+                                </div>
                             </div>
 
                             <div id="calendar-wrapper" class="pt-4">
