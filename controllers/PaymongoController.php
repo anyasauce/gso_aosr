@@ -7,8 +7,8 @@ class PaymongoController {
     private $apiBaseUrl = 'https://api.paymongo.com/v1';
 
     public function __construct() {
-        // $this->secretKey = 'sk_test_NG3NZZFEBtZJHYSjMx1spgLy';
-        $this->appUrl    = 'http://localhost/gso-aosr';
+        $this->secretKey = 'sk_test_NG3NZZFEBtZJHYSjMx1spgLy';
+        $this->appUrl    = 'http://localhost/gso_aosr';
     }
 
     /**
@@ -28,7 +28,7 @@ class PaymongoController {
                     ],
                     'payment_method_types' => ['gcash', 'paymaya', 'grab_pay'],
                     'line_items' => $lineItems,
-                    'success_url' => $this->appUrl . '/public/payment_success.php?session_id={CHECKOUT_SESSION_ID}',
+                    'success_url' => $this->appUrl . '/public/payment_success.php',
                     'cancel_url' => $this->appUrl . '/public/payment_cancel.php',
                     'description' => 'GSO AOSR Reservation Payment'
                 ]
