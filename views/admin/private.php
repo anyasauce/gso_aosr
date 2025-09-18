@@ -56,7 +56,7 @@
                                 ?>
                                         <tr>
                                             <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900"><?= htmlspecialchars($row["event_name"] ?? '') ?></td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-gray-600"><?= $fullName ?></td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-gray-600"><?=  $fullName ?></td>
                                             <td class="px-6 py-4 whitespace-nowrap text-gray-600"><?= date("M d, Y", strtotime($row["start_date"])) ?></td>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full <?= $badge_color ?>">

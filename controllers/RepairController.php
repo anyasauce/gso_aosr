@@ -11,7 +11,7 @@ if(isset($_POST['add_repair'])){
     $status = 'Pending';
     
 
-    $stmt = $conn->prepare("INSERT INTO (email, department_name, concern, status) VALUES(?,?,?,?)");
+    $stmt = $conn->prepare("INSERT INTO repairs (email, department_name, concern, status) VALUES(?,?,?,?)");
     $stmt->bind_param('ssss', $email, $dep_name, $concern, $status);
     
     if($stmt->execute()){
