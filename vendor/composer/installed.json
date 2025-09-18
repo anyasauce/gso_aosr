@@ -235,6 +235,7 @@
             "install-path": "../masterminds/html5"
         },
         {
+<<<<<<< HEAD
             "name": "paymongo/paymongo-php",
             "version": "v0.0.0",
             "version_normalized": "0.0.0.0",
@@ -284,6 +285,8 @@
             "install-path": "../paymongo/paymongo-php"
         },
         {
+=======
+>>>>>>> a8fd89b8dfbda68b3b7db560c7f1c4b6fd1e128d
             "name": "phpmailer/phpmailer",
             "version": "v6.10.0",
             "version_normalized": "6.10.0.0",

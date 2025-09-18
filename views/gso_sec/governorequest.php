@@ -2,7 +2,9 @@
 require_once '../../config/db.php';
 
 $requests = [];
-$sql = "SELECT * FROM requests WHERE type_gov = 'private' AND status = 'Pre-Approved' ORDER BY start_date DESC ";
+// --- 1. MODIFIED SQL QUERY ---
+// Added 'payment_status' and 'payment_amount' to the SELECT statement.
+$sql = "SELECT id, first_name, last_name, event_name, purpose, start_date, end_date, res_type, status, payment_status, payment_amount FROM requests WHERE type_gov = 'private' AND status = 'Pre-Approved' ORDER BY start_date DESC ";
 $result = $conn->query($sql);
 
 if ($result && $result->num_rows > 0) {
@@ -11,6 +13,8 @@ if ($result && $result->num_rows > 0) {
         $row['display_event'] = !empty($row['event_name']) ? $row['event_name'] : $row['purpose'];
         $row['start_date_formatted'] = date('M d, Y', strtotime($row['start_date']));
         $row['end_date_formatted'] = date('M d, Y', strtotime($row['end_date']));
+        // Format the payment amount for display
+        $row['payment_amount_formatted'] = is_numeric($row['payment_amount']) ? '₱' . number_format($row['payment_amount'], 2) : 'N/A';
         $requests[] = $row;
     }
 }
@@ -44,7 +48,8 @@ $conn->close();
                                 <th class="px-6 py-4 text-sm font-semibold text-slate-600">Requester</th>
                                 <th class="px-6 py-4 text-sm font-semibold text-slate-600">Event / Purpose</th>
                                 <th class="px-6 py-4 text-sm font-semibold text-slate-600">Date Range</th>
-                                <th class="px-6 py-4 text-sm font-semibold text-slate-600">Reservation Type</th>
+                                <th class="px-6 py-4 text-sm font-semibold text-slate-600">Payment Status</th>
+                                <th class="px-6 py-4 text-sm font-semibold text-slate-600">Amount</th>
                                 <th class="px-6 py-4 text-sm font-semibold text-slate-600">Status</th>
                                 <th class="px-6 py-4 text-sm font-semibold text-slate-600 text-right">Actions</th>
                             </tr>
@@ -52,7 +57,7 @@ $conn->close();
                         <tbody class="divide-y divide-slate-200/80">
                             <?php if (empty($requests)): ?>
                                 <tr>
-                                    <td colspan="5" class="text-center py-10 px-6 text-slate-500">No requests found.</td>
+                                    <td colspan="7" class="text-center py-10 px-6 text-slate-500">No requests found.</td>
                                 </tr>
                             <?php else: ?>
                                 <?php foreach ($requests as $request): ?>
@@ -60,13 +65,20 @@ $conn->close();
                                         <td class="px-6 py-4 text-sm text-slate-700 font-medium"><?= htmlspecialchars($request['requester_name']) ?></td>
                                         <td class="px-6 py-4 text-sm text-slate-600"><?= htmlspecialchars($request['display_event']) ?></td>
                                         <td class="px-6 py-4 text-sm text-slate-600"><?= htmlspecialchars($request['start_date_formatted']) ?> → <?= htmlspecialchars($request['end_date_formatted']) ?></td>
-                                        <td class="px-6 py-4 text-sm text-slate-600"><?= htmlspecialchars($request['res_type']) ?></td>
+                                        <td class="px-6 py-4">
+                                            <?php
+                                            $payment_status = htmlspecialchars($request['payment_status']);
+                                            $p_badge_class = 'bg-slate-100 text-slate-800'; // Default
+                                            if ($payment_status == 'Pending Payment') $p_badge_class = 'bg-yellow-100 text-yellow-800';
+                                            if ($payment_status == 'Paid') $p_badge_class = 'bg-green-100 text-green-800';
+                                            ?>
+                                            <span class="px-3 py-1 text-xs font-semibold rounded-full <?= $p_badge_class ?>"><?= $payment_status ?></span>
+                                        </td>
+                                        <td class="px-6 py-4 text-sm text-slate-600 font-mono"><?= htmlspecialchars($request['payment_amount_formatted']) ?></td>
                                         <td class="px-6 py-4">
                                             <?php
                                             $status = htmlspecialchars($request['status']);
-                                            $badge_class = 'bg-amber-100 text-amber-800'; // Default to Pending
-                                            if ($status == 'Approved') $badge_class = 'bg-emerald-100 text-emerald-800';
-                                            if ($status == 'Disapproved') $badge_class = 'bg-rose-100 text-rose-800';
+                                            $badge_class = 'bg-amber-100 text-amber-800';
                                             ?>
                                             <span class="px-3 py-1 text-xs font-semibold rounded-full <?= $badge_class ?>"><?= $status ?></span>
                                         </td>
@@ -89,18 +101,14 @@ $conn->close();
                 <h3 class="text-2xl font-bold text-slate-800">Request Details</h3>
                 <button id="close-modal-btn" class="text-slate-400 hover:text-slate-800 text-3xl leading-none">&times;</button>
             </div>
-
             <div class="overflow-y-auto">
                 <div id="map-container" class="hidden p-8 pt-0">
                     <p class="text-sm text-slate-500 mb-2">Destination Map</p>
                     <div id="details-map" class="w-full h-64 rounded-lg border z-10"></div>
                 </div>
-                <div id="details-content" class="p-8 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
-                    </div>
+                <div id="details-content" class="p-8 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6"></div>
             </div>
-
-            <div id="modal-footer" class="flex-shrink-0 flex justify-end gap-3 px-6 py-4 border-t mt-auto">
-                </div>
+            <div id="modal-footer" class="flex-shrink-0 flex justify-end gap-3 px-6 py-4 border-t mt-auto"></div>
         </div>
     </div>
 
@@ -111,9 +119,8 @@ $conn->close();
         const closeModalBtn = $('#close-modal-btn');
         const mapContainer = $('#map-container');
         const modalFooter = $('#modal-footer');
-        let detailMap = null; // Variable to hold the map instance
+        let detailMap = null;
 
-        // --- VIEW DETAILS ---
         $('.details-btn').on('click', function () {
             const requestId = $(this).data('id');
             detailsContent.html('<p class="text-center col-span-2">Loading details...</p>');
@@ -130,14 +137,16 @@ $conn->close();
                     if (response.success) {
                         const data = response.data;
                         let content = '';
+                        
+                        // --- 4. MODIFIED MODAL CONTENT ---
+                        // Added Payment Status and Amount to the details view.
                         const fieldMapping = {
                             'Request ID': data.id,
                             'Requester': `${data.first_name} ${data.last_name}`,
-                            'Email': data.email,
-                            'Phone': data.phone,
-                            'Organization': data.org,
                             'Status': `<span class="font-bold">${data.status}</span>`,
-                            '<hr class="md:col-span-2 my-2 border-slate-200">': '',
+                            'Payment Status': `<span class="font-bold">${data.payment_status}</span>`,
+                            'Payment Amount': data.payment_amount ? `₱${parseFloat(data.payment_amount).toFixed(2)}` : 'N/A',
+                             '<hr class="md:col-span-2 my-2 border-slate-200">': '',
                             'Event/Purpose': data.event_name || data.purpose,
                             'Start Date': new Date(data.start_date).toLocaleString(),
                             'End Date': new Date(data.end_date).toLocaleString(),
@@ -160,10 +169,25 @@ $conn->close();
                         }
                         detailsContent.html(content);
 
+                        // --- 5. UPDATED MODAL FOOTER LOGIC ---
+                        // Modified logic for payment handling with PayMongo integration.
+                        const rejectBtn = `<button class="reject-btn px-4 py-2 bg-rose-500 text-white text-sm font-semibold rounded-md hover:bg-rose-600" data-id="${data.id}">Reject</button>`;
+                        
                         if (data.status === 'Pre-Approved') {
-                            const approveBtn = `<button class="approve-btn px-4 py-2 bg-emerald-500 text-white text-sm font-semibold rounded-md hover:bg-emerald-600" data-id="${data.id}">Approve</button>`;
-                            const rejectBtn = `<button class="reject-btn px-4 py-2 bg-rose-500 text-white text-sm font-semibold rounded-md hover:bg-rose-600" data-id="${data.id}">Reject</button>`;
-                            modalFooter.html(approveBtn + rejectBtn);
+                            if (data.payment_status === 'Not Required') {
+                                // No payment required, show approve button
+                                const approveBtn = `<button class="approve-btn px-4 py-2 bg-emerald-500 text-white text-sm font-semibold rounded-md hover:bg-emerald-600" data-id="${data.id}">Approve</button>`;
+                                modalFooter.html(approveBtn + rejectBtn);
+                            } else if (data.payment_status === 'Pending Payment' || !data.payment_status) {
+                                // Payment is pending, show "Send Payment Link"
+                                const sendPaymentBtn = `<button class="send-payment-btn px-4 py-2 bg-blue-500 text-white text-sm font-semibold rounded-md hover:bg-blue-600" data-id="${data.id}">Send Payment Link</button>`;
+                                const markPaidBtn = `<button class="mark-paid-btn px-4 py-2 bg-green-500 text-white text-sm font-semibold rounded-md hover:bg-green-600" data-id="${data.id}">Mark as Paid</button>`;
+                                modalFooter.html(sendPaymentBtn + markPaidBtn + rejectBtn);
+                            } else if (data.payment_status === 'Paid') {
+                                // Payment is complete, show approve button
+                                const approveBtn = `<button class="approve-btn px-4 py-2 bg-emerald-500 text-white text-sm font-semibold rounded-md hover:bg-emerald-600" data-id="${data.id}">Approve</button>`;
+                                modalFooter.html(approveBtn + rejectBtn);
+                            }
                         }
 
                     } else {
@@ -176,27 +200,117 @@ $conn->close();
             });
         });
         
-        // --- FUNCTION TO INITIALIZE THE MAP IN THE MODAL ---
+        // --- 6. NEW 'SEND PAYMENT LINK' EVENT HANDLER ---
+        $(document).on('click', '.send-payment-btn', function() {
+            const requestId = $(this).data('id');
+            Swal.fire({
+                title: 'Send Payment Link', 
+                text: "This will create a PayMongo payment link and send it to the requester's email. Continue?", 
+                icon: 'question',
+                showCancelButton: true, 
+                confirmButtonColor: '#3b82f6', 
+                cancelButtonColor: '#64748b',
+                confirmButtonText: 'Yes, send payment link!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    sendPaymentLink(requestId);
+                }
+            });
+        });
+        
+        // --- 7. UPDATED 'MARK AS PAID' EVENT HANDLER (for manual verification) ---
+        $(document).on('click', '.mark-paid-btn', function() {
+            const requestId = $(this).data('id');
+            Swal.fire({
+                title: 'Confirm Payment', 
+                text: "Are you sure you want to manually mark this request as paid? Use this only if you've verified payment outside the system.", 
+                icon: 'warning',
+                showCancelButton: true, 
+                confirmButtonColor: '#10b981', 
+                cancelButtonColor: '#64748b',
+                confirmButtonText: 'Yes, mark as paid!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    updatePaymentStatus(requestId, 'Paid');
+                }
+            });
+        });
+        
+        // --- 8. NEW AJAX FUNCTION FOR SENDING PAYMENT LINK ---
+        function sendPaymentLink(id) {
+            $.ajax({
+                url: 'api/manage_request.php', 
+                type: 'POST', 
+                dataType: 'json',
+                data: { action: 'send_payment_link', id: id },
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire({ 
+                            title: 'Payment Link Sent!', 
+                            text: response.message, 
+                            icon: 'success', 
+                            timer: 3000, 
+                            showConfirmButton: false 
+                        }).then(() => {
+                            modal.addClass('hidden').removeClass('flex'); // Close modal
+                            // Re-open the modal to show updated status
+                            $(`.details-btn[data-id="${id}"]`).click();
+                        });
+                    } else {
+                        Swal.fire('Error!', response.message, 'error');
+                    }
+                },
+                error: function () {
+                    Swal.fire('Error!', 'Could not connect to the server.', 'error');
+                }
+            });
+        }
+        
+        // --- 9. UPDATED AJAX FUNCTION FOR PAYMENT STATUS ---
+        function updatePaymentStatus(id, paymentStatus) {
+            $.ajax({
+                url: 'api/manage_request.php', 
+                type: 'POST', 
+                dataType: 'json',
+                data: { action: 'update_payment', id: id, payment_status: paymentStatus },
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire({ 
+                            title: 'Success!', 
+                            text: `Request has been marked as ${paymentStatus}.`, 
+                            icon: 'success', 
+                            timer: 2000, 
+                            showConfirmButton: false 
+                        }).then(() => {
+                            modal.addClass('hidden').removeClass('flex'); // Close modal
+                            // Re-open the modal to show the updated "Approve" button
+                            $(`.details-btn[data-id="${id}"]`).click();
+                        });
+                    } else {
+                        Swal.fire('Error!', response.message, 'error');
+                    }
+                },
+                error: function () {
+                    Swal.fire('Error!', 'Could not connect to the server.', 'error');
+                }
+            });
+        }
+        
         function initializeDetailMap(lat, lng) {
-            // If the map is already initialized, just set the new view
             if (detailMap) {
                 detailMap.setView([lat, lng], 15);
-            } else { // Otherwise, create a new map instance
+            } else {
                 detailMap = L.map('details-map').setView([lat, lng], 15);
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '&copy; OpenStreetMap contributors'
                 }).addTo(detailMap);
             }
-            // Add a marker to the destination
             L.marker([lat, lng]).addTo(detailMap)
                 .bindPopup('Requested Destination')
                 .openPopup();
-                
-            // IMPORTANT: Invalidate the map size to ensure it renders correctly
             setTimeout(() => detailMap.invalidateSize(), 10);
         }
 
-        // --- EVENT DELEGATION FOR DYNAMICALLY ADDED BUTTONS ---
         $(document).on('click', '.approve-btn', function() {
             const requestId = $(this).data('id');
             Swal.fire({
@@ -223,7 +337,6 @@ $conn->close();
             });
         });
 
-        // --- AJAX UPDATE FUNCTION ---
         function updateRequestStatus(id, status, remarks = '') {
             $.ajax({
                 url: 'api/manage_request.php', type: 'POST', dataType: 'json',
@@ -242,7 +355,6 @@ $conn->close();
             });
         }
 
-        // --- Modal Closing Logic ---
         closeModalBtn.on('click', () => modal.addClass('hidden').removeClass('flex'));
         modal.on('click', function (e) {
             if (e.target === this) {

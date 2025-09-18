@@ -12,8 +12,13 @@
         }
     ],
     "require": {
+<<<<<<< HEAD
         "dompdf/dompdf": "^3.1",
         "paymongo/paymongo-php": "^0.0.0",
         "phpmailer/phpmailer": "^6.10"
+=======
+        "phpmailer/phpmailer": "^6.10",
+        "dompdf/dompdf": "^3.1"
+>>>>>>> a8fd89b8dfbda68b3b7db560c7f1c4b6fd1e128d
     }
 }

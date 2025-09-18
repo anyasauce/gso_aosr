@@ -8,10 +8,15 @@ $baseDir = dirname($vendorDir);
 return array(
     'Svg\\' => array($vendorDir . '/dompdf/php-svg-lib/src/Svg'),
     'Sabberworm\\CSS\\' => array($vendorDir . '/sabberworm/php-css-parser/src'),
+<<<<<<< HEAD
     'Paymongo\\' => array($vendorDir . '/paymongo/paymongo-php/src'),
     'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
     'Masterminds\\' => array($vendorDir . '/masterminds/html5/src'),
     'Hyungadgets\\GsoAosr\\' => array($baseDir . '/src'),
+=======
+    'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
+    'Masterminds\\' => array($vendorDir . '/masterminds/html5/src'),
+>>>>>>> a8fd89b8dfbda68b3b7db560c7f1c4b6fd1e128d
     'FontLib\\' => array($vendorDir . '/dompdf/php-font-lib/src/FontLib'),
     'Dompdf\\' => array($vendorDir . '/dompdf/dompdf/src'),
 );

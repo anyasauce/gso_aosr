@@ -1,65 +1,85 @@
 <?php
+// This page handles successful payments from PayMongo
 require_once '../config/init.php';
+require_once '../config/paymongo_config.php';
 require_once '../controllers/PaymongoController.php';
 
-$paymentStatus = 'failed';
-$checkoutSessionId = null;
-$message = 'An error occurred. No payment session was found.';
+$message = '';
+$status = 'error';
 
-if (isset($_SESSION['checkout_session_id'])) {
-    $checkoutSessionId = $_SESSION['checkout_session_id'];
-    
-    unset($_SESSION['checkout_session_id']);
+// Get the checkout session ID from URL parameters
+$checkoutSessionId = $_GET['checkout_session_id'] ?? null;
 
-    $paymongoController = new PaymongoController();
-    $checkoutSession = $paymongoController->retrieveCheckoutSession($checkoutSessionId);
-
-    if ($checkoutSession && isset($checkoutSession->attributes->payment_intent)) {
-        $paymentIntentStatus = $checkoutSession->attributes->payment_intent->attributes->status;
-
-        if ($paymentIntentStatus === 'succeeded') {
-            $paymentStatus = 'success';
-            $message = 'Salamat gid! Your payment has been successfully confirmed.';
-            // --- THIS IS WHERE YOU UPDATE YOUR DATABASE ---
-            // Example: updateReservationStatus($your_reservation_id, 'Paid');
+if ($checkoutSessionId) {
+    try {
+        // Verify the payment with PayMongo
+        $paymongoController = new PaymongoController();
+        $checkoutSession = $paymongoController->retrieveCheckoutSession($checkoutSessionId);
+        
+        if ($checkoutSession && $checkoutSession->attributes->payment_status === 'paid') {
+            // Update the database - find the request with this checkout session ID
+            $stmt = $conn->prepare("UPDATE requests SET payment_status = 'Paid', payment_id = ? WHERE paymongo_reference_id = ?");
+            $paymentId = $checkoutSession->attributes->payments[0]->id ?? 'N/A';
+            $stmt->bind_param("ss", $paymentId, $checkoutSessionId);
+            
+            if ($stmt->execute() && $stmt->affected_rows > 0) {
+                $status = 'success';
+                $message = 'Payment successful! Your reservation request has been updated.';
+            } else {
+                $message = 'Payment verified but failed to update request status. Please contact support.';
+            }
+            $stmt->close();
         } else {
-            $message = "Your payment status is '{$paymentIntentStatus}'. Please contact support.";
+            $message = 'Payment verification failed. Please contact support if you believe this is an error.';
         }
-    } else {
-        $message = 'Could not retrieve payment session details from the server.';
+    } catch (Exception $e) {
+        error_log("Payment verification error: " . $e->getMessage());
+        $message = 'An error occurred while verifying your payment. Please contact support.';
     }
+} else {
+    $message = 'Invalid payment session. Please contact support.';
 }
+
+$conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Payment Confirmation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?= $status === 'success' ? 'Payment Successful' : 'Payment Error' ?></title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style> body { font-family: 'Poppins', sans-serif; } </style>
 </head>
-<body class="bg-slate-100 flex items-center justify-center min-h-screen">
-    <div class="bg-white p-8 md:p-12 rounded-2xl shadow-2xl w-full max-w-lg text-center">
-        <?php if ($paymentStatus === 'success'): ?>
-            <div class="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg class="w-12 h-12 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center">
+    <div class="max-w-md w-full bg-white rounded-lg shadow-lg p-8">
+        <?php if ($status === 'success'): ?>
+            <div class="text-center">
+                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 mb-4">
+                    <svg class="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                </div>
+                <h1 class="text-2xl font-bold text-gray-900 mb-4">Payment Successful!</h1>
+                <p class="text-gray-600 mb-6"><?= htmlspecialchars($message) ?></p>
+                <p class="text-sm text-gray-500 mb-6">You will receive a confirmation email shortly. Your request will be processed by our admin team.</p>
             </div>
-            <h1 class="text-3xl font-bold text-slate-800 mb-2">Payment Confirmed!</h1>
         <?php else: ?>
-            <div class="w-20 h-20 bg-rose-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                 <svg class="w-12 h-12 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            <div class="text-center">
+                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mb-4">
+                    <svg class="h-6 w-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </div>
+                <h1 class="text-2xl font-bold text-gray-900 mb-4">Payment Error</h1>
+                <p class="text-gray-600 mb-6"><?= htmlspecialchars($message) ?></p>
             </div>
-            <h1 class="text-3xl font-bold text-slate-800 mb-2">Payment Not Confirmed</h1>
         <?php endif; ?>
-
-        <p class="text-slate-500 mb-8"><?= htmlspecialchars($message) ?></p>
-        <div class="bg-slate-50 border rounded-lg px-6 py-4 text-left mb-8">
-            <div class="flex justify-between items-center text-sm">
-                <p class="text-slate-500">Checkout Session ID:</p>
-                <p class="font-mono text-slate-800 font-medium"><?= htmlspecialchars($checkoutSessionId ?? 'N/A') ?></p>
-            </div>
+        
+        <div class="flex justify-center">
+            <a href="/" class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                Return to Home
+            </a>
         </div>
-        <a href="pay.php" class="w-full block bg-indigo-600 text-white py-3 rounded-full font-semibold hover:bg-indigo-700">Return to Payment Page</a>
     </div>
 </body>
 </html>

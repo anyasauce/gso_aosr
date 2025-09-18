@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: application/json');
 
-require_once '../../../config/db.php';
+require_once '../../../config/init.php';
 
 $response = ['success' => false, 'message' => 'An unknown error occurred.'];
 
