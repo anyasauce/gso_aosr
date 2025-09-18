@@ -25,7 +25,7 @@
 
                 <div class="bg-white shadow-lg rounded-xl overflow-hidden">
                     <div class="overflow-x-auto">
-                        <table class="min-w-full text-sm">
+                        <table id="privateTable" class="min-w-full text-sm">
                             <thead class="bg-gray-50 text-gray-600">
                                 <tr class="border-b border-gray-200">
                                     <th class="px-6 py-4 text-left font-semibold uppercase tracking-wider">Event Name</th>
@@ -236,5 +236,15 @@
             }
         };
     </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#privateTable').DataTable({
+                "paging": true,
+                "searching": true,
+                "ordering": true
+            });
+        });
+</script>
 </body>
 </html>

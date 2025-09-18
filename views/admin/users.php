@@ -23,7 +23,7 @@
 
             <!-- Users Table -->
             <div class="overflow-x-auto">
-                <table class="min-w-full border-collapse rounded-lg overflow-hidden">
+                <table id="usersTable" class="min-w-full border-collapse rounded-lg overflow-hidden">
                     <thead class="bg-gray-100">
                         <tr class="text-gray-700 text-sm font-semibold uppercase">
                             <th class="px-6 py-3 text-left">ID</th>
@@ -122,6 +122,16 @@
         document.getElementById('edit_role').value = role;
         document.getElementById('editModal').classList.remove('hidden');
     }
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('#usersTable').DataTable({
+            "paging": true,
+            "searching": true,
+            "ordering": true
+        });
+    });
 </script>
 </body>
 </html>

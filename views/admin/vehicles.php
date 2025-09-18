@@ -25,7 +25,7 @@
 
                 <!-- Vehicles Table -->
                 <div class="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
-                    <table class="min-w-full divide-y divide-gray-200 text-center">
+                    <table id="vehiclesTable" class="min-w-full divide-y divide-gray-200 text-center">
                         <thead class="bg-gray-100 text-gray-600 text-sm uppercase tracking-wide">
                         <tr>
                             <th class="px-4 py-3">ID</th>
@@ -132,6 +132,16 @@
 
         document.getElementById('editModal').classList.remove('hidden');
     }
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('#vehiclesTable').DataTable({
+            "paging": true,
+            "searching": true,
+            "ordering": true
+        });
+    });
 </script>
 </body>
 </html>

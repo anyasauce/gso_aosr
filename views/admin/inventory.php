@@ -23,7 +23,7 @@
 
             <!-- Inventory Table -->
             <div class="overflow-x-auto">
-                <table class="min-w-full border-collapse rounded-lg overflow-hidden">
+                <table id="inventoryTable" class="min-w-full border-collapse rounded-lg overflow-hidden">
                     <thead class="bg-gray-100">
                         <tr class="text-gray-700 text-sm font-semibold uppercase">
                             <th class="px-6 py-3 text-left">Item Name</th>
@@ -52,7 +52,7 @@
                                         Edit
                                     </button>
                                     <form action="../../controllers/InventoryController.php?id=<?= $row['id'] ?>" method="POST" class="inline">
-                                        <button type="submit" name="delete"
+                                        <button type="submit" name="deleteItem"
                                             class="bg-red-600 text-white px-4 py-1.5 rounded-md shadow hover:bg-red-700 transition">
                                             Delete
                                         </button>
@@ -73,7 +73,7 @@
 <div id="addModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
     <div class="bg-white rounded-xl shadow-lg p-6 w-96">
         <h3 class="text-lg font-semibold mb-4">Add Inventory Item</h3>
-        <form action="../../controllers/InventoryController.php?action=add" method="POST" class="space-y-3">
+        <form action="../../controllers/InventoryController.php" method="POST" class="space-y-3">
             <input type="text" name="item_name" placeholder="Item Name" required class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-indigo-500">
             <input type="number" name="quantity" placeholder="Quantity" required class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-indigo-500">
             <select name="category" required class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-indigo-500">
@@ -101,7 +101,7 @@
 <div id="editModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
     <div class="bg-white rounded-xl shadow-lg p-6 w-96">
         <h3 class="text-lg font-semibold mb-4">Edit Inventory Item</h3>
-        <form action="../../controllers/InventoryController.php?action=edit" method="POST" class="space-y-3">
+        <form action="../../controllers/InventoryController.php" method="POST" class="space-y-3">
             <input type="hidden" name="id" id="edit_id">
             <input type="text" name="item_name" id="edit_item_name" required class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-yellow-500">
             <input type="number" name="quantity" id="edit_quantity" required class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-yellow-500">
@@ -129,6 +129,16 @@
         document.getElementById('edit_status').value = status;
         document.getElementById('editModal').classList.remove('hidden');
     }
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('#inventoryTable').DataTable({
+            "paging": true,
+            "searching": true,
+            "ordering": true
+        });
+    });
 </script>
 </body>
 </html>
