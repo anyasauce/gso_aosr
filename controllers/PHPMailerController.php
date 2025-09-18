@@ -3,23 +3,19 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-// ✅ FIX: REMOVED the 'require_once' for autoload.php. 
-// The central 'config/init.php' file now handles this.
-
 $mail = new PHPMailer(true);
 
 try {
     // Server settings
-    $mail->SMTPDebug = SMTP::DEBUG_OFF; // Use DEBUG_SERVER for detailed logs
+    $mail->SMTPDebug = SMTP::DEBUG_OFF;
     $mail->isSMTP();
     $mail->Host       = 'smtp.gmail.com';
     $mail->SMTPAuth   = true;
-    $mail->Username   = 'josiahdanielle09gallenero@gmail.com'; // Your Gmail address
-    $mail->Password   = 'glvd fvmn kzsj ylqt'; // Your Gmail App Password
+    $mail->Username   = 'josiahdanielle09gallenero@gmail.com';
+    $mail->Password   = 'glvd fvmn kzsj ylqt';
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
     $mail->Port       = 465;
 
-    // Default sender
     $mail->setFrom('josiahdanielle09gallenero@gmail.com', 'GSO AOSR Admin');
 
 } catch (Exception $e) {
@@ -34,7 +30,7 @@ function sendPaymentLinkEmail($email, $name, $requestId, $amount, $paymentLink) 
     global $mail; 
 
     try {
-        $mail->clearAddresses(); // Clear any previous recipients
+        $mail->clearAddresses(); 
         $mail->addAddress($email, $name);
 
         $mail->isHTML(true);
@@ -72,7 +68,7 @@ function sendPaymentLinkEmail($email, $name, $requestId, $amount, $paymentLink) 
 function sendApprovedEmailWithAttachment($email, $attachment = null){
     global $mail;
     try {
-        $mail->clearAddresses(); // Clear any previous recipients
+        $mail->clearAddresses();
         $mail->addAddress($email);
 
         $mail->isHTML(true);
@@ -82,7 +78,6 @@ function sendApprovedEmailWithAttachment($email, $attachment = null){
         $mail->Body = $template;
 
         if ($attachment !== null) {
-            // Attach raw PDF string with a filename
             $mail->addStringAttachment($attachment, 'letter.pdf', 'base64', 'application/pdf');
         }
 
@@ -99,7 +94,7 @@ function sendApprovedEmailWithAttachment($email, $attachment = null){
 function sendPendingEmail($email, $fullname){
     global $mail;
     try {
-        $mail->clearAddresses(); // Clear any previous recipients
+        $mail->clearAddresses();
         $mail->addAddress($email);
 
         $mail->isHTML(true);

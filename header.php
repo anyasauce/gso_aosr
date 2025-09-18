@@ -3,9 +3,9 @@
         <a href="index.php" class="text-3xl font-bold text-slate-800 tracking-tight">GSO <span class="text-indigo-600">CONNECT</span></a>
 
         <div class="hidden md:flex items-center space-x-4">
-            <a href="#about" class="text-slate-600 hover:text-indigo-600 hover:bg-slate-100 px-4 py-2 rounded-full transition-all duration-300 font-medium">About</a>
-            <a href="#features" class="text-slate-600 hover:text-indigo-600 hover:bg-slate-100 px-4 py-2 rounded-full transition-all duration-300 font-medium">Features</a>
-            <a href="#reservation" class="text-slate-600 hover:text-indigo-600 hover:bg-slate-100 px-4 py-2 rounded-full transition-all duration-300 font-medium">Reserve</a>
+            <a href="index.php#about" class="text-slate-600 hover:text-indigo-600 hover:bg-slate-100 px-4 py-2 rounded-full transition-all duration-300 font-medium">About</a>
+            <a href="index.php#features" class="text-slate-600 hover:text-indigo-600 hover:bg-slate-100 px-4 py-2 rounded-full transition-all duration-300 font-medium">Features</a>
+            <a href="index.php#reservation" class="text-slate-600 hover:text-indigo-600 hover:bg-slate-100 px-4 py-2 rounded-full transition-all duration-300 font-medium">Reserve</a>
             <a href="repair.php" class="text-slate-600 hover:text-indigo-600 hover:bg-slate-100 px-4 py-2 rounded-full transition-all duration-300 font-medium">Repair</a>
         </div>
 
