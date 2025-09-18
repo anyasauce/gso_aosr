@@ -4,11 +4,7 @@
 
 namespace Composer\Autoload;
 
-<<<<<<< HEAD
 class ComposerStaticInitbc1efb4d847c8e40d7f089bebedbf15b
-=======
-class ComposerStaticIniteb9ee8a0fa9728a9422633a73d25e67d
->>>>>>> a8fd89b8dfbda68b3b7db560c7f1c4b6fd1e128d
 {
     public static $prefixLengthsPsr4 = array (
         'S' => 
@@ -48,13 +44,10 @@ class ComposerStaticIniteb9ee8a0fa9728a9422633a73d25e67d
         array (
             0 => __DIR__ . '/..' . '/sabberworm/php-css-parser/src',
         ),
-<<<<<<< HEAD
         'Paymongo\\' => 
         array (
             0 => __DIR__ . '/..' . '/paymongo/paymongo-php/src',
         ),
-=======
->>>>>>> a8fd89b8dfbda68b3b7db560c7f1c4b6fd1e128d
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
@@ -85,15 +78,9 @@ class ComposerStaticIniteb9ee8a0fa9728a9422633a73d25e67d
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-<<<<<<< HEAD
             $loader->prefixLengthsPsr4 = ComposerStaticInitbc1efb4d847c8e40d7f089bebedbf15b::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitbc1efb4d847c8e40d7f089bebedbf15b::$prefixDirsPsr4;
             $loader->classMap = ComposerStaticInitbc1efb4d847c8e40d7f089bebedbf15b::$classMap;
-=======
-            $loader->prefixLengthsPsr4 = ComposerStaticIniteb9ee8a0fa9728a9422633a73d25e67d::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticIniteb9ee8a0fa9728a9422633a73d25e67d::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticIniteb9ee8a0fa9728a9422633a73d25e67d::$classMap;
->>>>>>> a8fd89b8dfbda68b3b7db560c7f1c4b6fd1e128d
 
         }, null, ClassLoader::class);
     }

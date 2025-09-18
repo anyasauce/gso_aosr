@@ -3,29 +3,13 @@
         'name' => 'hyungadgets/gso_aosr',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-<<<<<<< HEAD
-        'reference' => '253776fca9f86de9ea7ca97d140e0bfd924099bc',
-=======
-        'reference' => '03151e09d51140743d3242c62c01ad8d3687e32c',
->>>>>>> a8fd89b8dfbda68b3b7db560c7f1c4b6fd1e128d
+        'reference' => '43f6ead3f93fb25d1af48e3fe5dc1579f3f504da',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
-<<<<<<< HEAD
-=======
-        '__root__' => array(
-            'pretty_version' => 'dev-main',
-            'version' => 'dev-main',
-            'reference' => '03151e09d51140743d3242c62c01ad8d3687e32c',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../../',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
->>>>>>> a8fd89b8dfbda68b3b7db560c7f1c4b6fd1e128d
         'dompdf/dompdf' => array(
             'pretty_version' => 'v3.1.0',
             'version' => '3.1.0.0',
@@ -56,7 +40,7 @@
         'hyungadgets/gso_aosr' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '253776fca9f86de9ea7ca97d140e0bfd924099bc',
+            'reference' => '43f6ead3f93fb25d1af48e3fe5dc1579f3f504da',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -71,7 +55,6 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-<<<<<<< HEAD
         'paymongo/paymongo-php' => array(
             'pretty_version' => 'v0.0.0',
             'version' => '0.0.0.0',
@@ -81,8 +64,6 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-=======
->>>>>>> a8fd89b8dfbda68b3b7db560c7f1c4b6fd1e128d
         'phpmailer/phpmailer' => array(
             'pretty_version' => 'v6.10.0',
             'version' => '6.10.0.0',

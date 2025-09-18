@@ -1,85 +1,94 @@
 <?php
-// This page handles successful payments from PayMongo
-require_once '../config/init.php';
-require_once '../config/paymongo_config.php';
-require_once '../controllers/PaymongoController.php';
+// 1. INCLUDE CONFIGURATION AND CONTROLLERS
+// This assumes your init.php file is in a 'config' folder at the project root.
+// Adjust the path if necessary.
+require_once __DIR__ . '/../config/init.php';
 
-$message = '';
-$status = 'error';
+$message = "Invalid payment session. Please contact support.";
+$isSuccess = false;
 
-// Get the checkout session ID from URL parameters
-$checkoutSessionId = $_GET['checkout_session_id'] ?? null;
+// 2. GET THE SESSION ID FROM THE URL
+$checkoutSessionId = $_GET['session_id'] ?? null;
 
-if ($checkoutSessionId) {
+if ($checkoutSessionId && strpos($checkoutSessionId, 'cs_') === 0) {
     try {
-        // Verify the payment with PayMongo
-        $paymongoController = new PaymongoController();
-        $checkoutSession = $paymongoController->retrieveCheckoutSession($checkoutSessionId);
-        
-        if ($checkoutSession && $checkoutSession->attributes->payment_status === 'paid') {
-            // Update the database - find the request with this checkout session ID
-            $stmt = $conn->prepare("UPDATE requests SET payment_status = 'Paid', payment_id = ? WHERE paymongo_reference_id = ?");
-            $paymentId = $checkoutSession->attributes->payments[0]->id ?? 'N/A';
-            $stmt->bind_param("ss", $paymentId, $checkoutSessionId);
+        // 3. VERIFY THE SESSION WITH PAYMONGO
+        $paymongo = new PaymongoController();
+        $session = $paymongo->retrieveCheckoutSession($checkoutSessionId);
+
+        // 4. CHECK THE PAYMENT STATUS
+        // A successful payment will have a payment_intent with a 'succeeded' status.
+        if (isset($session->attributes->payment_intent->attributes->status) && $session->attributes->payment_intent->attributes->status === 'succeeded') {
             
-            if ($stmt->execute() && $stmt->affected_rows > 0) {
-                $status = 'success';
-                $message = 'Payment successful! Your reservation request has been updated.';
+            $paymentIntentId = $session->attributes->payment_intent->id;
+
+            // 5. UPDATE YOUR DATABASE
+            // Use a prepared statement to prevent SQL injection
+            $stmt = $conn->prepare("UPDATE requests SET payment_status = 'Paid', payment_id = ? WHERE paymongo_reference_id = ? AND payment_status = 'Pending Payment'");
+            $stmt->bind_param("ss", $paymentIntentId, $checkoutSessionId);
+            $stmt->execute();
+
+            // Check if the update was successful
+            if ($stmt->affected_rows > 0) {
+                $isSuccess = true;
+                $message = "Your payment was successful and your reservation has been confirmed!";
+                // You could also send a final confirmation email here if you want.
             } else {
-                $message = 'Payment verified but failed to update request status. Please contact support.';
+                // This can happen if the user refreshes the success page after the DB is already updated.
+                // We can check if it's already paid.
+                $checkStmt = $conn->prepare("SELECT payment_status FROM requests WHERE paymongo_reference_id = ?");
+                $checkStmt->bind_param("s", $checkoutSessionId);
+                $checkStmt->execute();
+                $result = $checkStmt->get_result()->fetch_assoc();
+                if ($result && $result['payment_status'] === 'Paid') {
+                     $isSuccess = true;
+                     $message = "Your payment was successful and your reservation has been confirmed!";
+                } else {
+                     $message = "Payment confirmed, but we could not update your reservation record. Please contact support with your Payment ID: " . htmlspecialchars($paymentIntentId);
+                }
+                $checkStmt->close();
             }
             $stmt->close();
         } else {
-            $message = 'Payment verification failed. Please contact support if you believe this is an error.';
+            // The payment was not successful (e.g., failed, pending, etc.)
+            $message = "Your payment was not completed successfully. Please try again or contact support.";
         }
+
     } catch (Exception $e) {
         error_log("Payment verification error: " . $e->getMessage());
-        $message = 'An error occurred while verifying your payment. Please contact support.';
+        $message = "A server error occurred during payment verification. Please contact support.";
     }
-} else {
-    $message = 'Invalid payment session. Please contact support.';
 }
 
 $conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $status === 'success' ? 'Payment Successful' : 'Payment Error' ?></title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Payment Status</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; background-color: #f4f7f6; }
+        .container { text-align: center; padding: 40px; background-color: white; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); max-width: 500px; }
+        .icon { font-size: 50px; }
+        .success .icon { color: #28a745; }
+        .error .icon { color: #dc3545; }
+        h1 { margin-top: 20px; color: #333; }
+        p { color: #666; font-size: 1.1em; }
+        a { display: inline-block; margin-top: 25px; padding: 12px 25px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; transition: background-color 0.3s; }
+        a:hover { background-color: #0056b3; }
+    </style>
 </head>
-<body class="bg-gray-50 min-h-screen flex items-center justify-center">
-    <div class="max-w-md w-full bg-white rounded-lg shadow-lg p-8">
-        <?php if ($status === 'success'): ?>
-            <div class="text-center">
-                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 mb-4">
-                    <svg class="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                </div>
-                <h1 class="text-2xl font-bold text-gray-900 mb-4">Payment Successful!</h1>
-                <p class="text-gray-600 mb-6"><?= htmlspecialchars($message) ?></p>
-                <p class="text-sm text-gray-500 mb-6">You will receive a confirmation email shortly. Your request will be processed by our admin team.</p>
-            </div>
-        <?php else: ?>
-            <div class="text-center">
-                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mb-4">
-                    <svg class="h-6 w-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </div>
-                <h1 class="text-2xl font-bold text-gray-900 mb-4">Payment Error</h1>
-                <p class="text-gray-600 mb-6"><?= htmlspecialchars($message) ?></p>
-            </div>
-        <?php endif; ?>
-        
-        <div class="flex justify-center">
-            <a href="/" class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                Return to Home
-            </a>
+<body>
+    <div class="container <?php echo $isSuccess ? 'success' : 'error'; ?>">
+        <div class="icon">
+            <?php echo $isSuccess ? '✔' : '✖'; ?>
         </div>
+        <h1><?php echo $isSuccess ? 'Payment Successful!' : 'Payment Error'; ?></h1>
+        <p><?php echo htmlspecialchars($message); ?></p>
+        <a href="/">Return to Home</a>
     </div>
 </body>
 </html>

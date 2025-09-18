@@ -1,33 +1,38 @@
 <?php
 
-class PaymongoController
-{
+class PaymongoController {
+
     private $secretKey;
+    private $appUrl; // Your website's base URL
     private $apiBaseUrl = 'https://api.paymongo.com/v1';
 
-    public function __construct()
-    {
-        $this->secretKey = PAYMONGO_SECRET_KEY;
+    public function __construct() {
+        // ✅ FIX: Hardcode your secret key and website URL here.
+        // ⚠️ IMPORTANT: Replace these placeholder values with your ACTUAL key and URL.
+        $this->secretKey = 'sk_test_NG3NZZFEBtZJHYSjMx1spgLy'; // <-- PASTE YOUR PAYMONGO SECRET KEY
+        $this->appUrl    = 'http://localhost/gso-aosr';   // <-- PASTE YOUR FULL WEBSITE URL (e.g., http://localhost/yourproject)
     }
 
     /**
-     * Creates a Checkout Session in a single API call.
-     * @param array $lineItems
-     * @return object|null
+     * Creates a PayMongo Checkout Session.
+     * @param array $lineItems The items for the checkout.
+     * @param string $customerName The full name of the customer.
+     * @param string $customerEmail The email of the customer.
+     * @return object|null The decoded JSON response from PayMongo, or null on failure.
      */
-    public function createCheckoutSession(array $lineItems)
-    {
+    public function createCheckoutSession(array $lineItems, string $customerName, string $customerEmail) {
         $payload = [
             'data' => [
                 'attributes' => [
                     'billing' => [
-                        'name' => 'GSO AOSR Requester',
-                        'email' => 'requester@example.com',
+                        'name' => $customerName,
+                        'email' => $customerEmail,
                     ],
                     'payment_method_types' => ['gcash', 'paymaya', 'grab_pay'],
                     'line_items' => $lineItems,
-                    'success_url' => APP_URL . '/public/payment_success.php?checkout_session_id={CHECKOUT_SESSION_ID}',
-                    'cancel_url' => APP_URL . '/public/payment_cancel.php',
+                    // ✅ FIX: Use the hardcoded URL variable
+                    'success_url' => $this->appUrl . '/public/payment_success.php?session_id={CHECKOUT_SESSION_ID}',
+                    'cancel_url' => $this->appUrl . '/public/payment_cancel.php',
                     'description' => 'GSO AOSR Reservation Payment'
                 ]
             ]
@@ -36,13 +41,40 @@ class PaymongoController
     }
 
     /**
-     * Creates a Checkout Session with custom payload (for more control)
-     * @param array $payload
-     * @return object|null
+     * Private helper function to handle all cURL API requests.
      */
-    public function createCheckoutSessionCustom(array $payload)
-    {
-        return $this->makeApiRequest('/checkout_sessions', 'POST', $payload);
+    private function makeApiRequest(string $endpoint, string $method = 'POST', ?array $payload = null) {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $this->apiBaseUrl . $endpoint);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
+        if ($payload) {
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+        }
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/json', 
+            'Accept: application/json'
+        ]);
+        curl_setopt($ch, CURLOPT_USERPWD, $this->secretKey . ':');
+
+        $responseBody = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        if (curl_errno($ch)) { 
+            error_log('cURL error when connecting to PayMongo: ' . curl_error($ch)); 
+            curl_close($ch);
+            return null;
+        }
+        curl_close($ch);
+        
+        $responseData = json_decode($responseBody);
+
+        if ($httpCode >= 200 && $httpCode < 300) {
+            return $responseData->data ?? $responseData;
+        } else {
+            error_log("PayMongo API failed for {$endpoint} with code {$httpCode}: {$responseBody}");
+            return $responseData;
+        }
     }
 
     /**
@@ -54,39 +86,5 @@ class PaymongoController
     {
         $endpoint = "/checkout_sessions/{$checkoutSessionId}";
         return $this->makeApiRequest($endpoint, 'GET');
-    }
-
-    /**
-     * Private helper function to handle all cURL API requests.
-     */
-    private function makeApiRequest(string $endpoint, string $method = 'POST', ?array $payload = null)
-    {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $this->apiBaseUrl . $endpoint);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
-        if ($payload) {
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
-        }
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json', 'Accept: application/json']);
-        curl_setopt($ch, CURLOPT_USERPWD, $this->secretKey . ':');
-
-        $responseBody = curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-        if (curl_errno($ch)) { 
-            error_log('cURL error: ' . curl_error($ch)); 
-        }
-        curl_close($ch);
-
-        // Log API response for debugging
-        error_log("PayMongo API {$method} {$endpoint} - HTTP {$httpCode}: " . $responseBody);
-
-        if ($httpCode >= 200 && $httpCode < 300) {
-            return json_decode($responseBody)->data;
-        }
-        
-        error_log("PayMongo API failed for {$endpoint} with code {$httpCode}: {$responseBody}");
-        return null;
     }
 }

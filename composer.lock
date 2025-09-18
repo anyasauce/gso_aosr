@@ -4,11 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-<<<<<<< HEAD
     "content-hash": "bc1efb4d847c8e40d7f089bebedbf15b",
-=======
-    "content-hash": "eb9ee8a0fa9728a9422633a73d25e67d",
->>>>>>> a8fd89b8dfbda68b3b7db560c7f1c4b6fd1e128d
     "packages": [
         {
             "name": "dompdf/dompdf",
@@ -233,7 +229,6 @@
             "time": "2025-07-25T09:04:22+00:00"
         },
         {
-<<<<<<< HEAD
             "name": "paymongo/paymongo-php",
             "version": "v0.0.0",
             "source": {
@@ -280,8 +275,6 @@
             "time": "2022-11-21T06:10:32+00:00"
         },
         {
-=======
->>>>>>> a8fd89b8dfbda68b3b7db560c7f1c4b6fd1e128d
             "name": "phpmailer/phpmailer",
             "version": "v6.10.0",
             "source": {

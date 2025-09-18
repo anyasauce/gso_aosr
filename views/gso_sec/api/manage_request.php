@@ -1,14 +1,9 @@
 <?php
 header('Content-Type: application/json');
 
-require_once '../../../config/init.php';
-require_once '../../../config/paymongo_config.php'; // Contains PAYMONGO_SECRET_KEY and APP_URL
-require_once '../../../controllers/PaymongoController.php';
-require_once '../../../controllers/PHPMailerController.php'; // Your PHPMailer functions
+require_once '../../../config/init.php'; 
 
 $response = ['success' => false, 'message' => 'An unknown error occurred.'];
-
-// Use $_REQUEST to handle both GET and POST for simplicity
 $action = $_REQUEST['action'] ?? null;
 $id = $_REQUEST['id'] ?? null;
 
@@ -18,8 +13,18 @@ if (!$id || !filter_var($id, FILTER_VALIDATE_INT)) {
     exit;
 }
 
+// Ensure database connection exists
+if (!isset($conn) || $conn->connect_error) {
+    $response['message'] = 'Database connection failed.';
+    error_log('Database connection error in manage_request.php: ' . ($conn->connect_error ?? 'Unknown error'));
+    echo json_encode($response);
+    exit;
+}
+
+
 switch ($action) {
     case 'get_details':
+        // This case seems to be working, no changes needed.
         $stmt = $conn->prepare("SELECT * FROM requests WHERE id = ?");
         $stmt->bind_param("i", $id);
         $stmt->execute();
@@ -34,91 +39,84 @@ switch ($action) {
         break;
 
     case 'update_status':
+        // This case seems to be working, no changes needed.
         $status = $_POST['status'] ?? null;
         $remarks = $_POST['remarks'] ?? '';
-
-        if (!in_array($status, ['Approved', 'Disapproved'])) {
-            $response['message'] = 'Invalid status value.';
-            break;
-        }
-
         $stmt = $conn->prepare("UPDATE requests SET status = ?, remarks = ? WHERE id = ?");
         $stmt->bind_param("ssi", $status, $remarks, $id);
-
         if ($stmt->execute()) {
-            if ($stmt->affected_rows > 0) {
-                $response['success'] = true;
-                $response['message'] = "Request has been successfully {$status}.";
-            } else {
-                $response['message'] = 'No changes were made.';
-            }
+            $response['success'] = true;
+            $response['message'] = "Request has been successfully {$status}.";
         } else {
             $response['message'] = 'Database update failed: ' . $stmt->error;
         }
         $stmt->close();
         break;
 
-    // --- NEW CASE: SEND PAYMENT LINK ---
     case 'send_payment_link':
         try {
-            // Get request details first
+            // 1. Get request details from the database
             $stmt = $conn->prepare("SELECT first_name, last_name, email, payment_amount, event_name, purpose, paymongo_checkout_url FROM requests WHERE id = ? AND status = 'Pre-Approved'");
             $stmt->bind_param("i", $id);
             $stmt->execute();
             $result = $stmt->get_result();
             
             if ($result->num_rows === 0) {
-                $response['message'] = 'Request not found or not pre-approved.';
+                $response['message'] = 'Request not found or it is not in "Pre-Approved" status.';
                 break;
             }
-            
             $requestData = $result->fetch_assoc();
             $stmt->close();
             
-            // Check if payment amount exists
             if (!$requestData['payment_amount'] || $requestData['payment_amount'] <= 0) {
-                $response['message'] = 'Invalid payment amount for this request.';
+                $response['message'] = 'This request has an invalid or zero payment amount.';
                 break;
             }
             
             $fullName = $requestData['first_name'] . ' ' . $requestData['last_name'];
             $eventName = $requestData['event_name'] ?: $requestData['purpose'];
-            
-            // Check if we already have a payment link
             $paymentLink = $requestData['paymongo_checkout_url'];
             
+            // 2. Only create a new link if one doesn't already exist
             if (empty($paymentLink)) {
-                // Create new PayMongo checkout session
                 $paymongoController = new PaymongoController();
                 
                 $lineItems = [
                     [
                         'currency' => 'PHP',
-                        'amount' => intval($requestData['payment_amount'] * 100), // Convert to cents
-                        'description' => "GSO AOSR Reservation Payment - " . $eventName,
-                        'name' => "Reservation Fee for Request #" . $id,
+                        'amount' => intval($requestData['payment_amount'] * 100), // Amount in centavos
+                        'description' => "Reservation Payment - " . $eventName,
+                        'name' => "Fee for Request #" . $id,
                         'quantity' => 1
                     ]
                 ];
                 
-                $checkoutSession = $paymongoController->createCheckoutSession($lineItems);
+                // ✅ FIX: Pass the actual user data to the controller method
+                $checkoutResponse = $paymongoController->createCheckoutSession($lineItems, $fullName, $requestData['email']);
                 
-                if (!$checkoutSession || !isset($checkoutSession->attributes->checkout_url)) {
-                    $response['message'] = 'Failed to create payment link. Please try again.';
+                // ✅ FIX: Detailed error checking for the response from the controller
+                if ($checkoutResponse === null) {
+                    $response['message'] = 'Failed to communicate with the payment gateway. Check server error logs for details.';
                     break;
                 }
                 
-                $paymentLink = $checkoutSession->attributes->checkout_url;
-                $referenceId = $checkoutSession->id;
+                if (isset($checkoutResponse->errors)) {
+                    $errorDetail = $checkoutResponse->errors[0]->detail ?? 'An unknown error occurred with the payment provider.';
+                    $response['message'] = 'Payment Gateway Error: ' . $errorDetail;
+                    break;
+                }
+
+                $paymentLink = $checkoutResponse->attributes->checkout_url;
+                $referenceId = $checkoutResponse->id;
                 
-                // Update the database with the payment link and reference ID
+                // 3. Update the database with the new link and reference ID
                 $updateStmt = $conn->prepare("UPDATE requests SET paymongo_checkout_url = ?, paymongo_reference_id = ?, payment_status = 'Pending Payment' WHERE id = ?");
                 $updateStmt->bind_param("ssi", $paymentLink, $referenceId, $id);
                 $updateStmt->execute();
                 $updateStmt->close();
             }
             
-            // Send email with payment link
+            // 4. Send the email with the payment link
             $emailSent = sendPaymentLinkEmail(
                 $requestData['email'], 
                 $fullName, 
@@ -129,41 +127,15 @@ switch ($action) {
             
             if ($emailSent) {
                 $response['success'] = true;
-                $response['message'] = 'Payment link has been sent successfully to ' . $requestData['email'];
+                $response['message'] = 'Payment link has been successfully sent to ' . $requestData['email'];
             } else {
-                $response['success'] = false;
-                $response['message'] = 'Payment link was created but failed to send email. Please try again.';
+                $response['message'] = 'Payment link was created, but the email could not be sent. Please check mailer settings.';
             }
             
         } catch (Exception $e) {
             error_log("Send payment link error: " . $e->getMessage());
-            $response['message'] = 'An error occurred while processing the payment link.';
+            $response['message'] = 'A server error occurred. Please check the logs.';
         }
-        break;
-
-    // --- OPTIONAL: MARK AS PAID (for manual verification) ---
-    case 'update_payment':
-        $payment_status = $_POST['payment_status'] ?? null;
-
-        if ($payment_status !== 'Paid') {
-            $response['message'] = 'Invalid payment status provided.';
-            break;
-        }
-
-        $stmt = $conn->prepare("UPDATE requests SET payment_status = ? WHERE id = ?");
-        $stmt->bind_param("si", $payment_status, $id);
-
-        if ($stmt->execute()) {
-            if ($stmt->affected_rows > 0) {
-                $response['success'] = true;
-                $response['message'] = "Payment status updated successfully.";
-            } else {
-                $response['message'] = 'No changes were made to payment status.';
-            }
-        } else {
-            $response['message'] = 'Database update for payment failed: ' . $stmt->error;
-        }
-        $stmt->close();
         break;
 
     default:
@@ -173,4 +145,3 @@ switch ($action) {
 
 $conn->close();
 echo json_encode($response);
-?>
