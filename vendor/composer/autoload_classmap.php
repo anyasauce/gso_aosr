@@ -6,24 +6,6 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-<<<<<<< HEAD
-    'Attribute' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
-    'PhpToken' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',
-    'Stringable' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
-    'UnhandledMatchError' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
-    'ValueError' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
-=======
-    'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
->>>>>>> 31d07f4e30fc24c47bc601c3fa6ab089bd847881
     'Dompdf\\Cpdf' => $vendorDir . '/dompdf/dompdf/lib/Cpdf.php',
-<<<<<<< HEAD
->>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
-=======
->>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
 );

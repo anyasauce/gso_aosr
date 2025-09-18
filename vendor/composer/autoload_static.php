@@ -4,65 +4,8 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit9dc101580172bce51709e33f5926f7ca
+class ComposerStaticIniteb9ee8a0fa9728a9422633a73d25e67d
 {
-<<<<<<< HEAD
-    public static $files = array (
-        '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
-        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
-        'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
-    );
-
-    public static $prefixLengthsPsr4 = array (
-        'S' => 
-        array (
-            'Symfony\\Polyfill\\Php80\\' => 23,
-            'Symfony\\Polyfill\\Mbstring\\' => 26,
-            'Symfony\\Polyfill\\Ctype\\' => 23,
-        ),
-        'P' => 
-        array (
-            'PhpOption\\' => 10,
-            'Paymongo\\' => 9,
-            'PHPMailer\\PHPMailer\\' => 20,
-        ),
-        'G' => 
-        array (
-            'GrahamCampbell\\ResultType\\' => 26,
-        ),
-        'D' => 
-        array (
-            'Dotenv\\' => 7,
-        ),
-    );
-
-    public static $prefixDirsPsr4 = array (
-        'Symfony\\Polyfill\\Php80\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/polyfill-php80',
-        ),
-        'Symfony\\Polyfill\\Mbstring\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
-        ),
-        'Symfony\\Polyfill\\Ctype\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
-        ),
-        'PhpOption\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
-        ),
-        'Paymongo\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/paymongo/paymongo-php/src',
-        ),
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
-=======
     public static $prefixLengthsPsr4 = array (
         'S' => 
         array (
@@ -88,7 +31,6 @@ class ComposerStaticInit9dc101580172bce51709e33f5926f7ca
     );
 
     public static $prefixDirsPsr4 = array (
-<<<<<<< HEAD
         'Svg\\' => 
         array (
             0 => __DIR__ . '/..' . '/dompdf/php-svg-lib/src/Svg',
@@ -97,23 +39,10 @@ class ComposerStaticInit9dc101580172bce51709e33f5926f7ca
         array (
             0 => __DIR__ . '/..' . '/sabberworm/php-css-parser/src',
         ),
-=======
->>>>>>> 31d07f4e30fc24c47bc601c3fa6ab089bd847881
->>>>>>> 995dedb18f073857c93af72c7202b458aff93fae
-<<<<<<< HEAD
->>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
-=======
->>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
->>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
         'Masterminds\\' => 
         array (
             0 => __DIR__ . '/..' . '/masterminds/html5/src',
@@ -126,57 +55,19 @@ class ComposerStaticInit9dc101580172bce51709e33f5926f7ca
         array (
             0 => __DIR__ . '/..' . '/dompdf/dompdf/src',
         ),
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
-=======
->>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
-        'GrahamCampbell\\ResultType\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/graham-campbell/result-type/src',
-        ),
-        'Dotenv\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
-        ),
-    );
-
-    public static $classMap = array (
-        'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
-        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'PhpToken' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',
-        'Stringable' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
-        'UnhandledMatchError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
-        'ValueError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
-=======
->>>>>>> 995dedb18f073857c93af72c7202b458aff93fae
     );
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-<<<<<<< HEAD
         'Dompdf\\Cpdf' => __DIR__ . '/..' . '/dompdf/dompdf/lib/Cpdf.php',
-=======
->>>>>>> 31d07f4e30fc24c47bc601c3fa6ab089bd847881
->>>>>>> 995dedb18f073857c93af72c7202b458aff93fae
-<<<<<<< HEAD
->>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
-=======
->>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit9dc101580172bce51709e33f5926f7ca::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit9dc101580172bce51709e33f5926f7ca::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit9dc101580172bce51709e33f5926f7ca::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticIniteb9ee8a0fa9728a9422633a73d25e67d::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticIniteb9ee8a0fa9728a9422633a73d25e67d::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticIniteb9ee8a0fa9728a9422633a73d25e67d::$classMap;
 
         }, null, ClassLoader::class);
     }

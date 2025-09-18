@@ -4,36 +4,8 @@
 
 $issues = array();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-if (!(PHP_VERSION_ID >= 70205)) {
-    $issues[] = 'Your Composer dependencies require a PHP version ">= 7.2.5". You are running ' . PHP_VERSION . '.';
-=======
-<<<<<<< HEAD
 if (!(PHP_VERSION_ID >= 70100)) {
     $issues[] = 'Your Composer dependencies require a PHP version ">= 7.1.0". You are running ' . PHP_VERSION . '.';
-=======
-<<<<<<< HEAD
-if (!(PHP_VERSION_ID >= 70205)) {
-    $issues[] = 'Your Composer dependencies require a PHP version ">= 7.2.5". You are running ' . PHP_VERSION . '.';
-=======
-=======
-if (!(PHP_VERSION_ID >= 70100)) {
-    $issues[] = 'Your Composer dependencies require a PHP version ">= 7.1.0". You are running ' . PHP_VERSION . '.';
-=======
-<<<<<<< HEAD
-if (!(PHP_VERSION_ID >= 70205)) {
-    $issues[] = 'Your Composer dependencies require a PHP version ">= 7.2.5". You are running ' . PHP_VERSION . '.';
-=======
->>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
-if (!(PHP_VERSION_ID >= 50500)) {
-    $issues[] = 'Your Composer dependencies require a PHP version ">= 5.5.0". You are running ' . PHP_VERSION . '.';
->>>>>>> 31d07f4e30fc24c47bc601c3fa6ab089bd847881
->>>>>>> 995dedb18f073857c93af72c7202b458aff93fae
-<<<<<<< HEAD
->>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
-=======
->>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
 }
 
 if ($issues) {
