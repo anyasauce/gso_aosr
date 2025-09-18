@@ -7,10 +7,8 @@ class PaymongoController {
     private $apiBaseUrl = 'https://api.paymongo.com/v1';
 
     public function __construct() {
-        // ✅ FIX: Hardcode your secret key and website URL here.
-        // ⚠️ IMPORTANT: Replace these placeholder values with your ACTUAL key and URL.
-        $this->secretKey = 'sk_test_NG3NZZFEBtZJHYSjMx1spgLy'; // <-- PASTE YOUR PAYMONGO SECRET KEY
-        $this->appUrl    = 'http://localhost/gso-aosr';   // <-- PASTE YOUR FULL WEBSITE URL (e.g., http://localhost/yourproject)
+        // $this->secretKey = 'sk_test_NG3NZZFEBtZJHYSjMx1spgLy';
+        $this->appUrl    = 'http://localhost/gso-aosr';
     }
 
     /**
@@ -30,7 +28,6 @@ class PaymongoController {
                     ],
                     'payment_method_types' => ['gcash', 'paymaya', 'grab_pay'],
                     'line_items' => $lineItems,
-                    // ✅ FIX: Use the hardcoded URL variable
                     'success_url' => $this->appUrl . '/public/payment_success.php?session_id={CHECKOUT_SESSION_ID}',
                     'cancel_url' => $this->appUrl . '/public/payment_cancel.php',
                     'description' => 'GSO AOSR Reservation Payment'
