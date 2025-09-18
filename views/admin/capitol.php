@@ -1,6 +1,6 @@
 <?php
 
-require_once '../../config/init.php'; // Use init for consistent setup
+// require_once '../../config/init.php'; // Use init for consistent setup
 
 // Fetch all records once
 $sql = "SELECT * FROM requests WHERE type_gov = 'capitol' ORDER BY start_date DESC";
