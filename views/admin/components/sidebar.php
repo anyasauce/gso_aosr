@@ -92,7 +92,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
         </li>
 
         <li>
-            <a href="#" class="flex items-center px-4 py-3 text-white/90 rounded-lg transition-all duration-200 hover:bg-white/10 hover:translate-x-1">
+            <a href="inventory.php" class="flex items-center px-4 py-3 text-white/90 rounded-lg transition-all duration-200 hover:bg-white/10 hover:translate-x-1">
                 <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M10 12a5 5 0 100-10 5 5 0 000 10zm-7 8a7 7 0 0114 0H3z"/>
                 </svg>

@@ -54,7 +54,7 @@
     <section class="hero flex items-center justify-center min-h-[60vh] md:justify-start text-white">
         <div class="relative z-10 p-6 md:p-12 lg:p-24 max-w-3xl text-center md:text-left">
             <div class="fade-in">
-                <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-4 text-shadow">Streamline Your Reservations</h1>
+                <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-4 text-shadow">Streamline Your <span class="text-indigo-400">Reservations</span></h1>
                 <p class="text-lg md:text-xl font-light text-gray-200 max-w-2xl mb-8">
                     Effortlessly book venues and vehicles for your next event or official travel. Our simple, secure platform makes it easy to manage your needs.
                 </p>
