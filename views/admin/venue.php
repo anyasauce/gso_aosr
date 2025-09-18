@@ -1,3 +1,5 @@
+<?php include '../../config/init.php'; ?>
+
 <!-- user.php -->
 <!DOCTYPE html>
 <html lang="en">
@@ -37,7 +39,6 @@
                         </thead>
                         <tbody class="divide-y divide-gray-200 text-sm text-gray-700">
                         <?php
-                        include '../../config/init.php'; // DB connection
 
                         $result = $conn->query("SELECT * FROM venue");
                         while ($row = $result->fetch_assoc()):

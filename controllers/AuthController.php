@@ -1,9 +1,6 @@
 <?php 
 require_once '../config/init.php';
-<<<<<<< HEAD
-=======
 // session_start();
->>>>>>> 6cccc5793ebe334ac2b99af1e3a911c6e2bedc96
 
 if (isset($_POST['login'])) {
     $email = $_POST['email'];

@@ -1,3 +1,4 @@
+<?php include '../../config/init.php'; ?>
 <!-- user.php -->
 <!DOCTYPE html>
 <html lang="en">
@@ -35,7 +36,6 @@
                     </thead>
                     <tbody class="text-gray-700 text-sm divide-y divide-gray-200">
                         <?php
-                        include '../../config/init.php';
                         $result = $conn->query("SELECT * FROM inventory");
                         while ($row = $result->fetch_assoc()):
                         ?>
