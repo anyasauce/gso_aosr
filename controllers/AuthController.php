@@ -26,7 +26,7 @@ if (isset($_POST['login'])) {
             $diffInSeconds = $currentTime->getTimestamp() - $lastLoginTime->getTimestamp();
             $diffInHours   = floor($diffInSeconds / 3600);
 
-            if ($diffInHours > 3) {
+            if ($diffInHours > 3 || is_null($user['last_login']) || empty($user['last_login'])) {
                 // Generate and store OTP
                 $otp = random_int(1000, 9999);
                 $_SESSION['otp'] = $otp;
@@ -37,7 +37,7 @@ if (isset($_POST['login'])) {
                 // Redirect to OTP page
                 header("Location: ../otp.php");
                 exit();
-            } else {
+            }   else {
                 // Redirect based on role
                 switch ($user['role']) {
                     case 'admin':
