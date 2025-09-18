@@ -1,3 +1,6 @@
+<?php 
+include '../../config/init.php';
+?>
 <!-- user.php -->
 <!DOCTYPE html>
 <html lang="en">

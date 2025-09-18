@@ -18,7 +18,8 @@ if(isset($_POST['addItem'])){
         $stmt = $conn->prepare("INSERT INTO inventory (item_name, quantity, category, status) VALUES (?, ?, ?, ?)");
         $stmt->bind_param("ssss", $item_name, $quantity, $category, $status);
         $stmt->execute();
-        echo json_encode(["success" => true, "message" => "Item added successfully."]);
+        header("Location: ../views/admin/inventory.php");
+
     }
 };
 
@@ -33,7 +34,8 @@ if(isset($_POST['updateItem'])){
     $stmt = $conn->prepare("UPDATE inventory SET item_name = ?, quantity = ?, category = ?, status = ? WHERE id = ?");
     $stmt->bind_param("ssssi", $item_name, $quantity, $category, $status, $id);
     $stmt->execute();
-    echo json_encode(["success" => true, "message" => "Item updated successfully."]);
+
+    header("Location: ../views/admin/inventory.php");
 };
 
 if(isset($_POST['deleteItem'])){
@@ -42,5 +44,6 @@ if(isset($_POST['deleteItem'])){
     $stmt = $conn->prepare("DELETE FROM inventory WHERE id = ?");
     $stmt->bind_param("i", $id);
     $stmt->execute();
-    echo json_encode(["success" => true, "message" => "Item deleted successfully."]);
+    header("Location: ../views/admin/inventory.php");
+
 }

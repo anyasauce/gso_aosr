@@ -189,7 +189,10 @@ if ($prediction < 0) {
          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mb-6">
 
           <div class="bg-white p-2 rounded-xl border border-slate-200/80 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-            <div class="flex justify-center items-start">
+            <div class="flex-column justify-center items-start">
+              <div>
+                <p class="text-sm font-medium text-slate-500">Reservations/Month</p>
+              </div>
               <div class="mt-6 w-full">
                 <canvas id="reservationsChart" height="150"></canvas>
               </div>
@@ -197,14 +200,15 @@ if ($prediction < 0) {
         </div>
 
            <div class="bg-white p-6 rounded-xl border border-slate-200/80 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-            <div class="flex justify-center items-start">
+            <div class="flex-column justify-center items-start">
+               <p class="text-sm font-medium text-slate-500">Pending/Rejected/Approved/</p>
              <div class="mt-6">
               <canvas id="reservationsPieChart" height="200"></canvas>
             </div>
           </div>
         </div>
           </div>
-</div>
+          </div>
 
         <div class="bg-white rounded-xl border border-slate-200/80 shadow-sm mt-8">
           <div class="px-6 py-5 border-b border-slate-200/80 flex justify-between items-center">
