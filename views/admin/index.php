@@ -1,6 +1,5 @@
 <?php 
 include '../../config/init.php';
-
 $stmt = $conn->prepare("SELECT COUNT(*) AS total_reservations FROM requests");
 $stmt->execute();
 $total_reservation = $stmt->get_result()->fetch_assoc();
@@ -92,6 +91,26 @@ if ($prediction < 0) {
           <p class="text-slate-500 mt-1">Here's a summary of your activities.</p>
         </div>
 
+     <div class="text-end mb-4">
+        <button id="downloadPdf" 
+          class="inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-300 shadow">
+          <!-- PDF Icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" 
+              class="h-5 w-5" fill="none" viewBox="0 0 24 24" 
+              stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" 
+              d="M19 21H5a2 2 0 01-2-2V5a2 2 0 
+                012-2h7l5 5v11a2 2 0 01-2 2z" />
+            <text x="9" y="16" font-size="6" fill="currentColor" font-family="Arial" font-weight="bold">PDF</text>
+          </svg>
+
+          Download as PDF
+        </button>
+    </div>
+
+
+
+    <div id="main-report">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
           
           <div class="bg-white p-6 rounded-xl border border-slate-200/80 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
@@ -185,7 +204,7 @@ if ($prediction < 0) {
           </div>
         </div>
           </div>
-
+</div>
 
         <div class="bg-white rounded-xl border border-slate-200/80 shadow-sm mt-8">
           <div class="px-6 py-5 border-b border-slate-200/80 flex justify-between items-center">
@@ -285,6 +304,8 @@ if ($prediction < 0) {
 </body>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
   const ctx = document.getElementById('reservationsChart').getContext('2d');
   new Chart(ctx, {
@@ -335,6 +356,33 @@ if ($prediction < 0) {
       }
     }
   });
+
+document.getElementById('downloadPdf').addEventListener('click', async () => {
+  const { jsPDF } = window.jspdf;
+
+  // Target the main dashboard container
+  const dashboard = document.getElementById('main-report');
+
+  // Convert dashboard to canvas
+  const canvas = await html2canvas(dashboard, { scale: 2 }); // sharp
+  const imgData = canvas.toDataURL('image/png');
+
+  // Create PDF
+  const pdf = new jsPDF('p', 'mm', 'a4');
+  const pdfWidth = pdf.internal.pageSize.getWidth();
+  const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+  // Define margin (mm)
+  const margin = 10; // 10mm all around
+
+  // Adjust size to fit inside margins
+  const usableWidth = pdfWidth - margin * 2;
+  const usableHeight = (canvas.height * usableWidth) / canvas.width;
+
+  pdf.addImage(imgData, 'PNG', margin, margin, usableWidth, usableHeight);
+  pdf.save("dashboard-report.pdf");
+});
+
 </script>
 
 </html> 

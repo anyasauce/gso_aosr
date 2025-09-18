@@ -1,7 +1,8 @@
 <?php 
 require_once '../config/init.php';
+session_start();
 
-if(isset($_POST['login'])) {
+if (isset($_POST['login'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
@@ -18,32 +19,53 @@ if(isset($_POST['login'])) {
             $_SESSION['email']   = $user['email'];
             $_SESSION['role']    = $user['role'];
 
-            if ($user['role'] === 'admin') {
-                header("Location: ../views/admin/index.php");
-            } elseif ($user['role'] === 'gso_sec') {
-                header("Location: ../views/gso_sec/index.php");
-            } elseif ($user['role'] === 'gov_sec') {
-                header("Location: ../views/gov_sec/index.php");
+            $lastLogin    = $user['last_login'];
+            $lastLoginTime = new DateTime($lastLogin);
+            $currentTime   = new DateTime("now");
+
+            $diffInSeconds = $currentTime->getTimestamp() - $lastLoginTime->getTimestamp();
+            $diffInHours   = floor($diffInSeconds / 3600);
+
+            if ($diffInHours > 3) {
+                // Generate and store OTP
+                $otp = random_int(1000, 9999);
+                $_SESSION['otp'] = $otp;
+
+                require_once 'PHPMailerController.php';
+                sendOTP($email, $otp);
+
+                // Redirect to OTP page
+                header("Location: ../otp.php");
+                exit();
             } else {
-                header("Location: ../views/admin/index.php");
+                // Redirect based on role
+                switch ($user['role']) {
+                    case 'admin':
+                        header("Location: ../views/admin/index.php");
+                        break;
+                    case 'gso_sec':
+                        header("Location: ../views/gso_sec/index.php");
+                        break;
+                    case 'gov_sec':
+                        header("Location: ../views/gov_sec/index.php");
+                        break;
+                    default:
+                        header("Location: ../views/admin/index.php");
+                }
+                exit();
             }
-            exit();
 
         } else {
-            ?>
-            <script>
-                alert("Incorrect password.");
-                window.location.href = "../views/auth/login.php";
-            </script>
-            <?php
+            echo "<script>
+                    alert('Incorrect password.');
+                    window.location.href = '../views/auth/login.php';
+                  </script>";
         }
     } else {
-        ?>
-        <script>
-            alert("User not Found!");
-            window.location.href = "../views/auth/login.php";
-        </script>
-        <?php
+        echo "<script>
+                alert('User not Found!');
+                window.location.href = '../views/auth/login.php';
+              </script>";
     }
 }
 ?>

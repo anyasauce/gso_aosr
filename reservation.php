@@ -24,8 +24,8 @@ $conn->close();
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
     <title>GSO AOSR | Reservation</title>
     <style>
         body {
@@ -362,7 +362,7 @@ $conn->close();
                                 <h4 class="text-md font-semibold text-slate-700 pt-4 border-b pb-2">Set Destination</h4>
                                 <p class="text-sm text-slate-500 mt-2">Click on the map to drop a pin on your
                                     destination.</p>
-                                <div id="map" class="w-full h-80 rounded-xl shadow-md mt-3 border z-0"></div>
+                                <div id="map" class="w-full h-[450px] rounded-xl shadow-md mt-3 border z-0"></div>
                                 <input type="hidden" name="latitude" id="dest-lat"><input type="hidden" name="longitude"
                                     id="dest-lng">
                             </div>
@@ -427,8 +427,10 @@ $conn->close();
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         // --- Form Navigation Variables ---
@@ -526,7 +528,8 @@ $conn->close();
                     setTimeout(() => {
                         initMap();
                         map.invalidateSize();
-                    }, 10);
+                        map.setView([10.7202, 122.5621], 13);
+                    }, 300);
                 }
             }
         });
@@ -535,21 +538,42 @@ $conn->close();
         function initMap() {
             if (map) return;
             map = L.map('map').setView([10.7202, 122.5621], 13);
+
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; OpenStreetMap contributors'
             }).addTo(map);
 
+            // --- ADD SEARCH BAR ---
+            L.Control.geocoder({
+                defaultMarkGeocode: false
+            })
+            .on('markgeocode', function(e) {
+                const latlng = e.geocode.center;
+
+                // Save coords in form inputs
+                document.getElementById('dest-lat').value = latlng.lat.toFixed(6);
+                document.getElementById('dest-lng').value = latlng.lng.toFixed(6);
+
+                // Place marker
+                if (destinationMarker) map.removeLayer(destinationMarker);
+                destinationMarker = L.marker(latlng).addTo(map)
+                    .bindPopup(`<b>${e.geocode.name}</b>`).openPopup();
+                map.setView(latlng, 16); // zoom in
+            })
+            .addTo(map);
+
+            // --- Existing map click logic ---
             map.on('click', function (e) {
-                const {
-                    lat,
-                    lng
-                } = e.latlng;
+                const { lat, lng } = e.latlng;
                 document.getElementById('dest-lat').value = lat.toFixed(6);
                 document.getElementById('dest-lng').value = lng.toFixed(6);
+
                 if (destinationMarker) map.removeLayer(destinationMarker);
-                destinationMarker = L.marker([lat, lng]).addTo(map).bindPopup(`<b>Destination Pinned</b>`).openPopup();
+                destinationMarker = L.marker([lat, lng]).addTo(map)
+                    .bindPopup(`<b>Destination Pinned</b>`).openPopup();
             });
         }
+
 
         // --- CALENDAR LOGIC ---
         async function fetchReservedDates() {
