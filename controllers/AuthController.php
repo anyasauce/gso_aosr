@@ -23,7 +23,7 @@ if(isset($_POST['login'])) {
             } elseif ($user['role'] === 'gso_sec') {
                 header("Location: ../views/gso_sec/index.php");
             } elseif ($user['role'] === 'gov_sec') {
-                header("Location: ../views/gov_sec/index.php"); 
+                header("Location: ../views/gov_sec/index.php");
             } else {
                 header("Location: ../views/admin/index.php");
             }
