@@ -1,15 +1,24 @@
 <?php 
-require_once 'controllers/PHPMailerController.php';
-session_start();
+require_once __DIR__ . '/config/init.php';
 
-// Generate random 4-digit OTP (zero-padded)
+$now = time();
+
+// Prevent resend if requested within 60 seconds
+if (isset($_SESSION['last_resend_time']) && ($now - $_SESSION['last_resend_time']) < 60) {
+    header("Location: otp.php?error=wait");
+    exit;
+}
+
 $otp = str_pad(random_int(0, 9999), 4, '0', STR_PAD_LEFT);
 
-// Store in session (for later verification)
 $_SESSION['otp'] = $otp;
-$_SESSION['otp_expires'] = time() + 300; // expires in 5 minutes
+$_SESSION['otp_expires'] = time() + 300;
+$_SESSION['last_resend_time'] = $now;
 
 sendOTP($_SESSION['email'], $otp);
 
-return $otp;
+$_SESSION['otp_message'] = "A new OTP has been sent to your email.";
+
+header("Location: otp.php?resend=success");
+exit;
 ?>

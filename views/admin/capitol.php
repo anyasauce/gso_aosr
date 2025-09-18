@@ -237,30 +237,13 @@ $result = $conn->query($sql);
 
     <script>
         $(document).ready(function () {
-            // --- 1. DATATABLES INITIALIZATION ---
-            var table = $('#capitolTable').DataTable({
+            const table = $('#capitolTable').DataTable({
+                "pagingType": "simple_numbers",
                 "language": {
-                    "search": "", "searchPlaceholder": "Search requests...",
-                },
-                "columns": [
-                    { "data": 1, "className": "font-semibold text-slate-800 capitalize" }, // res_type
-                    { "data": null, "render": (data, type, row) => `${row[2]} ${row[3]}` }, // first_name + last_name
-                    { "data": 9, "render": (data) => new Date(data).toLocaleDateString() }, // start_date
-                    {
-                        "data": 15, "render": function (data) { // status
-                            let badge_class = 'bg-yellow-100 text-yellow-800 border-yellow-200';
-                            if (data === 'Approved') badge_class = 'bg-emerald-100 text-emerald-800 border-emerald-200';
-                            if (data === 'Disapproved') badge_class = 'bg-rose-100 text-rose-800 border-rose-200';
-                            return `<span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full border ${badge_class}">${data}</span>`;
-                        }
-                    },
-                    {
-                        "data": null, "orderable": false, "className": "text-center", "render": function (data, type, row) {
-                            const record = { id: row[0], res_type: row[1], first_name: row[2], last_name: row[3], email: row[4], phone: row[5], org: row[6], purpose: row[7], event_name: row[8], start_date: row[9], end_date: row[10], res_place: row[11], num_person: row[12], v_type: row[13], num_pass: row[14], status: row[15], remarks: row[16], created_at: row[17] };
-                            return `<button data-record='${JSON.stringify(record)}' class="details-btn bg-indigo-100 hover:bg-indigo-200 text-indigo-700 font-bold py-2 px-4 rounded-lg transition">View</button>`;
-                        }
-                    }
-                ]
+                    "search": "",
+                    "searchPlaceholder": "Search requests...",
+                    "lengthMenu": "Show _MENU_ entries"
+                }
             });
 
             // --- 2. EXPORT BUTTON LOGIC (Separate from DataTable) ---
