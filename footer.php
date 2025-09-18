@@ -2,7 +2,7 @@
     <div class="container mx-auto px-6">
         <div class="flex flex-col md:flex-row items-center justify-between">
             <div class="mb-6 md:mb-0 text-center md:text-left">
-                <h3 class="text-3xl font-bold mb-2">GSO AOSR</h3>
+                <h3 class="text-3xl font-bold mb-2">GSO CONNECT</h3>
                 <p class="text-gray-400">Modern Reservation System</p>
             </div>
             <div class="flex flex-col md:flex-row items-center md:space-x-8">
