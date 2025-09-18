@@ -333,7 +333,7 @@ const blueIcon = new L.Icon({
             });
         }
         
-        function initializeDetailMap(lat, lng) {
+    function initializeDetailMap(lat, lng) {
     const capitol = [10.7040, 122.5621]; // Iloilo Provincial Capitol
 
     if (detailMap) {

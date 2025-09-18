@@ -280,7 +280,7 @@ $result = $conn->query($sql);
                 // Populate modal fields
                 $('#modal_request_id').val(record.id);
                 $('#modal_purpose').text(record.res_type === 'vehicle' ? record.purpose : record.event_name);
-                $('#modal_requester').text(record.first_name + ' ' + record.last_name);
+                $('#modal_requester').text(record.first_name + ' ' + record.last_name || '');
                 $('#modal_org').text(record.org);
                 $('#modal_email').text(record.email);
                 $('#modal_phone').text(record.phone);

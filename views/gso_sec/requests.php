@@ -22,6 +22,8 @@ $conn->close();
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+
 
 <body class="bg-slate-50">
     <div class="flex">
@@ -102,6 +104,7 @@ $conn->close();
                 </div>
         </div>
     </div>
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
 
     <script>
     $(document).ready(function () {
@@ -111,6 +114,24 @@ $conn->close();
         const mapContainer = $('#map-container');
         const modalFooter = $('#modal-footer');
         let detailMap = null; // Variable to hold the map instance
+
+        const greenIcon = new L.Icon({
+            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+        });
+
+        const blueIcon = new L.Icon({
+            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+        });
 
         // --- VIEW DETAILS ---
         $('.details-btn').on('click', function () {
@@ -181,23 +202,40 @@ $conn->close();
         
         // --- FUNCTION TO INITIALIZE THE MAP IN THE MODAL ---
         function initializeDetailMap(lat, lng) {
-            // If the map is already initialized, just set the new view
-            if (detailMap) {
-                detailMap.setView([lat, lng], 15);
-            } else { // Otherwise, create a new map instance
-                detailMap = L.map('details-map').setView([lat, lng], 15);
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; OpenStreetMap contributors'
-                }).addTo(detailMap);
-            }
-            // Add a marker to the destination
-            L.marker([lat, lng]).addTo(detailMap)
-                .bindPopup('Requested Destination')
-                .openPopup();
-                
-            // IMPORTANT: Invalidate the map size to ensure it renders correctly
-            setTimeout(() => detailMap.invalidateSize(), 10);
-        }
+    const capitol = [10.7040, 122.5621]; // Iloilo Provincial Capitol
+
+    if (!detailMap) {
+        detailMap = L.map('details-map').setView(capitol, 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(detailMap);
+    } else {
+        detailMap.setView(capitol, 13);
+        // Remove old route
+        if (detailMap._routingControl) detailMap.removeControl(detailMap._routingControl);
+    }
+
+    // Add new routing
+    detailMap._routingControl = L.Routing.control({
+        waypoints: [L.latLng(capitol[0], capitol[1]), L.latLng(lat, lng)],
+        router: L.Routing.osrmv1({
+            serviceUrl: 'https://router.project-osrm.org/route/v1'
+        }),
+        routeWhileDragging: false,
+        addWaypoints: false,
+        lineOptions: { styles: [{ color: 'green', weight: 6, opacity: 0.8 }] }
+    }).addTo(detailMap);
+
+    // Add markers
+    L.marker(capitol, { icon: greenIcon }).addTo(detailMap)
+        .bindPopup(`<b>Iloilo Provincial Capitol</b>`).openPopup();
+    L.marker([lat, lng], { icon: blueIcon }).addTo(detailMap)
+        .bindPopup(`Requested Destination`).openPopup();
+
+    // Ensure map renders inside modal
+    setTimeout(() => detailMap.invalidateSize(), 500);
+}
+
 
         // --- EVENT DELEGATION FOR DYNAMICALLY ADDED BUTTONS ---
         $(document).on('click', '.approve-btn', function() {
