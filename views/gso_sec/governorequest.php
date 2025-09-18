@@ -25,7 +25,6 @@ $conn->close();
 <?php include 'components/head.php' ?>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
 
@@ -44,7 +43,7 @@ $conn->close();
                 </div>
 
                 <div class="bg-white rounded-xl border border-slate-200/80 shadow-sm overflow-hidden">
-                    <table class="min-w-full text-left">
+                    <table id="governorTable" class="min-w-full text-left">
                         <thead class="bg-slate-50/80 border-b border-slate-200/80">
                             <tr>
                                 <th class="px-6 py-4 text-sm font-semibold text-slate-600">Requester</th>

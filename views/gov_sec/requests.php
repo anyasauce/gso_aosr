@@ -20,7 +20,6 @@ $conn->close();
 <?php include 'components/head.php' ?>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <body class="bg-slate-50">
     <div class="flex">
@@ -28,13 +27,19 @@ $conn->close();
         <div class="flex flex-col flex-1">
             <?php include 'components/header.php' ?>
             <main class="flex-1 p-6 lg:p-10">
-                <div class="mb-8">
-                    <h1 class="text-3xl font-bold text-slate-900">Pending Private Requests</h1>
+                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-8">
+                    <div>
+                        <h1 class="text-3xl font-bold text-slate-900">Pending Private Requests</h1>
                     <p class="text-slate-500 mt-1">Review and pre-approve new reservation requests.</p>
+                    </div>
+                    <button id="export-excel-btn" class="mt-4 sm:mt-0 flex items-center gap-2 bg-emerald-600 text-white font-semibold px-4 py-2 rounded-lg shadow-lg hover:bg-emerald-700 transition active:scale-95">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10.75 2.75a.75.75 0 00-1.5 0v8.25H8a.75.75 0 000 1.5h1.25v1.25a.75.75 0 001.5 0v-1.25H12a.75.75 0 000-1.5h-1.25V2.75z"></path><path fill-rule="evenodd" d="M2 1a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V3a2 2 0 00-2-2H2zm1.5 12.5a.5.5 0 000-1H2a.5.5 0 000 1h1.5zm0-2a.5.5 0 000-1H2a.5.5 0 000 1h1.5zM2 9.5a.5.5 0 01.5-.5h1.5a.5.5 0 010 1H2.5a.5.5 0 01-.5-.5zm.5 2.5a.5.5 0 000-1H2a.5.5 0 000 1h1.5zM2 5.5a.5.5 0 01.5-.5h1.5a.5.5 0 010 1H2.5a.5.5 0 01-.5-.5zM14 14a.5.5 0 01-.5.5h-1.5a.5.5 0 010-1h1.5a.5.5 0 01.5.5zm.5-2.5a.5.5 0 000-1h-1.5a.5.5 0 000 1h1.5zM14 9.5a.5.5 0 01-.5.5h-1.5a.5.5 0 010-1h1.5a.5.5 0 01.5.5zm.5-2.5a.5.5 0 000-1h-1.5a.5.5 0 000 1h1.5zM14 3.5a.5.5 0 01-.5.5h-1.5a.5.5 0 010-1h1.5a.5.5 0 01.5.5z" clip-rule="evenodd"></path></svg>
+                        Export Full Report
+                    </button>
                 </div>
 
                 <div class="bg-white rounded-xl border border-slate-200/80 shadow-sm overflow-hidden">
-                    <table class="min-w-full text-left">
+                    <table id="privateRequestTable" class="min-w-full text-left">
                         <thead class="bg-slate-50/80 border-b border-slate-200/80">
                             <tr>
                                 <th class="px-6 py-4 text-sm font-semibold text-slate-600">Requester</th>
@@ -58,7 +63,7 @@ $conn->close();
                                             </span>
                                         </td>
                                         <td class="px-6 py-4">
-                                             <?php
+                                            <?php
                                             $p_status = htmlspecialchars($request['payment_status']);
                                             $p_badge_class = 'bg-slate-100 text-slate-600'; // Default for Not Required
                                             if ($p_status === 'Pending Payment') $p_badge_class = 'bg-amber-100 text-amber-800';
@@ -145,6 +150,23 @@ $(document).ready(function () {
             }
         });
     });
+
+    const table = $('#privateRequestTable').DataTable({
+        "pagingType": "simple_numbers",
+        "language": {
+            "search": "",
+            "searchPlaceholder": "Search requests...",
+            "lengthMenu": "Show _MENU_ entries"
+        }
+    });
+
+
+    // --- 2. EXPORT BUTTON LOGIC ---
+        $('#export-excel-btn').on('click', function () {
+            const currentSearch = table.search(); // ✅ This now works
+            const exportUrl = `api/export_private_excel.php?search=${encodeURIComponent(currentSearch)}`;
+            window.location.href = exportUrl;
+        });
 
     $(document).on('change', '#requires-payment', function() {
         $('#payment-amount-container').toggleClass('hidden', !this.checked);
