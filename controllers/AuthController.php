@@ -20,7 +20,7 @@ if (isset($_POST['login'])) {
             $_SESSION['role']    = $user['role'];
 
             $lastLogin    = $user['last_login'];
-            $lastLoginTime = new DateTime($lastLogin);
+            $lastLoginTime = new DateTime($lastLogin ?? '');
             $currentTime   = new DateTime("now");
 
             $diffInSeconds = $currentTime->getTimestamp() - $lastLoginTime->getTimestamp();
@@ -37,7 +37,7 @@ if (isset($_POST['login'])) {
                 // Redirect to OTP page
                 header("Location: ../otp.php");
                 exit();
-            }   else {
+            }  else {
                 // Redirect based on role
                 switch ($user['role']) {
                     case 'admin':
