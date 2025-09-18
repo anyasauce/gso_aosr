@@ -54,17 +54,9 @@
 
 <body class="bg-slate-100 text-slate-800 antialiased">
 
-    <nav class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-slate-200">
-        <div class="container mx-auto flex items-center justify-between px-6 py-4">
-            <a href="#" class="text-2xl font-bold text-slate-900">GSO AOSR</a>
-            <div class="flex items-center space-x-4">
-                <a href="#" class="text-slate-600 hover:text-indigo-600 transition font-medium">About</a>
-                <a href="#" class="text-slate-600 hover:text-indigo-600 transition font-medium">Availability</a>
-                <a href="views/auth/login.php"
-                    class="bg-indigo-600 text-white px-5 py-2 rounded-full hover:bg-indigo-700 transition font-medium shadow-lg shadow-indigo-500/30">Login</a>
-            </div>
-        </div>
-    </nav>
+   <?php 
+   include 'header.php';
+   ?>
 
     <section id="reservation" class="py-12 md:py-20">
         <div class="container mx-auto px-4 max-w-4xl">
@@ -505,6 +497,7 @@
                 }
                 const dates = await response.json();
                 reservedDates = dates;
+                console.log(reservedDates);
                 updateCalendar();
             } catch (error) {
                 console.error('Error fetching reserved dates:', error);
@@ -610,12 +603,9 @@
                     Swal.fire({ icon: 'error', title: 'Server Error', text: 'Please try again later.' });
              }
         });
-
-        // --- INITIALIZATION ---
+    });
         showStep(currentStep);
         fetchReservedDates();
-        
-    }); // <-- THIS WAS IN THE WRONG PLACE. It now correctly wraps the entire script.
 });
 </script>
 </body>
