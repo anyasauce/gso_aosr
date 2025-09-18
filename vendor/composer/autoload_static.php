@@ -6,6 +6,7 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit9dc101580172bce51709e33f5926f7ca
 {
+<<<<<<< HEAD
     public static $files = array (
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -57,7 +58,10 @@ class ComposerStaticInit9dc101580172bce51709e33f5926f7ca
             0 => __DIR__ . '/..' . '/paymongo/paymongo-php/src',
         ),
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
 =======
     public static $prefixLengthsPsr4 = array (
         'S' => 
@@ -96,14 +100,20 @@ class ComposerStaticInit9dc101580172bce51709e33f5926f7ca
 =======
 >>>>>>> 31d07f4e30fc24c47bc601c3fa6ab089bd847881
 >>>>>>> 995dedb18f073857c93af72c7202b458aff93fae
+<<<<<<< HEAD
+>>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
+=======
 >>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
+=======
+>>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
         'Masterminds\\' => 
         array (
             0 => __DIR__ . '/..' . '/masterminds/html5/src',
@@ -118,6 +128,9 @@ class ComposerStaticInit9dc101580172bce51709e33f5926f7ca
         ),
 =======
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
+=======
 >>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
         'GrahamCampbell\\ResultType\\' => 
         array (
@@ -137,7 +150,10 @@ class ComposerStaticInit9dc101580172bce51709e33f5926f7ca
         'UnhandledMatchError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
         'ValueError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
 =======
 >>>>>>> 995dedb18f073857c93af72c7202b458aff93fae
     );
@@ -149,6 +165,9 @@ class ComposerStaticInit9dc101580172bce51709e33f5926f7ca
 =======
 >>>>>>> 31d07f4e30fc24c47bc601c3fa6ab089bd847881
 >>>>>>> 995dedb18f073857c93af72c7202b458aff93fae
+<<<<<<< HEAD
+>>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
+=======
 >>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
     );
 

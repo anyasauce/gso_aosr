@@ -4,9 +4,12 @@
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
 <<<<<<< HEAD
+<<<<<<< HEAD
         'reference' => '2a430c47acbb1a4d7b21d4ae12e0a78bed0a3702',
 =======
 <<<<<<< HEAD
+=======
+>>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
         'reference' => '31d07f4e30fc24c47bc601c3fa6ab089bd847881',
 =======
 <<<<<<< HEAD
@@ -15,6 +18,9 @@
         'reference' => '2b40dcff047b920ef52e5aea6371a71973b2c03b',
 >>>>>>> 31d07f4e30fc24c47bc601c3fa6ab089bd847881
 >>>>>>> 995dedb18f073857c93af72c7202b458aff93fae
+<<<<<<< HEAD
+>>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
+=======
 >>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
@@ -26,9 +32,12 @@
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
 <<<<<<< HEAD
+<<<<<<< HEAD
             'reference' => '2a430c47acbb1a4d7b21d4ae12e0a78bed0a3702',
 =======
 <<<<<<< HEAD
+=======
+>>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
             'reference' => '31d07f4e30fc24c47bc601c3fa6ab089bd847881',
 =======
 <<<<<<< HEAD
@@ -37,6 +46,9 @@
             'reference' => '2b40dcff047b920ef52e5aea6371a71973b2c03b',
 >>>>>>> 31d07f4e30fc24c47bc601c3fa6ab089bd847881
 >>>>>>> 995dedb18f073857c93af72c7202b458aff93fae
+<<<<<<< HEAD
+>>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
+=======
 >>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
@@ -44,8 +56,11 @@
             'dev_requirement' => false,
         ),
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
+=======
+>>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
         'dompdf/dompdf' => array(
             'pretty_version' => 'v3.1.0',
             'version' => '3.1.0.0',
@@ -84,6 +99,9 @@
         ),
 =======
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
+=======
 >>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
         'graham-campbell/result-type' => array(
             'pretty_version' => 'v1.1.3',
@@ -104,6 +122,12 @@
             'dev_requirement' => false,
         ),
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 31d07f4e30fc24c47bc601c3fa6ab089bd847881
+>>>>>>> 995dedb18f073857c93af72c7202b458aff93fae
+>>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
 =======
 =======
 >>>>>>> 31d07f4e30fc24c47bc601c3fa6ab089bd847881
@@ -119,8 +143,11 @@
             'dev_requirement' => false,
         ),
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
+=======
+>>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
         'sabberworm/php-css-parser' => array(
             'pretty_version' => 'v8.9.0',
             'version' => '8.9.0.0',
@@ -132,6 +159,9 @@
         ),
 =======
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
+=======
 >>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
         'phpoption/phpoption' => array(
             'pretty_version' => '1.9.4',
@@ -179,6 +209,12 @@
             'dev_requirement' => false,
         ),
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 31d07f4e30fc24c47bc601c3fa6ab089bd847881
+>>>>>>> 995dedb18f073857c93af72c7202b458aff93fae
+>>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
 =======
 =======
 >>>>>>> 31d07f4e30fc24c47bc601c3fa6ab089bd847881

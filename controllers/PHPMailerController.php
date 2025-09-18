@@ -59,6 +59,7 @@ function sendPendingEmail($email, $name) {
     }
 }
 
+<<<<<<< HEAD
 /**
  * Sends an email with a unique PayMongo payment link.
  *
@@ -108,3 +109,5 @@ function sendPaymentLinkEmail($email, $name, $requestId, $amount, $paymentLink) 
     }
 }
 
+=======
+>>>>>>> 31d07f4e30fc24c47bc601c3fa6ab089bd847881

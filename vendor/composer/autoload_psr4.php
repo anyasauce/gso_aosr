@@ -7,8 +7,11 @@ $baseDir = dirname($vendorDir);
 
 return array(
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
+=======
+>>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
     'Svg\\' => array($vendorDir . '/dompdf/php-svg-lib/src/Svg'),
     'Sabberworm\\CSS\\' => array($vendorDir . '/sabberworm/php-css-parser/src'),
     'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
@@ -17,6 +20,9 @@ return array(
     'Dompdf\\' => array($vendorDir . '/dompdf/dompdf/src'),
 =======
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
+=======
 >>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
     'Symfony\\Polyfill\\Php80\\' => array($vendorDir . '/symfony/polyfill-php80'),
     'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
@@ -27,10 +33,16 @@ return array(
     'GrahamCampbell\\ResultType\\' => array($vendorDir . '/graham-campbell/result-type/src'),
     'Dotenv\\' => array($vendorDir . '/vlucas/phpdotenv/src'),
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
 =======
     'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
 >>>>>>> 31d07f4e30fc24c47bc601c3fa6ab089bd847881
 >>>>>>> 995dedb18f073857c93af72c7202b458aff93fae
+<<<<<<< HEAD
+>>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
+=======
 >>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
 );
