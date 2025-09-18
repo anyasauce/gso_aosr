@@ -1,3 +1,25 @@
+<?php 
+include '../../config/init.php';
+
+$stmt = $conn->prepare("SELECT COUNT(*) AS total_reservations FROM requests");
+$stmt->execute();
+$total_reservation = $stmt->get_result()->fetch_assoc();
+
+$stmt = $conn->prepare("SELECT COUNT(*) AS total_venue FROM requests WHERE res_type = 'place'");
+$stmt->execute();
+$total_venue = $stmt->get_result()->fetch_assoc();
+
+$stmt = $conn->prepare("SELECT COUNT(*) AS dispatch_vehicle FROM vehicles WHERE NOT `availability` = 'available'");
+$stmt->execute();
+$dispatch_vehicle = $stmt->get_result()->fetch_assoc();
+
+$stmt = $conn->prepare("SELECT COUNT(*) AS pending_request FROM requests WHERE status = 'pending'");
+$stmt->execute();
+$pending_request = $stmt->get_result()->fetch_assoc();
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <?php include 'components/head.php' ?>
@@ -20,7 +42,7 @@
             <div class="flex justify-between items-start">
               <div>
                 <p class="text-sm font-medium text-slate-500">Total Reservations</p>
-                <h2 class="text-4xl font-bold text-slate-900 mt-2">1,234</h2>
+                <h2 class="text-4xl font-bold text-slate-900 mt-2"><?=htmlspecialchars($total_reservation['total_reservations'])?></h2>
               </div>
               <div class="bg-gradient-to-br from-indigo-500 to-indigo-600 text-white p-3 rounded-xl shadow-lg shadow-indigo-500/30">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -38,7 +60,7 @@
             <div class="flex justify-between items-start">
               <div>
                 <p class="text-sm font-medium text-slate-500">Venues Booked</p>
-                <h2 class="text-4xl font-bold text-slate-900 mt-2">82</h2>
+                <h2 class="text-4xl font-bold text-slate-900 mt-2"><?=htmlspecialchars($total_venue['total_venue'])?></h2>
               </div>
               <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 text-white p-3 rounded-xl shadow-lg shadow-emerald-500/30">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -56,7 +78,7 @@
             <div class="flex justify-between items-start">
               <div>
                 <p class="text-sm font-medium text-slate-500">Vehicles Dispatched</p>
-                <h2 class="text-4xl font-bold text-slate-900 mt-2">126</h2>
+                <h2 class="text-4xl font-bold text-slate-900 mt-2"><?=htmlspecialchars($dispatch_vehicle['dispatch_vehicle'])?></h2>
               </div>
               <div class="bg-gradient-to-br from-amber-500 to-amber-600 text-white p-3 rounded-xl shadow-lg shadow-amber-500/30">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -74,7 +96,7 @@
             <div class="flex justify-between items-start">
               <div>
                 <p class="text-sm font-medium text-slate-500">Pending Approvals</p>
-                <h2 class="text-4xl font-bold text-slate-900 mt-2">15</h2>
+                <h2 class="text-4xl font-bold text-slate-900 mt-2"><?=htmlspecialchars($pending_request['pending_request'])?></h2>
               </div>
               <div class="bg-gradient-to-br from-rose-500 to-rose-600 text-white p-3 rounded-xl shadow-lg shadow-rose-500/30">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
