@@ -11,7 +11,7 @@ if(isset($_POST['add_vehicle'])){
     $stmt->bind_param("sis", $name, $capacity, $plate_no);
     
     if($stmt->execute()){
-        echo json_encode(["success" => "true"]);
+        header("Location: ../views/admin/vehicles.php");
     }
 }
 
@@ -24,7 +24,7 @@ if(isset($_POST['update'])){
     $stmt->bind_param('sisi', $name, $capacity, $plate_no, $_POST['id']);
 
     if($stmt->execute()){
-        echo json_encode(["success" => "true"]);
+        header("Location: ../views/admin/vehicles.php");
     }
 }
 
@@ -34,7 +34,7 @@ if(isset($_POST['delete'])){
     $stmt = $conn->prepare("DELETE FROM vehicles WHERE id = ?");
     $stmt->bind_param('i', $id);
     if($stmt->execute()){
-        echo json_encode(["success" => "true"]);
+        header("Location: ../views/admin/vehicles.php");
     }
 }
 ?>

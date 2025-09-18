@@ -120,6 +120,8 @@
     </div>
 </div>
 
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
     function openEditModal(id, item_name, quantity, category, status) {
         document.getElementById('edit_id').value = id;
@@ -129,6 +131,8 @@
         document.getElementById('edit_status').value = status;
         document.getElementById('editModal').classList.remove('hidden');
     }
+
+
 </script>
 
 <script>

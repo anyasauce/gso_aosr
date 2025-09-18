@@ -57,8 +57,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 </svg>
             </button>
             <div class="hidden mt-2 ml-4 space-y-2">
-                <a href="#" class="flex items-center px-4 py-2 text-sm text-white/80 rounded-lg hover:bg-white/10">Incoming</a>
-                <a href="#" class="flex items-center px-4 py-2 text-sm text-white/80 rounded-lg hover:bg-white/10">Outgoing</a>
+                <a href="letters.php" class="flex items-center px-4 py-2 text-sm text-white/80 rounded-lg hover:bg-white/10">Incoming</a>
             </div>
         </li>
 
