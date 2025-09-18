@@ -368,16 +368,27 @@ $conn->close();
                             </div>
                         </div>
 
-                        <div class="space-y-5 mt-5 pt-5 border-t">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
-                                <div><label class="block mb-1.5 text-sm font-medium text-slate-600">Start Date &
-                                        Time</label><input type="datetime-local" name="start_datetime"
-                                        class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                                        required></div>
-                                <div><label class="block mb-1.5 text-sm font-medium text-slate-600">End Date &
-                                        Time</label><input type="datetime-local" name="end_datetime"
-                                        class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                                        required></div>
+                                <div class="space-y-5 mt-5 pt-5 border-t">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
+                                        <div>
+                                <label class="block mb-1.5 text-sm font-medium text-slate-600">
+                                    Start Date & Time
+                                </label>
+                                <input type="datetime-local" id="start_datetime" name="start_datetime"
+                                    class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 
+                                        focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                    required>
+                                </div>
+
+                                <div>
+                                <label class="block mb-1.5 text-sm font-medium text-slate-600">
+                                    End Date & Time
+                                </label>
+                                <input type="datetime-local" id="end_datetime" name="end_datetime"
+                                    class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 
+                                        focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                    required>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -660,6 +671,25 @@ $conn->close();
         showStep(currentStep);
         fetchReservedDates();
 });
+
+ function getCurrentDateTime() {
+    const now = new Date();
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset()); // adjust for timezone
+    return now.toISOString().slice(0,16); // format: "2025-09-18T14:30"
+  }
+
+  const startInput = document.getElementById('start_datetime');
+  const endInput = document.getElementById('end_datetime');
+
+  // Set min to today (no past dates allowed)
+  const now = getCurrentDateTime();
+  startInput.min = now;
+  endInput.min = now;
+
+  // Optional: ensure end is always after start
+  startInput.addEventListener('change', () => {
+    endInput.min = startInput.value;
+  });
 </script>
 </body>
 
