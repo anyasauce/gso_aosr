@@ -22,7 +22,7 @@
         <div class="flex flex-col space-y-2 p-4">
             <a href="#about" class="text-slate-600 hover:text-indigo-600 hover:bg-slate-100 px-4 py-3 rounded-lg transition-all duration-300 font-medium">About</a>
             <a href="#features" class="text-slate-600 hover:text-indigo-600 hover:bg-slate-100 px-4 py-3 rounded-lg transition-all duration-300 font-medium">Features</a>
-            <a href="#reservation" class="text-slate-600 hover:text-indigo-600 hover:bg-slate-100 px-4 py-3 rounded-lg transition-all duration-300 font-medium">Reserve</a>
+            <a href="reservation.php" class="text-slate-600 hover:text-indigo-600 hover:bg-slate-100 px-4 py-3 rounded-lg transition-all duration-300 font-medium">Reserve</a>
         </div>
     </div>
 </nav>
