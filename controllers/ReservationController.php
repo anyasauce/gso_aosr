@@ -65,11 +65,11 @@ if ($result->num_rows > 0) {
         // generateLetter($event_name, $start_date, $organization, $address, $num_person, $res_place, $num_tables, $num_chairs, $num_rostrum, $num_stage_table,);
 
          $pdfPath = '../assets/pdfs/Reservation_Letter_' . $req_id . '.pdf';
-    generateLetter($fullname, $event_name, $start_date, $organization, $address, $num_person, $res_place, $num_tables, $num_chairs, $num_rostrum, $num_stage_table, $pdfPath, $phone_number);
-    $pdf = 'Reservation_Letter_' . $req_id . '.pdf';
+        generateLetter($fullname, $event_name, $start_date, $organization, $address, $num_person, $res_place, $num_tables, $num_chairs, $num_rostrum, $num_stage_table, $pdfPath, $phone_number);
+        $pdf = 'Reservation_Letter_' . $req_id . '.pdf';
 
-        $stmt = $conn->prepare("INSERT INTO letters (letter_name) VALUES(?)");
-        $stmt-> bind_param('s', $pdfPath);
+        $stmt = $conn->prepare("INSERT INTO letters (letter_name, request_id) VALUES(?, ?)");
+        $stmt-> bind_param('si', $pdf, $req_id);
         $stmt->execute();
    } else {
         $v_type = $_POST['v_type'];

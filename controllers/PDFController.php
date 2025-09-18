@@ -5,7 +5,7 @@ require_once '../config/init.php';
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
-function generateLetter($fullname, $title, $date_time, $org, $address, $participants, $venue, $tp, $tc, $tr, $tt, $savePath = null, $cn) {
+function generateLetter($fullname, $title, $date_time, $org, $address, $participants, $venue, $tp, $tc, $tr, $tt, $cn, $savePath = null) {
     $dateTimeObj = new DateTime($date_time);
     $formattedDate = $dateTimeObj->format('F j, Y \a\t g:i A'); // e.g., "September 18, 2025 at 3:30 PM"
 

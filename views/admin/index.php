@@ -111,42 +111,25 @@ $pending_request = $stmt->get_result()->fetch_assoc();
         </div>
 
          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mb-6">
-          <div class="bg-white p-6 rounded-xl border border-slate-200/80 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-            <div class="flex justify-between items-start">
-              <div>
-                <p class="text-sm font-medium text-slate-500">Total Reservations</p>
-                <h2 class="text-4xl font-bold text-slate-900 mt-2"><?=htmlspecialchars($total_reservation['total_reservations'])?></h2>
-              </div>
-              <div class="bg-gradient-to-br from-indigo-500 to-indigo-600 text-white p-3 rounded-xl shadow-lg shadow-indigo-500/30">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-                </svg>
-              </div>
-            </div>
-            <p class="text-sm text-green-500 mt-4 flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L12 11.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0L12 12.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
-              12% from last month
-            </p>
-          </div>
-
+          
            <div class="bg-white p-6 rounded-xl border border-slate-200/80 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-            <div class="flex justify-between items-start">
-              <div>
-                <p class="text-sm font-medium text-slate-500">Total Reservations</p>
-                <h2 class="text-4xl font-bold text-slate-900 mt-2"><?=htmlspecialchars($total_reservation['total_reservations'])?></h2>
-              </div>
-              <div class="bg-gradient-to-br from-indigo-500 to-indigo-600 text-white p-3 rounded-xl shadow-lg shadow-indigo-500/30">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-                </svg>
-              </div>
+            <div class="flex justify-center items-start">
+             <div class="mt-6">
+              <canvas id="reservationsPieChart" height="200"></canvas>
             </div>
-            <p class="text-sm text-green-500 mt-4 flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L12 11.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0L12 12.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
-              12% from last month
-            </p>
           </div>
         </div>
+          
+
+           <div class="bg-white p-6 rounded-xl border border-slate-200/80 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+            <div class="flex justify-center items-start">
+              <div class="mt-6 w-full">
+                <canvas id="reservationsChart" height="200"></canvas>
+              </div>
+          </div>
+        </div>
+          </div>
+
 
         <div class="bg-white rounded-xl border border-slate-200/80 shadow-sm mt-8">
           <div class="px-6 py-5 border-b border-slate-200/80 flex justify-between items-center">
@@ -244,4 +227,58 @@ $pending_request = $stmt->get_result()->fetch_assoc();
     </div>
   </div>
 </body>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const ctx = document.getElementById('reservationsChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+      datasets: [{
+        label: 'Reservations',
+        data: [12, 19, 3, 5, 2, 7], // <- replace with PHP values
+        backgroundColor: 'rgba(99, 102, 241, 0.8)', // Indigo 500
+        borderRadius: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false }
+      },
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
+  });
+
+   const pieCtx = document.getElementById('reservationsPieChart').getContext('2d');
+  new Chart(pieCtx, {
+    type: 'pie',
+    data: {
+      labels: ['Approved', 'Pending', 'Cancelled'], // example categories
+      datasets: [{
+        data: [45, 25, 30], // replace with PHP data if needed
+        backgroundColor: [
+          'rgba(99, 102, 241, 0.9)',   // Indigo
+          'rgba(16, 185, 129, 0.9)',   // Emerald
+          'rgba(239, 68, 68, 0.9)'     // Red
+        ],
+        borderWidth: 1,
+        borderColor: '#fff'
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: { color: '#374151' } // Tailwind slate-700
+        }
+      }
+    }
+  });
+</script>
+
 </html> 

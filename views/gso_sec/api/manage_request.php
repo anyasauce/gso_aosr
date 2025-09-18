@@ -122,7 +122,7 @@ switch ($action) {
                 $fullName, 
                 $id, 
                 $requestData['payment_amount'], 
-                $paymentLink
+                'http://localhost/gso_aosr/pay.php?ref_id=' . $referenceId
             );
             
             if ($emailSent) {
