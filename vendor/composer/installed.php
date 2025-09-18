@@ -3,7 +3,19 @@
         'name' => '__root__',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
+<<<<<<< HEAD
         'reference' => '2a430c47acbb1a4d7b21d4ae12e0a78bed0a3702',
+=======
+<<<<<<< HEAD
+        'reference' => '31d07f4e30fc24c47bc601c3fa6ab089bd847881',
+=======
+<<<<<<< HEAD
+        'reference' => '9d541d95150857ee49c674670c038b9338ff2720',
+=======
+        'reference' => '2b40dcff047b920ef52e5aea6371a71973b2c03b',
+>>>>>>> 31d07f4e30fc24c47bc601c3fa6ab089bd847881
+>>>>>>> 995dedb18f073857c93af72c7202b458aff93fae
+>>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,12 +25,66 @@
         '__root__' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
+<<<<<<< HEAD
             'reference' => '2a430c47acbb1a4d7b21d4ae12e0a78bed0a3702',
+=======
+<<<<<<< HEAD
+            'reference' => '31d07f4e30fc24c47bc601c3fa6ab089bd847881',
+=======
+<<<<<<< HEAD
+            'reference' => '9d541d95150857ee49c674670c038b9338ff2720',
+=======
+            'reference' => '2b40dcff047b920ef52e5aea6371a71973b2c03b',
+>>>>>>> 31d07f4e30fc24c47bc601c3fa6ab089bd847881
+>>>>>>> 995dedb18f073857c93af72c7202b458aff93fae
+>>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+        'dompdf/dompdf' => array(
+            'pretty_version' => 'v3.1.0',
+            'version' => '3.1.0.0',
+            'reference' => 'a51bd7a063a65499446919286fb18b518177155a',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../dompdf/dompdf',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'dompdf/php-font-lib' => array(
+            'pretty_version' => '1.0.1',
+            'version' => '1.0.1.0',
+            'reference' => '6137b7d4232b7f16c882c75e4ca3991dbcf6fe2d',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../dompdf/php-font-lib',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'dompdf/php-svg-lib' => array(
+            'pretty_version' => '1.0.0',
+            'version' => '1.0.0.0',
+            'reference' => 'eb045e518185298eb6ff8d80d0d0c6b17aecd9af',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../dompdf/php-svg-lib',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'masterminds/html5' => array(
+            'pretty_version' => '2.10.0',
+            'version' => '2.10.0.0',
+            'reference' => 'fcf91eb64359852f00d921887b219479b4f21251',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../masterminds/html5',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+=======
+<<<<<<< HEAD
+>>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
         'graham-campbell/result-type' => array(
             'pretty_version' => 'v1.1.3',
             'version' => '1.1.3.0',
@@ -37,6 +103,12 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 31d07f4e30fc24c47bc601c3fa6ab089bd847881
+>>>>>>> 995dedb18f073857c93af72c7202b458aff93fae
+>>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
         'phpmailer/phpmailer' => array(
             'pretty_version' => 'v6.10.0',
             'version' => '6.10.0.0',
@@ -46,6 +118,21 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+        'sabberworm/php-css-parser' => array(
+            'pretty_version' => 'v8.9.0',
+            'version' => '8.9.0.0',
+            'reference' => 'd8e916507b88e389e26d4ab03c904a082aa66bb9',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../sabberworm/php-css-parser',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+=======
+<<<<<<< HEAD
+>>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
         'phpoption/phpoption' => array(
             'pretty_version' => '1.9.4',
             'version' => '1.9.4.0',
@@ -91,5 +178,11 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 31d07f4e30fc24c47bc601c3fa6ab089bd847881
+>>>>>>> 995dedb18f073857c93af72c7202b458aff93fae
+>>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
     ),
 );

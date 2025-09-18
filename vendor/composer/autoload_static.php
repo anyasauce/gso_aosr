@@ -56,10 +56,69 @@ class ComposerStaticInit9dc101580172bce51709e33f5926f7ca
         array (
             0 => __DIR__ . '/..' . '/paymongo/paymongo-php/src',
         ),
+<<<<<<< HEAD
+=======
+=======
+    public static $prefixLengthsPsr4 = array (
+        'S' => 
+        array (
+            'Svg\\' => 4,
+            'Sabberworm\\CSS\\' => 15,
+        ),
+        'P' => 
+        array (
+            'PHPMailer\\PHPMailer\\' => 20,
+        ),
+        'M' => 
+        array (
+            'Masterminds\\' => 12,
+        ),
+        'F' => 
+        array (
+            'FontLib\\' => 8,
+        ),
+        'D' => 
+        array (
+            'Dompdf\\' => 7,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+<<<<<<< HEAD
+        'Svg\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dompdf/php-svg-lib/src/Svg',
+        ),
+        'Sabberworm\\CSS\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/sabberworm/php-css-parser/src',
+        ),
+=======
+>>>>>>> 31d07f4e30fc24c47bc601c3fa6ab089bd847881
+>>>>>>> 995dedb18f073857c93af72c7202b458aff93fae
+>>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+        'Masterminds\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/masterminds/html5/src',
+        ),
+        'FontLib\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dompdf/php-font-lib/src/FontLib',
+        ),
+        'Dompdf\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dompdf/dompdf/src',
+        ),
+=======
+<<<<<<< HEAD
+>>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
         'GrahamCampbell\\ResultType\\' => 
         array (
             0 => __DIR__ . '/..' . '/graham-campbell/result-type/src',
@@ -77,6 +136,20 @@ class ComposerStaticInit9dc101580172bce51709e33f5926f7ca
         'Stringable' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
         'UnhandledMatchError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
         'ValueError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 995dedb18f073857c93af72c7202b458aff93fae
+    );
+
+    public static $classMap = array (
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+<<<<<<< HEAD
+        'Dompdf\\Cpdf' => __DIR__ . '/..' . '/dompdf/dompdf/lib/Cpdf.php',
+=======
+>>>>>>> 31d07f4e30fc24c47bc601c3fa6ab089bd847881
+>>>>>>> 995dedb18f073857c93af72c7202b458aff93fae
+>>>>>>> 253776fca9f86de9ea7ca97d140e0bfd924099bc
     );
 
     public static function getInitializer(ClassLoader $loader)

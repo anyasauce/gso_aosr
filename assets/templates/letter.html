@@ -1,23 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <title>Venue Booking Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1;
+      font-size: 14px;
+    }
+    h2, h3 {
+      text-align: center;
+      margin: 0;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .header h2 {
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .header h3 {
+      font-size: 16px;
+      margin-top: 5px;
+    }
+    .section {
+      margin-top: 10px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    td, th {
+      border: 1px solid #000;
+      padding: 6px;
+      vertical-align: top;
+    }
+    .no-border td {
+      border: none;
+    }
+    .signature {
+      margin-top: 40px;
+      width: 100%;
+    }
+    .signature td {
+      height: 50px;
+      vertical-align: bottom;
+      border: none;
+    }
+    .underline {
+      display: inline-block;
+      border-bottom: 1px solid #000;
+      width: 250px;
+    }
+  </style>
 </head>
 <body>
-    <table>
-        <th>
-            <img src="../images/seal.png" alt="">
-        </th>
-        <th>
-            <p>Republic of The Philippine</p>
-            <p>Province of Iloilo</p>
-            <p>GENERAL SERVICE OFFICE</p>
-            <br>
-            <br>
-            <p>VENUEW BOOKING FROM</p>
-        </th>
+  <div class="header">
+    <h2>Republic of the Philippines</h2>
+    <h3>Province of Iloilo</h3>
+    <h3>GENERAL SERVICES OFFICE</h3>
+    <h2 style="margin-top: 20px;">VENUE BOOKING FORM</h2>
+  </div>
+
+  <div class="section">
+    <table class="no-border">
+      <tr>
+        <td><strong>Title of Activity:</strong> {{title}}
+        <strong>Date and Time of Activity:</strong> {{date}}</td>
+      </tr>
+      <tr>
+        <td><strong>Office/Organization:</strong> {{org}}
+        <strong>Address:</strong> {{address}}</td>
+      </tr>
+      <tr>
+        <td colspan="2"><strong>No. of Participants/Guests:</strong> {{participants}}</td>
+      </tr>
     </table>
+  </div>
+
+  <div class="section">
+    <h3>SERVICES AND FACILITIES REQUIRED</h3>
+    <table>
+      <tr>
+        <th>Services or Facilities</th>
+        <th>No. of pcs.</th>
+      </tr>
+      <tr>
+        <td>Tables</td>
+        <td>{{TP}}</td>
+      </tr>
+      <tr>
+        <td>Chairs</td>
+        <td>{{TC}}</td>
+      </tr>
+      <tr>
+        <td>Rostrum</td>
+        <td>{{TR}}</td>
+      </tr>
+      <tr>
+        <td>Stage Table</td>
+        <td>{{TT}}</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <p><strong>Assigned Venue:</strong></p>
+    <ul>
+      <li>{{venue}}</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <table class="signature">
+      <tr>
+        <td><div class="underline">{{fullname}}</div><br>Booked by (Printed Name)</td>
+        <td><div class="underline"></div><br>Signature</td>
+        <td><div class="underline">{{date}}</div><br>Date</td>
+      </tr>
+      <tr>
+        <td colspan="3">Contact Number: {{CN}}</td>
+      </tr>
+    </table>
+  </div>
 </body>
 </html>

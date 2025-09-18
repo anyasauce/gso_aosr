@@ -136,6 +136,9 @@ $conn->close();
                                         d="M3 21h18M4 3h16M5 3v18m14-18v18M9 7h6m-6 4h6m-6 4h6" />
                                 </svg>
                                 <p class="text-lg font-semibold text-slate-800">Capitol Offices</p>
+                                <p class="text-sm text-slate-600 mt-1">
+                                    Provincial government offices or departments under the Iloilo Capitol.
+                                </p>
                             </label>
                             <label for="private"
                                 class="relative cursor-pointer border-2 border-slate-200 rounded-xl p-6 text-center transition-all duration-300 has-[:checked]:border-indigo-600 has-[:checked]:bg-indigo-50/50 hover:border-indigo-400">
@@ -147,6 +150,9 @@ $conn->close();
                                         d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2m4 0H4m16 0v10a2 2 0 01-2 2H6a2 2 0 01-2-2V7h16z" />
                                 </svg>
                                 <p class="text-lg font-semibold text-slate-800">Private Offices</p>
+                                <p class="text-sm text-slate-600 mt-1">
+                                    Non-government groups or individuals (e.g., companies, associations, schools, citizens).
+                                </p>
                             </label>
                         </div>
                     </div>
