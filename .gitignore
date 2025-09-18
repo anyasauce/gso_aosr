@@ -1,2 +1,3 @@
 /env.env
 .env
+/config/paymongo_config.php
