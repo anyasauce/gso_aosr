@@ -1,6 +1,7 @@
 {
     "packages": [
         {
+<<<<<<< HEAD
             "name": "graham-campbell/result-type",
             "version": "v1.1.3",
             "version_normalized": "1.1.3.0",
@@ -115,6 +116,8 @@
             "install-path": "../paymongo/paymongo-php"
         },
         {
+=======
+>>>>>>> 31d07f4e30fc24c47bc601c3fa6ab089bd847881
             "name": "phpmailer/phpmailer",
             "version": "v6.10.0",
             "version_normalized": "6.10.0.0",
@@ -197,6 +200,7 @@
                 }
             ],
             "install-path": "../phpmailer/phpmailer"
+<<<<<<< HEAD
         },
         {
             "name": "phpoption/phpoption",
@@ -623,6 +627,8 @@
                 }
             ],
             "install-path": "../vlucas/phpdotenv"
+=======
+>>>>>>> 31d07f4e30fc24c47bc601c3fa6ab089bd847881
         }
     ],
     "dev": true,
