@@ -13,7 +13,7 @@
         </div>
         <div class="border-t border-gray-700 my-8"></div>
         <div class="text-center text-gray-500">
-            <p>&copy; 2025 GSO AOSR. All Rights Reserved.</p>
+            <p>&copy; 2025 GSO CONNECT. All Rights Reserved.</p>
         </div>
     </div>
 </footer>
