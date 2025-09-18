@@ -116,3 +116,42 @@ function sendPendingEmail($email, $fullname){
         return false;
     } 
 }
+
+function sendOTP($email, $otp){
+    global $mail;
+    try {
+        $mail->clearAddresses(); 
+        $mail->addAddress($email);
+
+        $mail->isHTML(true);
+        $mail->Subject = 'Your OTP Code';
+
+        $mail->Body = "
+        <div style='font-family: Arial, sans-serif; background-color:#f9fafb; padding:20px;'>
+            <div style='max-width:500px; margin:0 auto; background:#ffffff; padding:20px; border-radius:12px; box-shadow:0 4px 6px rgba(0,0,0,0.1);'>
+                <h2 style='color:#4f46e5; text-align:center; margin-bottom:20px;'>🔑 OTP Verification</h2>
+                <p style='font-size:16px; color:#374151;'>
+                    Hello, <br><br>
+                    Use the following One-Time Password (OTP) to continue with your login. This code will expire in <b>5 minutes</b>.
+                </p>
+                <div style='text-align:center; margin:30px 0;'>
+                    <span style='font-size:28px; font-weight:bold; letter-spacing:6px; color:#1f2937; background:#eef2ff; padding:12px 20px; border-radius:8px;'>
+                        {$otp}
+                    </span>
+                </div>
+                <p style='font-size:14px; color:#6b7280; text-align:center;'>
+                    If you did not request this, please ignore this email.
+                </p>
+            </div>
+        </div>";
+
+        if($mail->send()){
+            return true;
+        }
+        return true;
+    } catch (Exception $e) {
+        error_log("Failed to send email to {$email}. Mailer Error: " . $e->getMessage());
+        return false;
+    } 
+}
+

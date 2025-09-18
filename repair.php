@@ -31,11 +31,17 @@ require_once 'config/db.php';
 
         <form action="controllers/RepairController.php" method="post">
           
+          <div class="mb-8">
+            <h3 class="text-xl font-semibold mb-2 text-slate-800">Email</h3>
+            <input type="email" name="email" required
+              class="w-full bg-slate-50 border border-slate-300 rounde  d-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500">
+          </div>
+
           <!-- Department Dropdown -->
           <div class="mb-8">
             <h3 class="text-xl font-semibold mb-2 text-slate-800">Select Department</h3>
             <p class="text-slate-500 mb-4">Choose which department is requesting the repair.</p>
-            <select name="department" required
+            <select name="dept_name" required
               class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500">
               <option disabled selected>-- Select Department --</option>
               <option value="Department 1">Department 1</option>
@@ -49,12 +55,12 @@ require_once 'config/db.php';
           <div class="mb-8">
             <h3 class="text-xl font-semibold mb-2 text-slate-800">Problem Description</h3>
             <p class="text-slate-500 mb-4">Describe the issue that needs repair.</p>
-            <textarea name="problem" rows="6" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500" placeholder="e.g., Broken projector in conference room" required></textarea>
+            <textarea name="concern" rows="6" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500" placeholder="e.g., Broken projector in conference room" required></textarea>
           </div>
 
           <!-- Submit -->
           <div class="flex justify-end">
-            <button type="submit" name="repair" class="bg-indigo-600 text-white px-8 py-3 rounded-full font-semibold transition hover:bg-indigo-700 shadow-lg shadow-indigo-500/30">
+            <button type="button" name="repair" id = "submit"class="bg-indigo-600 text-white px-8 py-3 rounded-full font-semibold transition hover:bg-indigo-700 shadow-lg shadow-indigo-500/30">
               Submit Repair Request
             </button>
           </div>
@@ -65,4 +71,37 @@ require_once 'config/db.php';
   </section>
 
 </body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+  document.getElementById('submit').addEventListener('click', function(e){
+    e.preventDefault();
+
+
+    var form = document.querySelector('form');
+    var formData = new FormData(form);
+    formData.append('add_repair', true);
+
+    $.ajax({
+      url : 'controllers/RepairController.php',
+      type : 'POST',
+      dataType : 'json',
+      processData : false,
+      contentType : false,
+      data : formData,
+      success  : function(response) {
+        console.log(response);
+        document.getElementById('form-message').innerText = "Reported";
+        document.getElementById('form-message').classList.add('text-success');
+
+        form.reset();
+      }, error : function(xhr, status, err){
+        console.log(xhr.responseText);
+        document.getElementById('form-message').innerText = "An Error Occured";
+        document.getElementById('form-message').classList.add('text-danger');
+
+      }
+    });
+  });
+</script>
 </html>

@@ -27,6 +27,8 @@ $conn->close();
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+
 
 <body class="bg-slate-50">
     <div class="flex">
@@ -112,8 +114,44 @@ $conn->close();
         </div>
     </div>
 
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
     <script>
     $(document).ready(function () {
+
+        function getPlaceName(lat, lng) {
+                return $.ajax({
+                    url: `https://nominatim.openstreetmap.org/reverse`,
+                    type: 'GET',
+                    data: {
+                        lat: lat,
+                        lon: lng,
+                        format: 'json'
+                    }
+                });
+            }
+
+        // Custom icons
+const greenIcon = new L.Icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
+
+const blueIcon = new L.Icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
+
+
+
+
         const modal = $('#details-modal');
         const detailsContent = $('#details-content');
         const closeModalBtn = $('#close-modal-btn');
@@ -297,19 +335,47 @@ $conn->close();
         }
         
         function initializeDetailMap(lat, lng) {
-            if (detailMap) {
-                detailMap.setView([lat, lng], 15);
-            } else {
-                detailMap = L.map('details-map').setView([lat, lng], 15);
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; OpenStreetMap contributors'
-                }).addTo(detailMap);
-            }
-            L.marker([lat, lng]).addTo(detailMap)
-                .bindPopup('Requested Destination')
-                .openPopup();
-            setTimeout(() => detailMap.invalidateSize(), 10);
+    const capitol = [10.7040, 122.5621]; // Iloilo Provincial Capitol
+
+    if (detailMap) {
+        detailMap.setView(capitol, 13);
+    } else {
+        detailMap = L.map('details-map').setView(capitol, 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(detailMap);
+    }
+
+    // Clear old route if any
+    if (detailMap._routingControl) {
+        detailMap.removeControl(detailMap._routingControl);
+    }
+
+    // Add route with thick green line
+    detailMap._routingControl = L.Routing.control({
+        waypoints: [
+            L.latLng(capitol[0], capitol[1]),
+            L.latLng(lat, lng)
+        ],
+        routeWhileDragging: false,
+        show: false,
+        addWaypoints: false,
+        lineOptions: {
+            styles: [{ color: 'green', weight: 6, opacity: 0.8 }]
         }
+    }).addTo(detailMap);
+
+    // Add markers
+    L.marker(capitol, { icon: greenIcon }).addTo(detailMap)
+        .bindPopup(`<b>Iloilo Provincial Capitol</b>`).openPopup();
+
+    L.marker([lat, lng], { icon: blueIcon }).addTo(detailMap)
+        .bindPopup(`Requested Destination`).openPopup();
+
+    setTimeout(() => detailMap.invalidateSize(), 200);
+}
+    
+
 
         $(document).on('click', '.approve-btn', function() {
             const requestId = $(this).data('id');
