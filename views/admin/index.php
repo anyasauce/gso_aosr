@@ -128,6 +128,24 @@ $pending_request = $stmt->get_result()->fetch_assoc();
               12% from last month
             </p>
           </div>
+
+           <div class="bg-white p-6 rounded-xl border border-slate-200/80 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="text-sm font-medium text-slate-500">Total Reservations</p>
+                <h2 class="text-4xl font-bold text-slate-900 mt-2"><?=htmlspecialchars($total_reservation['total_reservations'])?></h2>
+              </div>
+              <div class="bg-gradient-to-br from-indigo-500 to-indigo-600 text-white p-3 rounded-xl shadow-lg shadow-indigo-500/30">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                </svg>
+              </div>
+            </div>
+            <p class="text-sm text-green-500 mt-4 flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L12 11.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0L12 12.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              12% from last month
+            </p>
+          </div>
         </div>
 
         <div class="bg-white rounded-xl border border-slate-200/80 shadow-sm mt-8">
