@@ -1,6 +1,8 @@
 <?php 
 require_once '../config/init.php';
 require_once 'PHPMailerController.php';
+require_once 'PDFController.php';
+
 if(isset($_POST['reserve'])){
     $reservation_type = $_POST['reservationType'];
     $type_of_government = $_POST['govType'];
@@ -11,6 +13,8 @@ if(isset($_POST['reserve'])){
     $organization = $_POST['org_name'];
     $phone_number = $_POST['phone_number'];
     $address = $_POST['address'];
+    $fullname = $last_name . ', ' . $first_name;
+
 
     // validate first
 
@@ -52,10 +56,21 @@ if ($result->num_rows > 0) {
        $start_date = $_POST['start_datetime'];
        $end_date = $_POST['end_datetime'];
        $purpose = $_POST['purpose'];
+       
     //    $additional_notes = $_POST['additional_notes'] || '';
 
         $stmt = $conn->prepare("UPDATE requests SET event_name = ?, res_place = ?, num_person = ?, num_chairs = ?, sound_system = ?, start_date = ?, end_date = ?, purpose = ?, num_tables = ?, num_rostrum = ?, num_stage_table = ? WHERE id = ?");
         $stmt->bind_param('ssiissssiiii', $event_name, $res_place, $num_person, $num_chairs, $sound_system, $start_date, $end_date,  $purpose, $num_tables, $num_rostrum, $num_stage_table, $req_id);    
+
+        // generateLetter($event_name, $start_date, $organization, $address, $num_person, $res_place, $num_tables, $num_chairs, $num_rostrum, $num_stage_table,);
+
+         $pdfPath = '../assets/pdfs/Reservation_Letter_' . $req_id . '.pdf';
+    generateLetter($fullname, $event_name, $start_date, $organization, $address, $num_person, $res_place, $num_tables, $num_chairs, $num_rostrum, $num_stage_table, $pdfPath, $phone_number);
+    $pdf = 'Reservation_Letter_' . $req_id . '.pdf';
+
+        $stmt = $conn->prepare("INSERT INTO letters (letter_name) VALUES(?)");
+        $stmt-> bind_param('s', $pdfPath);
+        $stmt->execute();
    } else {
         $v_type = $_POST['v_type'];
         $num_pass = $_POST['num_pass'];
@@ -72,7 +87,6 @@ if ($result->num_rows > 0) {
    }
 
    if($stmt->execute()){
-            $fullname = $last_name . ', ' . $first_name;
             // Call Mauiler function
             if(sendPendingEmail($email, $fullname)){
             echo json_encode(["success" => true]);
