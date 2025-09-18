@@ -45,14 +45,17 @@ if ($result->num_rows > 0) {
        $res_place = $_POST['res_place'];
        $num_person = $_POST['num_person'];
        $num_chairs   = $_POST['num_chairs']   ?? 0;
+       $num_tables = $_POST['num_tables'] ?? 0 ;
+       $num_rostrum = $_POST['num_rostrum'] ?? 0;
+       $num_stage_table = $_POST['num_stage_table'] ?? 0 ;
        $sound_system = $_POST['sound_system'] ?? '';
        $start_date = $_POST['start_datetime'];
        $end_date = $_POST['end_datetime'];
        $purpose = $_POST['purpose'];
     //    $additional_notes = $_POST['additional_notes'] || '';
 
-        $stmt = $conn->prepare("UPDATE requests SET event_name = ?, res_place = ?, num_person = ?, num_chairs = ?, sound_system = ?, start_date = ?, end_date = ?, purpose =? WHERE id = ?");
-        $stmt->bind_param('ssiissssi', $event_name, $res_place, $num_person, $num_chairs, $sound_system, $start_date, $end_date,  $purpose, $req_id);    
+        $stmt = $conn->prepare("UPDATE requests SET event_name = ?, res_place = ?, num_person = ?, num_chairs = ?, sound_system = ?, start_date = ?, end_date = ?, purpose = ?, num_tables = ?, num_rostrum = ?, num_stage_table = ? WHERE id = ?");
+        $stmt->bind_param('ssiissssiiii', $event_name, $res_place, $num_person, $num_chairs, $sound_system, $start_date, $end_date,  $purpose, $num_tables, $num_rostrum, $num_stage_table, $req_id);    
    } else {
         $v_type = $_POST['v_type'];
         $num_pass = $_POST['num_pass'];
