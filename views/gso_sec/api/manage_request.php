@@ -30,6 +30,15 @@ switch ($action) {
         break;
 
     case 'update_status':
+        $stmt = $conn->prepare("SELECT * FROM requests WHERE id = ?");
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+        
+        $result = $stmt->get_result();
+
+        $row = $result->fetch_assoc();
+
+
         $status = $_POST['status'] ?? null;
         $remarks = $_POST['remarks'] ?? '';
 
