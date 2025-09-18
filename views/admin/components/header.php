@@ -15,7 +15,7 @@ $roleDisplay = $roleLabels[$_SESSION['role'] ?? ''] ?? 'Guest';
 <!-- Header -->
 <nav class="flex items-center justify-between px-4 py-3 bg-white/95 backdrop-blur border-b border-gray-100">
     <div class="flex items-center">
-        <a href="#" class="flex items-center text-xl font-bold text-gray-800 hover:text-indigo-600 transition-colors">
+        <a href="index.php" class="flex items-center text-xl font-bold text-gray-800 hover:text-indigo-600 transition-colors">
             <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 16 16">
                 <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3z"/>
             </svg>
