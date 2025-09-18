@@ -6,7 +6,7 @@
             <a href="#about" class="text-slate-600 hover:text-indigo-600 hover:bg-slate-100 px-4 py-2 rounded-full transition-all duration-300 font-medium">About</a>
             <a href="#features" class="text-slate-600 hover:text-indigo-600 hover:bg-slate-100 px-4 py-2 rounded-full transition-all duration-300 font-medium">Features</a>
             <a href="#reservation" class="text-slate-600 hover:text-indigo-600 hover:bg-slate-100 px-4 py-2 rounded-full transition-all duration-300 font-medium">Reserve</a>
-            <a href="#repair" class="text-slate-600 hover:text-indigo-600 hover:bg-slate-100 px-4 py-2 rounded-full transition-all duration-300 font-medium">Repair</a>
+            <a href="repair.php" class="text-slate-600 hover:text-indigo-600 hover:bg-slate-100 px-4 py-2 rounded-full transition-all duration-300 font-medium">Repair</a>
         </div>
 
         <div class="md:hidden">
