@@ -8,7 +8,7 @@ class PaymongoController {
 
     public function __construct() {
         $this->secretKey = 'sk_test_NG3NZZFEBtZJHYSjMx1spgLy';
-        $this->appUrl    = 'https://gso-aosr.onrender.com/';
+        $this->appUrl    = 'https://gso-aosr.onrender.com';   
     }
 
     /**
